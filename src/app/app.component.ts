@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'placement-manager-v1';
+  title = 'Placement Manager';
+  tweet = {
+    body: 'Here is the body of the tweet',
+    isLiked: false,
+    likeCount: 0
+  };
 }

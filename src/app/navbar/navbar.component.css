@@ -1,0 +1,25 @@
+.navbar {
+  padding: 1.5rem 0.5rem;
+}
+.navbarCardiff {
+  background-color: #2c354c;
+}
+.container{
+  justify-content: normal;
+}
+.navbarLogo {
+  max-width: 5rem;
+  margin-right: 10px;
+}
+.navbarText {
+  margin-left: 1rem;
+  float: left;
+  font-size: 30px;
+  font-weight: lighter;
+}
+
+@media only screen and (max-width: 768px) {
+  .navbarLogo{
+    margin: 0 auto;
+  }
+}

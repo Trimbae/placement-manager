@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.css';
+
+body{
+  /*padding: 20px;*/
+  /*font-family: sans-serif;*/
+
+}
+.box-shadow {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+}
+.clickable{
+  cursor: pointer;
+}
+
+/*.form-control.ng-touched.ng-invalid {
+  border: 2px solid red;
+}*/

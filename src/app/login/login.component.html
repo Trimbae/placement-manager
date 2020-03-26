@@ -1,0 +1,33 @@
+<div class="wrapper">
+  <div class="formContent">
+    <!--  Icon  -->
+    <div class="loginImageContainer">
+      <img src="./assets/img/Cardiff-University-logo.png" alt="" class="img-fluid logo" id="icon">
+    </div>
+    <!-- Title -->
+    <div class="loginTitle">Placement Management System</div>
+    <!--  Login Form  -->
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <input
+        formControlName="username"
+        id="username"
+        type="text"
+        placeholder="username"
+        autocomplete="off"
+        class="form-control loginInput">
+      <input
+        formControlName="password"
+        id="password"
+        type="password"
+        placeholder="password"
+        class="form-control loginInput">
+      <div *ngIf="loginForm.errors.invalidLogin" class="alert alert-warning">Invalid username/password combination</div>
+      <button class="btn btn-primary" type="submit">Log in</button>
+    </form>
+
+    <!--footer-->
+    <div class="formFooter">
+      <a href="#">Forgotten Password?</a>
+    </div>
+  </div>
+</div>

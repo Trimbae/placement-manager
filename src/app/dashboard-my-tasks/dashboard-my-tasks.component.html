@@ -1,0 +1,21 @@
+<div class="card box-shadow">
+  <div class="card-header">
+    <h3> My Tasks </h3>
+  </div>
+  <div class="card-body">
+    <p class="font-weight-bold">Upcoming Tasks</p>
+    <ul class="list-unstyled">
+      <li *ngFor="let task of tasks.upcoming">
+        <a href="#">{{ task.name }}</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <p>Completed Tasks</p>
+    <ul class="list-unstyled">
+      <li *ngFor="let task of tasks.completed">
+        <a href="#" class="text-muted">{{task.name}}</a>
+      </li>
+    </ul>
+  </div>
+</div>
