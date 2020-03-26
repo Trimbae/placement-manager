@@ -18,16 +18,20 @@ export class DashboardMyTasksComponent implements OnInit {
     {id: 6, name: 'Schedule supervisor meeting', isCompleted: false}
     ];
 
-  constructor() { }
-
-  ngOnInit(): void {
+  getPercentageCompleted() {
     let completedTaskCount = 0;
     for (const task of this.tasks) {
       if (task.isCompleted) {
         completedTaskCount++;
       }
     }
-    this.percentageCompleted = Math.floor(completedTaskCount / this.tasks.length * 100);
+    return Math.floor(completedTaskCount / this.tasks.length * 100);
+  }
+
+  constructor() { }
+
+  ngOnInit(): void {
+    this.percentageCompleted = this.getPercentageCompleted();
   }
 
 }

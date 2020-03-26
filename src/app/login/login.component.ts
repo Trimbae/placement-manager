@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {LoginValidators} from './login.validators';
 import {Router} from '@angular/router';
 
@@ -9,15 +9,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  loginForm = new FormGroup({
-    username: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      LoginValidators.cannotContainSpace
-    ], LoginValidators.shouldBeUnique),
-    password: new FormControl('', Validators.required)
-  });
+  loginForm: any;
 
   login() {
     if (this.loginForm.get('username').value === 'C1525379') {
@@ -33,7 +25,17 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/dashboard']);
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, fb: FormBuilder) {
+    this.loginForm = fb.group({
+      username: ['', [
+        Validators.required,
+        Validators.minLength(3),
+        LoginValidators.cannotContainSpace]
+        , LoginValidators.shouldBeUnique
+      ],
+      password: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
   }
