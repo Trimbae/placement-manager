@@ -2,3 +2,6 @@ h3 {
   font-size: 17px;
   font-weight: lighter;
 }
+.material-icons {
+  float: right;
+}

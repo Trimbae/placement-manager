@@ -10,6 +10,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardMyTasksComponent } from './dashboard-my-tasks/dashboard-my-tasks.component';
 import { DashboardProfileComponent } from './dashboard-profile/dashboard-profile.component';
 import { DashboardToolsComponent } from './dashboard-tools/dashboard-tools.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DashboardToolsComponent } from './dashboard-tools/dashboard-tools.compo
         path: 'login',
         component: LoginComponent
       },
-    ])
+    ]),
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

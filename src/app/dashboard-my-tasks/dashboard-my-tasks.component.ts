@@ -7,22 +7,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardMyTasksComponent implements OnInit {
 
-  tasks = {
-    upcoming: [
-      {id: 4, name: 'Upload Employer Evaluation Form'},
-      {id: 5, name: 'Upload SFIA Mapping Document'},
-      {id: 6, name: 'Schedule supervisor meeting'}
-    ],
-    completed: [
-      {id: 1, name: 'Upload induction checklist'},
-      {id: 2, name: 'Upload authorisation letter'},
-      {id: 3, name: 'Schedule supervisor meeting'}
-    ]
-  };
+  percentageCompleted: number;
+
+  tasks = [
+    {id: 1, name: 'Upload induction checklist', isCompleted: true},
+    {id: 2, name: 'Upload authorisation letter', isCompleted: true},
+    {id: 3, name: 'Schedule supervisor meeting', isCompleted: true},
+    {id: 4, name: 'Upload Employer Evaluation Form', isCompleted: false},
+    {id: 5, name: 'Upload SFIA Mapping Document', isCompleted: false},
+    {id: 6, name: 'Schedule supervisor meeting', isCompleted: false}
+    ];
 
   constructor() { }
 
   ngOnInit(): void {
+    let completedTaskCount = 0;
+    for (const task of this.tasks) {
+      if (task.isCompleted) {
+        completedTaskCount++;
+      }
+    }
+    this.percentageCompleted = Math.floor(completedTaskCount / this.tasks.length * 100);
   }
 
 }

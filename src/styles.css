@@ -12,6 +12,10 @@ body{
 .clickable{
   cursor: pointer;
 }
+.progress {
+  border-radius: 0;
+}
+
 
 /*.form-control.ng-touched.ng-invalid {
   border: 2px solid red;
