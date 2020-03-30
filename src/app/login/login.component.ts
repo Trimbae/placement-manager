@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {LoginValidators} from './login.validators';
 import {Router} from '@angular/router';
+import {MsalService} from '@azure/msal-angular';
 
 @Component({
   selector: 'app-login',
@@ -11,21 +12,7 @@ import {Router} from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: any;
 
-  login() {
-    if (this.loginForm.get('username').value === 'C1525379') {
-      this.loginSuccess();
-    } else {
-      this.loginForm.setErrors({
-        invalidLogin: true
-      });
-    }
-  }
-
-  loginSuccess() {
-    this.router.navigate(['/dashboard']);
-  }
-
-  constructor(private router: Router, fb: FormBuilder) {
+  constructor(private router: Router, fb: FormBuilder, private authService: MsalService, ) {
     this.loginForm = fb.group({
       username: ['', [
         Validators.required,
@@ -38,6 +25,23 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  login() {
+    const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
+
+    if (isIE) {
+      this.authService.loginRedirect();
+      this.loginSuccess();
+    } else {
+      this.authService.loginPopup().then(() => {
+        this.loginSuccess();
+      });
+    }
+  }
+
+  loginSuccess() {
+    this.router.navigate(['/dashboard']);
   }
 
 }

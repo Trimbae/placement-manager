@@ -21,7 +21,7 @@ export class PostsComponent implements OnInit {
         (error: AppError) => {
           if (error instanceof NotFoundError) {
             alert('Resource not found');
-        }});
+          }});
   }
 
   createPost(input: HTMLInputElement) {
