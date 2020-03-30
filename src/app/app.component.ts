@@ -7,9 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Placement Manager';
-  tweet = {
-    body: 'Here is the body of the tweet',
-    isLiked: false,
-    likeCount: 0
-  };
 }
