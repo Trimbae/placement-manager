@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ImageService} from '../services/image.service';
+import {environment} from '../../environments/environment';
+import {SafeUrl} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dashboard-profile',
@@ -6,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard-profile.component.css']
 })
 export class DashboardProfileComponent implements OnInit {
+
+  @Input() msUser: any;
+  profilePhoto: SafeUrl;
 
   user = {
     id: 'C1525379',
@@ -20,9 +26,21 @@ export class DashboardProfileComponent implements OnInit {
     startDate: '09/09/2019'
   };
 
-  constructor() { }
+  photoUrl = environment.urls.MICROSOFT_API + 'me/photo/$value';
+
+  constructor(private imageService: ImageService) {}
 
   ngOnInit(): void {
+    this.getImageFromService();
+  }
+
+  getImageFromService() {
+    this.imageService.getImage(this.photoUrl)
+      .subscribe(data => {
+        this.profilePhoto = this.imageService.createImageFromBlob(data);
+      }, error => {
+        console.log(error);
+    });
   }
 
 }

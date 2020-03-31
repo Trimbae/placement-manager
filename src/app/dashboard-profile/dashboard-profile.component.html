@@ -5,10 +5,11 @@
   <div class="card-body">
     <div class="row">
       <div class="col-md-4 avatar">
-        <img src="{{user.img}}" alt="user icon" class="rounded-circle dashboardAvatar">
+        <img [src]="profilePhoto" alt="user icon" class="rounded-circle dashboardAvatar">
       </div>
       <div class="col-md-8">
-        <div class="dashboardProfileHeading">{{ user.name }}</div>
+        <div *ngIf="msUser && msUser.displayName" class="dashboardProfileHeading">{{ msUser.displayName }}</div>
+        <div *ngIf="msUser && msUser.jobTitle" class="text-muted">{{ msUser.jobTitle }}</div>
         <div class="text-muted">{{ user.id }} - {{ user.placementEmployer }}</div>
         <br/>
         <div>

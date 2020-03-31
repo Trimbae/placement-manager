@@ -46,6 +46,14 @@ export class DataService {
       );
   }
 
+  get(param: string) {
+    return this.http.get(this.url + param)
+      .pipe(
+        map((response: any) => response),
+        catchError(DataService.handleError)
+      );
+  }
+
   update(resource) {
     return this.http.patch(this.url + '/' + resource.id, JSON.stringify({isRead: true}));
   }

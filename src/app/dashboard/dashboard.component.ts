@@ -10,12 +10,13 @@ import {NotFoundError} from '../common/not-found.error';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  user;
+  msUser;
+
   constructor(private authService: MsalService, private msService: MsGraphService) { }
 
   ngOnInit(): void {
-    this.msService.getAll().
-      subscribe(user => this.user = user,
+    this.msService.get('/me').
+      subscribe(user => this.msUser = user,
       (error: AppError) => {
         if (error instanceof NotFoundError) {
           alert('Resource not found');
