@@ -1,24 +1,28 @@
-<div class="card box-shadow">
+<div class="card box-shadow fadeIn">
   <div class="card-header">
     <h3>Profile</h3>
   </div>
   <div class="card-body">
     <div class="row">
       <div class="col-md-4 avatar">
-        <img [src]="profilePhoto" alt="user icon" class="rounded-circle dashboardAvatar">
+        <img *ngIf="isLoaded" [src]="photoUrl" alt="user icon" class="rounded-circle dashboardAvatar">
+<!--        <img *ngIf="!isLoaded" src="./assets/img/placeholder-icon" class="rounded-circle dashboardAvatar" alt="user icon">-->
+        <span *ngIf="!isLoaded" class="material-icons placeholderPhoto">account_circle</span>
       </div>
-      <div class="col-md-8">
-        <div *ngIf="msUser && msUser.displayName" class="dashboardProfileHeading">{{ msUser.displayName }}</div>
-        <div *ngIf="msUser && msUser.jobTitle" class="text-muted">{{ msUser.jobTitle }}</div>
-        <div class="text-muted">{{ user.id }} - {{ user.placementEmployer }}</div>
+      <div *ngIf="user" class="col-md-8">
+        <div *ngIf="user.name" class="dashboardProfileHeading">{{ user.name }}</div>
+        <div *ngIf="user.jobTitle" class="text-muted">{{ user.jobTitle }}</div>
+        <div class="text-muted">
+          <span *ngIf="user.universityId">{{ user.universityId }}</span> - <span *ngIf="user.placementProvider">{{user.placementProvider}}</span>
+        </div>
         <br/>
-        <div>
-          Supervisor: <a href="#">{{user.supervisor.name}}</a>
+        <div *ngIf="user.supervisorName">
+          Supervisor: <button class="btn btn-link" (click)="openModal()">{{user.supervisorName}}</button>
         </div>
-        <div>
-          Work Supervisor: {{user.workSupervisor}}
+        <div *ngIf="user.workplaceSupervisor">
+          Work Supervisor: {{user.workplaceSupervisor}}
         </div>
-        <div>
+        <div *ngIf="user.startDate">
           Start Date: {{user.startDate}}
         </div>
       </div>

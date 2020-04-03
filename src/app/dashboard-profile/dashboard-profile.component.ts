@@ -1,46 +1,45 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ImageService} from '../services/image.service';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {environment} from '../../environments/environment';
-import {SafeUrl} from '@angular/platform-browser';
+import {ModalProfileComponent} from '../modal-profile/modal-profile.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-dashboard-profile',
   templateUrl: './dashboard-profile.component.html',
   styleUrls: ['./dashboard-profile.component.css']
 })
-export class DashboardProfileComponent implements OnInit {
+export class DashboardProfileComponent implements OnInit, OnChanges {
 
-  @Input() msUser: any;
-  profilePhoto: SafeUrl;
+  @Input() user: any;
+  photoUrl;
+  isLoaded = false;
 
-  user = {
-    id: 'C1525379',
-    name: 'Matthew Trimby',
-    placementEmployer: 'BT',
-    img: './assets/img/Profile-pic-example.JPG',
-    supervisor: {
-      id: 1,
-      name: 'Carl Jones'
-    },
-    workSupervisor: 'Clare Lewis',
-    startDate: '09/09/2019'
-  };
-
-  photoUrl = environment.urls.MICROSOFT_API + 'me/photo/$value';
-
-  constructor(private imageService: ImageService) {}
+  constructor(private modalService: NgbModal ) {}
 
   ngOnInit(): void {
-    this.getImageFromService();
+
   }
 
-  getImageFromService() {
-    this.imageService.getImage(this.photoUrl)
-      .subscribe(data => {
-        this.profilePhoto = this.imageService.createImageFromBlob(data);
-      }, error => {
-        console.log(error);
-    });
+  ngOnChanges() {
+    this.getProfilePhotoUrl();
   }
 
+  getProfilePhotoUrl() {
+    if (this.user) {
+      this.photoUrl = environment.urls.PLACEMENT_MANAGER_API + '/images/' + this.user.universityId + '.jpg';
+      this.isLoaded = true;
+    }
+  }
+
+  openModal() {
+    const modalRef = this.modalService.open(ModalProfileComponent, {windowClass: 'modal-holder', centered: true});
+    modalRef.componentInstance.userData = {
+      name: 'Carl Jones',
+      jobTitle: 'Staff In Computer Science',
+      department: 'COMSC',
+      officeLocation: 'NSA NEWPORT',
+      email: 'JonesC162@cardiff.ac.uk',
+      phone: '029 555 5555'
+    };
+  }
 }

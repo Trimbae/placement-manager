@@ -9,6 +9,8 @@
   padding: 3rem;
 }
 .formContent {
+  animation-name: fade-in-down;
+  animation-duration: 1s;
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
   background: #fff;

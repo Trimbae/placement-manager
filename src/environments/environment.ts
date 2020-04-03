@@ -6,6 +6,7 @@ export const environment = {
   production: false,
 
   urls: {
+      PLACEMENT_MANAGER_API: 'http://localhost:3000',
       MICROSOFT_API: 'https://graph.microsoft.com/v1.0/'
     }
 };

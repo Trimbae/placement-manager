@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {MsalService} from '@azure/msal-angular';
-import {MsGraphService} from '../services/ms-graph.service';
 import {AppError} from '../common/app.error';
 import {NotFoundError} from '../common/not-found.error';
+import {PostService} from '../services/post.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,13 +10,13 @@ import {NotFoundError} from '../common/not-found.error';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  msUser;
+  userData;
 
-  constructor(private authService: MsalService, private msService: MsGraphService) { }
+  constructor(private authService: MsalService, private userService: PostService) { }
 
   ngOnInit(): void {
-    this.msService.get('/me').
-      subscribe(user => this.msUser = user,
+    this.userService.get('/me').
+      subscribe(data => this.userData = data,
       (error: AppError) => {
         if (error instanceof NotFoundError) {
           alert('Resource not found');

@@ -1,0 +1,33 @@
+
+.contact {
+  padding-bottom: 10px;
+}
+.close {
+  color: black;
+}
+.close:focus {
+  outline: none;
+}
+.infoContainer {
+  border-top: solid 1px rgba(0,0,0,0);
+  padding: 20px 30px 50px 30px;
+}
+.material-icons {
+  color: #2c354c;
+}
+.modal-header {
+  background-color: #f6f6f6;
+}
+.modal-footer {
+  border-top: none;
+}
+.modalSubtitle {
+  padding: 10px;
+}
+.modalProfilePhoto {
+  max-width: 100%;
+}
+.modal-title {
+  text-align: center;
+  margin-top: 10px;
+}

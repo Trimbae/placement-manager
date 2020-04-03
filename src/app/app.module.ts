@@ -16,11 +16,13 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {PostService} from './services/post.service';
 import {AppErrorHandler} from './common/app-error-handler';
 import {MsalGuard, MsalInterceptor, MsalModule} from '@azure/msal-angular';
+import { ModalProfileComponent } from './modal-profile/modal-profile.component';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 export const protectedResourceMap: [string, string[]][] = [
-  ['https://graph.microsoft.com/v1.0/me', ['user.read']]
+  ['https://graph.microsoft.com/v1.0/me', ['user.read']],
+  ['http://localhost:3000/user', ['user.read']]
 ];
 
 
@@ -33,7 +35,8 @@ export const protectedResourceMap: [string, string[]][] = [
     DashboardMyTasksComponent,
     DashboardProfileComponent,
     DashboardToolsComponent,
-    PostsComponent
+    PostsComponent,
+    ModalProfileComponent
   ],
   imports: [
     BrowserModule,
