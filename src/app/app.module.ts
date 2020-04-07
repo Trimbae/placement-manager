@@ -18,6 +18,16 @@ import {AppErrorHandler} from './common/app-error-handler';
 import {MsalGuard, MsalInterceptor, MsalModule} from '@azure/msal-angular';
 import { ModalProfileComponent } from './modal-profile/modal-profile.component';
 
+// imports for file upload plugin
+import { FileUploadComponent } from './file-upload/file-upload.component';
+import { FilePondModule, registerPlugin } from 'ngx-filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginFilePoster from 'filepond-plugin-file-poster';
+import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
+registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview, FilePondPluginFilePoster, FilePondPluginFileEncode);
+
+
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 export const protectedResourceMap: [string, string[]][] = [
@@ -36,11 +46,13 @@ export const protectedResourceMap: [string, string[]][] = [
     DashboardProfileComponent,
     DashboardToolsComponent,
     PostsComponent,
-    ModalProfileComponent
+    ModalProfileComponent,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    FilePondModule,
     HttpClientModule,
     MsalModule.forRoot({
         auth: {
@@ -87,6 +99,10 @@ export const protectedResourceMap: [string, string[]][] = [
       {
         path: 'posts',
         component: PostsComponent
+      },
+      {
+        path: 'tasks/upload/:userId/:taskId/:taskName',
+        component: FileUploadComponent
       }
     ]),
     NgbModule

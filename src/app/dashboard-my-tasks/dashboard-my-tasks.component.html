@@ -3,11 +3,11 @@
     <h3> My Tasks </h3>
   </div>
   <p><ngb-progressbar type="success" [value]="percentageCompleted" style="border-radius: 0"></ngb-progressbar></p>
-  <div class="card-body">
+  <div class="card-body" *ngIf="user">
     <ul class="list-unstyled">
         <li *ngFor="let task of tasks; let i = index;">
           <hr *ngIf="i !== 0"/>
-          <a href="#" [ngClass]="{'text-muted': task.isCompleted}">{{task.name}}</a>
+          <a [routerLink]="['/tasks', task.type, user.universityId, task.id, task.name]" [ngClass]="{'text-muted': task.isCompleted}">{{task.displayName}}</a>
           <span *ngIf="task.isCompleted" class="material-icons text-success font-weight-bold">done</span>
         </li>
     </ul>

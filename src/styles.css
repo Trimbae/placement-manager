@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.css';
+@import "~filepond/dist/filepond.css";
+@import "~filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
 body{
 }
@@ -8,6 +10,18 @@ a:hover {
 }
 .box-shadow {
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+}
+.btn-primary, .btn-primary:focus {
+  background-color: #d73a4b;
+  border: 1px solid #d73a4b;
+  box-shadow: none;
+}
+.btn-primary:not(:disabled):not(.disabled):active {
+  background-color: #cb3a49;
+}
+.btn-primary:hover {
+  background-color: rgba(227, 58, 75, 0.9);
+  border: 1px solid #d73a4b;
 }
 .clickable{
   cursor: pointer;
@@ -29,6 +43,10 @@ a:hover {
   animation-fill-mode:forwards;
   animation-duration:1s;
 }
+.fadeInDown {
+  animation-name: fade-in-down;
+  animation-duration: 1s;
+}
 /*Animation Keyframes*/
 @keyframes fade-in-down {
   0% {
@@ -41,3 +59,4 @@ a:hover {
   }
 }
 @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeOut { from { opacity:1; } to { opacity:0; } }

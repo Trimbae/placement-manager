@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {TaskService} from '../services/task.service';
 
 @Component({
   selector: 'app-dashboard-my-tasks',
@@ -7,16 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardMyTasksComponent implements OnInit {
 
+  @Input() user;
   percentageCompleted: number;
-
-  tasks = [
-    {id: 1, name: 'Upload induction checklist', isCompleted: true},
-    {id: 2, name: 'Upload authorisation letter', isCompleted: true},
-    {id: 3, name: 'Schedule supervisor meeting', isCompleted: true},
-    {id: 4, name: 'Upload Employer Evaluation Form', isCompleted: false},
-    {id: 5, name: 'Upload SFIA Mapping Document', isCompleted: false},
-    {id: 6, name: 'Schedule supervisor meeting', isCompleted: false}
-    ];
+  tasks: any;
 
   getPercentageCompleted() {
     let completedTaskCount = 0;
@@ -28,9 +22,10 @@ export class DashboardMyTasksComponent implements OnInit {
     return Math.floor(completedTaskCount / this.tasks.length * 100);
   }
 
-  constructor() { }
+  constructor(private taskService: TaskService) { }
 
   ngOnInit(): void {
+    this.tasks = this.taskService.getTasks();
     this.percentageCompleted = this.getPercentageCompleted();
   }
 

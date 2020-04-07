@@ -1,0 +1,95 @@
+<app-navbar></app-navbar>
+
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h3>File Upload: {{task.displayName}}</h3>
+
+      <hr>
+
+      <!-- File details -->
+      <div class="uploadSubtitle">Details:</div>
+      <div class="row">
+        <div class="col-md-4 ">
+          <div class="card box-shadow fadeIn">
+            <div class="card-header">
+              Deadline:
+            </div>
+            <div class="card-body uploadCardText">
+              {{ task.uploadInfo.dueDate | date:'HH:mm dd/MM/yyyy'}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 ">
+          <div class="card box-shadow fadeIn">
+            <div class="card-header">
+              Marks available:
+            </div>
+            <div class="card-body uploadCardText">
+              N/A
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 ">
+          <div class="card box-shadow fadeIn">
+            <div class="card-header">
+              Type:
+            </div>
+            <div class="card-body uploadCardText">
+              {{ task.uploadInfo.uploadType}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Description -->
+      <form [formGroup]="uploadForm" (ngSubmit)="onFileUpload()">
+        <div class="form-group">
+          <label for="comments">Comments:</label>
+          <textarea
+            formControlName="comments"
+            id="comments"
+            class="form-control"
+            rows="3">
+          </textarea>
+        </div>
+
+        <hr>
+        <!-- Pdf previewer -->
+        <div class="preview">
+          <div class="uploadSubtitle">Preview: </div>
+          <div class="text-center text-muted" *ngIf="!sourceData"> Select file to see preview... </div>
+          <object
+            *ngIf="sourceData"
+            [data]="sourceData"
+            [type]="previewType"
+            class="fadeInDown previewObject"
+            width="100%"
+            height="500">
+          </object>
+        </div>
+
+        <hr>
+
+        <!-- FILE POND (Add file section) -->
+        <div class="uploadSubtitle">Add Files: </div>
+        <file-pond #fileInputPond
+                   [options]="pondOptions"
+                   [files]="pondFiles"
+                   (oninit)="pondHandleInit()"
+                   (onremovefile)="onFileRemove()"
+                   (onpreparefile)="pondHandleAddFile($event)"
+                   class="clickable">
+        </file-pond>
+        <button type="submit" class="btn btn-primary">Upload</button>
+      </form>
+    </div>
+  </div>
+  <br>
+</div>
+
+
