@@ -1,0 +1,46 @@
+<app-navbar></app-navbar>
+
+<br>
+
+<div class="container">
+  <h3>View Submissions: {{task.displayName}}</h3>
+
+  <br>
+
+  <div *ngIf="isUploadRedirect" class="alert alert-success">Document uploaded successfully</div>
+  <div *ngIf="fileDeleted" class="alert alert-warning">Document '{{fileDeleted.filename}}' was deleted.</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-4 submissionHeader">Submissions</div>
+        <div class="col-md-8">Preview: </div>
+      </div>
+    </div>
+    <div class="card-body submissionsBody">
+      <div class="row">
+        <div class="col-md-4 submissionList">
+          <app-loading-spinner *ngIf="showSpinner"></app-loading-spinner>
+          <ul *ngIf="submissions" class="list-unstyled">
+            <li *ngFor="let sub of submissions; let i = index;" [ngClass]="{'selected': sub._id === idSelected}">
+              <div class="listContainer">
+                <button class="btn btn-link" (click)="getPreview(sub._id)"> {{sub.filename}}</button>
+                <span (click)="onDelete(sub)" class="material-icons clickable">delete</span>
+              </div>
+              <hr>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-8 previewSegment">
+          <div class="previewViewer">
+            <div class="text-center text-muted previewText" *ngIf="!pdfData"> Select submission to see preview... </div>
+            <div class="text-center text-muted previewText" *ngIf="pdfData && previewType !== 'application/pdf'"> Preview only available for pdf files </div>
+          <app-pdf-viewer *ngIf="pdfData && previewType === 'application/pdf'" [height]="800" [sourceData]="pdfData"></app-pdf-viewer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

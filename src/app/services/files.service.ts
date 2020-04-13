@@ -11,6 +11,14 @@ export class FilesService {
 
   constructor(private http: HttpClient) { }
 
+  deleteFileById(fileId: string) {
+    return this.http.delete(this.url + '/' + fileId);
+  }
+
+  getFilesByTaskId(taskId: number, universityId: string) {
+    return this.http.get(this.url + '/' + taskId.toString() + '/' + universityId);
+  }
+
   uploadFile(file) {
     return this.http.post(this.url, file);
   }

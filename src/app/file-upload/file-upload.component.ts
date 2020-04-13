@@ -1,9 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FilesService} from '../services/files.service';
 import {FormControl, FormGroup} from '@angular/forms';
-import {DomSanitizer} from '@angular/platform-browser';
 import {TaskService} from '../services/task.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-file-upload',
@@ -14,11 +13,12 @@ export class FileUploadComponent implements OnInit {
 
   @ViewChild('fileInput', {static: false}) fileInput: ElementRef;
   @ViewChild('fileInputPond') inputPond: any;
-  sourceData: any;
+  pdfData: any;
   previewType: string;
   isError = false;
   task: any;
   userId: string;
+  showSpinner = false;
 
   uploadForm = new FormGroup({
     comments: new FormControl(),
@@ -36,9 +36,10 @@ export class FileUploadComponent implements OnInit {
 
   constructor(
     private filesService: FilesService,
-    private sanitizer: DomSanitizer,
     private taskService: TaskService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.route.paramMap
@@ -56,7 +57,7 @@ export class FileUploadComponent implements OnInit {
   pondHandleAddFile(event) {
     console.log('A file was added', event);
     const fileObject = this.buildFileObject(event.file);
-    this.sourceData = this.sanitizer.bypassSecurityTrustResourceUrl('data:' + fileObject.fileType + ';base64,' + fileObject.data);
+    this.pdfData = fileObject.data;
     this.uploadForm.get('files').setValue(fileObject);
   }
 
@@ -74,16 +75,22 @@ export class FileUploadComponent implements OnInit {
   }
 
   onFileRemove() {
-    this.sourceData = null;
+    this.pdfData = null;
   }
 
   onFileUpload() {
+    this.showSpinner = true;
     if (!this.uploadForm.get('files').value) {
       this.isError = true;
     } else {
       this.filesService.uploadFile(this.uploadForm.value)
-        .subscribe( response => {
+        .subscribe( (response: any) => {
           console.log(response);
+          this.taskService.markTaskCompletedById(this.task.id);
+          const uploadId = response._id;
+          const navigationUrl = '/tasks/submitted/' + this.userId + '/' + this.task.id + '/' + this.task.name;
+          this.showSpinner = false;
+          this.router.navigate([navigationUrl], {queryParams : { idSelected: uploadId, isUploadRedirect: true}});
         });
     }
   }

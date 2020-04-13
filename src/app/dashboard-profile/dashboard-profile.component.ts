@@ -12,7 +12,7 @@ export class DashboardProfileComponent implements OnInit, OnChanges {
 
   @Input() user: any;
   photoUrl;
-  isLoaded = false;
+  isImageLoaded = false;
 
   constructor(private modalService: NgbModal ) {}
 
@@ -27,7 +27,7 @@ export class DashboardProfileComponent implements OnInit, OnChanges {
   getProfilePhotoUrl() {
     if (this.user) {
       this.photoUrl = environment.urls.PLACEMENT_MANAGER_API + '/images/' + this.user.universityId + '.jpg';
-      this.isLoaded = true;
+      this.isImageLoaded = true;
     }
   }
 

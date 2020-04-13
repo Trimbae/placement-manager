@@ -82,4 +82,12 @@ export class TaskService {
     }
     return null;
   }
+
+  markTaskCompletedById(id: number) {
+    for (const task of this.tasks) {
+      if (task.id === id) {
+        task.isCompleted = true;
+      }
+    }
+  }
 }

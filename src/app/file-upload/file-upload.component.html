@@ -1,3 +1,7 @@
+<div class="spinner-wrapper" *ngIf="showSpinner">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+
 <app-navbar></app-navbar>
 
 <br>
@@ -47,7 +51,7 @@
       <hr>
 
       <!-- Description -->
-      <form [formGroup]="uploadForm" (ngSubmit)="onFileUpload()">
+      <form [formGroup]="uploadForm" (ngSubmit)="onFileUpload()" class="fadeIn">
         <div class="form-group">
           <label for="comments">Comments:</label>
           <textarea
@@ -62,15 +66,9 @@
         <!-- Pdf previewer -->
         <div class="preview">
           <div class="uploadSubtitle">Preview: </div>
-          <div class="text-center text-muted" *ngIf="!sourceData"> Select file to see preview... </div>
-          <object
-            *ngIf="sourceData"
-            [data]="sourceData"
-            [type]="previewType"
-            class="fadeInDown previewObject"
-            width="100%"
-            height="500">
-          </object>
+          <div class="text-center text-muted" *ngIf="!pdfData"> Select file to see preview... </div>
+          <div class="text-center text-muted" *ngIf="pdfData && previewType !== 'application/pdf'"> Preview only available for pdf files </div>
+          <app-pdf-viewer *ngIf="pdfData && previewType === 'application/pdf'" [height]="500" [sourceData]="pdfData"></app-pdf-viewer>
         </div>
 
         <hr>

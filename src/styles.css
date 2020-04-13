@@ -34,6 +34,15 @@ a:hover {
   animation-name: fade-in-down;
   animation-duration: 0.5s;
 }
+.spinner-wrapper {
+  width: 100%;
+  height: 100%;
+  padding-top: 20%;
+  position: fixed;
+  z-index: 1;
+  background-color: #f6f6f6;
+  opacity: 40%;
+}
 
 
 /*Animation classes*/

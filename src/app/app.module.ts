@@ -25,6 +25,10 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondPluginFilePoster from 'filepond-plugin-file-poster';
 import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
+import { SubmissionComponent } from './submission/submission.component';
+import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
+import { LoadingSpinnerComponent } from './common/loading-spinner/loading-spinner.component';
+import { ModalDeleteComponent } from './modal-delete/modal-delete.component';
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview, FilePondPluginFilePoster, FilePondPluginFileEncode);
 
 
@@ -47,7 +51,11 @@ export const protectedResourceMap: [string, string[]][] = [
     DashboardToolsComponent,
     PostsComponent,
     ModalProfileComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    SubmissionComponent,
+    PdfViewerComponent,
+    LoadingSpinnerComponent,
+    ModalDeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -103,6 +111,10 @@ export const protectedResourceMap: [string, string[]][] = [
       {
         path: 'tasks/upload/:userId/:taskId/:taskName',
         component: FileUploadComponent
+      },
+      {
+        path: 'tasks/submitted/:userId/:taskId/:taskName',
+        component: SubmissionComponent
       }
     ]),
     NgbModule

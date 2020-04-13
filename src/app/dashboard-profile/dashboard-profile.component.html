@@ -3,11 +3,11 @@
     <h3>Profile</h3>
   </div>
   <div class="card-body">
+    <app-loading-spinner *ngIf="!user"></app-loading-spinner>
     <div class="row">
       <div class="col-md-4 avatar">
-        <img *ngIf="isLoaded" [src]="photoUrl" alt="user icon" class="rounded-circle dashboardAvatar">
-<!--        <img *ngIf="!isLoaded" src="./assets/img/placeholder-icon" class="rounded-circle dashboardAvatar" alt="user icon">-->
-        <span *ngIf="!isLoaded" class="material-icons placeholderPhoto">account_circle</span>
+        <img *ngIf="user && isImageLoaded" [src]="photoUrl" alt="user icon" class="rounded-circle dashboardAvatar">
+        <span *ngIf="user && !isImageLoaded" class="material-icons placeholderPhoto">account_circle</span>
       </div>
       <div *ngIf="user" class="col-md-8">
         <div *ngIf="user.name" class="dashboardProfileHeading">{{ user.name }}</div>
