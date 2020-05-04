@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ModalDeleteComponent } from './modal-delete.component';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 describe('ModalDeleteComponent', () => {
   let component: ModalDeleteComponent;
@@ -8,7 +9,10 @@ describe('ModalDeleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModalDeleteComponent ]
+      declarations: [ ModalDeleteComponent ],
+      providers: [
+        NgbActiveModal
+      ]
     })
     .compileComponents();
   }));

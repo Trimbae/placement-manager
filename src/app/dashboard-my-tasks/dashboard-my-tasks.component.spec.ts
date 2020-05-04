@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardMyTasksComponent } from './dashboard-my-tasks.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {LoadingSpinnerComponent} from '../common/loading-spinner/loading-spinner.component';
+import {NgbProgressbar} from '@ng-bootstrap/ng-bootstrap';
 
 describe('DashboardMyTasksComponent', () => {
   let component: DashboardMyTasksComponent;
@@ -8,7 +11,10 @@ describe('DashboardMyTasksComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardMyTasksComponent ]
+      declarations: [ DashboardMyTasksComponent, LoadingSpinnerComponent, NgbProgressbar ],
+      imports: [
+        HttpClientTestingModule
+      ]
     })
     .compileComponents();
   }));

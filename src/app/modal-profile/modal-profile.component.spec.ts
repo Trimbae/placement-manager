@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ModalProfileComponent } from './modal-profile.component';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 describe('ModalProfileComponent', () => {
   let component: ModalProfileComponent;
@@ -8,7 +9,10 @@ describe('ModalProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModalProfileComponent ]
+      declarations: [ ModalProfileComponent ],
+      providers: [
+        NgbActiveModal
+      ]
     })
     .compileComponents();
   }));
@@ -16,6 +20,7 @@ describe('ModalProfileComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ModalProfileComponent);
     component = fixture.componentInstance;
+    component.userData = {name: 'Matt'};
     fixture.detectChanges();
   });
 

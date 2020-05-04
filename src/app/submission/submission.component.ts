@@ -1,6 +1,6 @@
 import {Component, OnChanges, OnInit} from '@angular/core';
-import {FilesService} from '../services/files.service';
-import {TaskService} from '../services/task.service';
+import {FileService} from '../services/file-service/file.service';
+import {TaskService} from '../services/task-service/task.service';
 import {ActivatedRoute} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ModalDeleteComponent} from '../modal-delete/modal-delete.component';
@@ -23,7 +23,7 @@ export class SubmissionComponent implements OnInit, OnChanges {
 
   constructor(
     private route: ActivatedRoute,
-    private filesService: FilesService,
+    private filesService: FileService,
     private modalService: NgbModal,
     private taskService: TaskService
   ) { }

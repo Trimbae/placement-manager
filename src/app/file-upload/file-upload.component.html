@@ -6,7 +6,7 @@
 
 <br>
 
-<div class="container">
+<div *ngIf="task" class="container">
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <h3>File Upload: {{task.displayName}}</h3>
@@ -22,7 +22,7 @@
               Deadline:
             </div>
             <div class="card-body uploadCardText">
-              {{ task.uploadInfo.dueDate | date:'HH:mm dd/MM/yyyy'}}
+              {{ task.dueDateTime | date:'HH:mm dd/MM/yyyy'}}
             </div>
           </div>
         </div>
@@ -41,7 +41,7 @@
             <div class="card-header">
               Type:
             </div>
-            <div class="card-body uploadCardText">
+            <div *ngIf="task.uploadInfo" class="card-body uploadCardText">
               {{ task.uploadInfo.uploadType}}
             </div>
           </div>

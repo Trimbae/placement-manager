@@ -11,9 +11,8 @@ import { DashboardMyTasksComponent } from './dashboard-my-tasks/dashboard-my-tas
 import { DashboardProfileComponent } from './dashboard-profile/dashboard-profile.component';
 import { DashboardToolsComponent } from './dashboard-tools/dashboard-tools.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { PostsComponent } from './posts/posts.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {PostService} from './services/post.service';
+import {UserService} from './services/user-service/user.service';
 import {AppErrorHandler} from './common/app-error-handler';
 import {MsalGuard, MsalInterceptor, MsalModule} from '@azure/msal-angular';
 import { ModalProfileComponent } from './modal-profile/modal-profile.component';
@@ -25,10 +24,20 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondPluginFilePoster from 'filepond-plugin-file-poster';
 import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
+
 import { SubmissionComponent } from './submission/submission.component';
 import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
 import { LoadingSpinnerComponent } from './common/loading-spinner/loading-spinner.component';
 import { ModalDeleteComponent } from './modal-delete/modal-delete.component';
+import { CreateTaskComponent } from './create-task/create-task.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatCardModule} from '@angular/material/card';
+import { ViewTasksComponent } from './view-tasks/view-tasks.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview, FilePondPluginFilePoster, FilePondPluginFileEncode);
 
 
@@ -49,19 +58,22 @@ export const protectedResourceMap: [string, string[]][] = [
     DashboardMyTasksComponent,
     DashboardProfileComponent,
     DashboardToolsComponent,
-    PostsComponent,
     ModalProfileComponent,
     FileUploadComponent,
     SubmissionComponent,
     PdfViewerComponent,
     LoadingSpinnerComponent,
-    ModalDeleteComponent
+    ModalDeleteComponent,
+    CreateTaskComponent,
+    ViewTasksComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     FilePondModule,
     HttpClientModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MsalModule.forRoot({
         auth: {
           clientId: '55d3f751-f735-4fcc-91eb-66ed273ce2ec',
@@ -101,26 +113,39 @@ export const protectedResourceMap: [string, string[]][] = [
         component: DashboardComponent
       },
       {
-        path: 'login',
-        component: LoginComponent
+        path: 'edit/:taskId/:taskName',
+        component: CreateTaskComponent
       },
       {
-        path: 'posts',
-        component: PostsComponent
+        path: 'login',
+        component: LoginComponent
       },
       {
         path: 'tasks/upload/:userId/:taskId/:taskName',
         component: FileUploadComponent
       },
       {
+        path: 'tasks/create',
+        component: CreateTaskComponent
+      },
+      {
         path: 'tasks/submitted/:userId/:taskId/:taskName',
         component: SubmissionComponent
+      },
+      {
+        path: 'tasks/view',
+        component: ViewTasksComponent
       }
     ]),
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCardModule,
+    DragDropModule
   ],
   providers: [
-    PostService,
+    UserService,
     {provide: ErrorHandler, useClass: AppErrorHandler},
     {provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true}
   ],

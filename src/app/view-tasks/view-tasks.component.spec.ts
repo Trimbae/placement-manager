@@ -1,26 +1,26 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardComponent } from './dashboard.component';
+import { ViewTasksComponent } from './view-tasks.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {RouterTestingModule} from '@angular/router/testing';
 
-describe('DashboardComponent', () => {
-  let component: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+describe('ViewTasksComponent', () => {
+  let component: ViewTasksComponent;
+  let fixture: ComponentFixture<ViewTasksComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ],
+      declarations: [ ViewTasksComponent ],
       imports: [
-        HttpClientTestingModule
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+        HttpClientTestingModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardComponent);
+    fixture = TestBed.createComponent(ViewTasksComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

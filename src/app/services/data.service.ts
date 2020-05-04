@@ -54,7 +54,7 @@ export class DataService {
       );
   }
 
-  update(resource) {
-    return this.http.patch(this.url + '/' + resource.id, JSON.stringify({isRead: true}));
+  update(users) {
+    return this.http.patch(this.url, users);
   }
 }

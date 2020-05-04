@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PdfViewerComponent } from './pdf-viewer.component';
+import {DomSanitizer} from '@angular/platform-browser';
 
 describe('PdfViewerComponent', () => {
   let component: PdfViewerComponent;
@@ -8,7 +9,10 @@ describe('PdfViewerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PdfViewerComponent ]
+      declarations: [ PdfViewerComponent ],
+      providers: [
+        DomSanitizer
+      ]
     })
     .compileComponents();
   }));
