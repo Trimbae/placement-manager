@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {TaskService} from '../services/task-service/task.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {formatDate} from '@angular/common';
+
+// TODO: add option to publish task as draft, make multiple spaces invalid input
 
 @Component({
   selector: 'app-create-task',
@@ -40,14 +43,9 @@ export class CreateTaskComponent implements OnInit {
   constructor(private taskService: TaskService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    // set minimum date for form task due date as today
     this.minDate = new Date();
-    this.route.paramMap
-      .subscribe(params => {
-        const taskId = params.get('taskId');
-        if (taskId) {
-          this.editTask(taskId);
-        }
-      });
+    this.checkParamsForTask();
   }
 
   // these getter methods allow us to easily access the form control objects in the template
@@ -76,22 +74,6 @@ export class CreateTaskComponent implements OnInit {
     return this.form.get('dueTime');
   }
 
-  submit() {
-    if (this.isEdit) {
-      this.taskService.editTask(this.buildData())
-        .subscribe(response => {
-          console.log(response);
-          this.router.navigate(['/tasks/view']);
-        });
-    } else {
-      this.taskService.createTask(this.buildData())
-        .subscribe(response => {
-          console.log(response);
-          this.router.navigate(['/tasks/view']);
-        });
-    }
-  }
-
   buildData() {
     const data = this.form.getRawValue();
     return {
@@ -100,46 +82,53 @@ export class CreateTaskComponent implements OnInit {
       description: data.description,
       name: this.getUrlFriendlyName(),
       type: data.type,
-      uploadInfo: data.type === 1 ? this.getUploadInfo() : null,
-      dueDateTime: this.getDateTime(),
+      uploadInfo: data.type === 'upload' ? this.getUploadInfoObject() : null,
+      dueDateTime: this.createDateTime(),
       isPublished: true
     };
+  }
+
+  checkParamsForTask() {
+    this.route.paramMap
+      .subscribe(params => {
+        const taskId = +params.get('taskId');
+        if (taskId) {
+          this.editTask(taskId);
+        }
+      });
+  }
+
+  createDateTime(): Date {
+    const hours = this.dueTime.value.split(':')[0];
+    const mins = this.dueTime.value.split(':')[1];
+
+    const  newDate = new Date(this.dueDate.value);
+    newDate.setHours(hours, mins);
+    return newDate;
   }
 
   editTask(taskId) {
     this.taskService.getTaskById(taskId)
       .subscribe((response: any) => {
-        const task = response;
-        let parsedDueDateTime = null;
-        if (task.dueDateTime) {
-          parsedDueDateTime = new Date(task.dueDateTime);
-        }
-
-        this.form.patchValue({
-          taskId: task.taskId,
-          taskName: task.displayName,
-          description: task.description,
-          type: task.type,
-          uploadType: task.uploadInfo ? task.uploadInfo.uploadType : '',
-          marksAvailable: task.uploadInfo && task.uploadInfo.marksAvailable ? task.uploadInfo.taskType : '',
-          dueDate: parsedDueDateTime,
-          dueTime: parsedDueDateTime ? this.getTime(parsedDueDateTime) : null
-        });
+        this.patchValuesToForm(response);
         this.isEdit = true;
       });
   }
 
-  getDateTime() {
-    const hours = this.dueTime.value.split(':')[0];
-    const mins = this.dueTime.value.split(':')[1];
-    this.dueDate.value.setHours(hours, mins);
-    return this.dueDate.value;
+  getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  getUploadInfo() {
+  getTimeFromFullDate(dateTime: Date) {
+    return formatDate(dateTime, 'HH:mm', 'en');
+  }
+
+  getUploadInfoObject() {
     return {
       uploadType: this.uploadType.value,
-      marksAvailable: this.uploadType.value === 1 ? this.marksAvailable.value : null
+      marksAvailable: this.uploadType.value === 'assessment' ? this.marksAvailable.value : null
     };
   }
 
@@ -150,14 +139,35 @@ export class CreateTaskComponent implements OnInit {
     return urlFriendlyName;
   }
 
-  getTime(dateTime) {
-    return dateTime.getHours() + ':' + dateTime.getMinutes();
+  patchValuesToForm(task) {
+    let parsedDueDateTime = null;
+    if (task.dueDateTime) {
+      parsedDueDateTime = new Date(task.dueDateTime);
+    }
+    this.form.patchValue({
+      taskId: task.taskId,
+      taskName: task.displayName,
+      description: task.description,
+      type: task.type,
+      uploadType: task.uploadInfo ? task.uploadInfo.uploadType : '',
+      marksAvailable: task.uploadInfo && task.uploadInfo.marksAvailable ? task.uploadInfo.taskType : '',
+      dueDate: parsedDueDateTime,
+      dueTime: parsedDueDateTime ? this.getTimeFromFullDate(parsedDueDateTime) : null
+    });
   }
 
-  getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  submit() {
+    if (this.isEdit) {
+      this.taskService.editTask(this.buildData())
+        .subscribe(response => {
+          this.router.navigate(['/tasks/view']);
+        });
+    } else {
+      this.taskService.createTask(this.buildData())
+        .subscribe(response => {
+          this.router.navigate(['/tasks/view']);
+        });
+    }
   }
 
 }
