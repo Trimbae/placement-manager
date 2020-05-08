@@ -311,7 +311,7 @@ fdescribe('CreateTaskComponent', () => {
 
       component.submit();
 
-      expect(router.navigate).toHaveBeenCalledWith(['/tasks/view']);
+      expect(router.navigate).toHaveBeenCalledWith(['/admin/view-tasks']);
 
     });
     it('should navigate to view for create task', fakeAsync(() => {
@@ -321,7 +321,7 @@ fdescribe('CreateTaskComponent', () => {
 
       component.submit();
 
-      expect(router.navigate).toHaveBeenCalledWith(['/tasks/view']);
+      expect(router.navigate).toHaveBeenCalledWith(['/admin/view-tasks']);
     }));
   });
 });

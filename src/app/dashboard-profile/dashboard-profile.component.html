@@ -13,14 +13,14 @@
         <div *ngIf="user.name" class="dashboardProfileHeading">{{ user.name }}</div>
         <div *ngIf="user.jobTitle" class="text-muted">{{ user.jobTitle }}</div>
         <div class="text-muted">
-          <span *ngIf="user.universityId">{{ user.universityId }}</span> - <span *ngIf="user.placementProvider">{{user.placementProvider}}</span>
+          <span *ngIf="user.universityId">{{ user.universityId }}</span> - <span *ngIf="user.studentData.placementProvider">{{user.studentData.placementProvider}}</span>
         </div>
         <br/>
-        <div *ngIf="user.supervisorName">
-          Supervisor: <button class="btn btn-link" (click)="openModal()">{{user.supervisorName}}</button>
+        <div *ngIf="user.studentData.supervisorName">
+          Supervisor: <button class="btn btn-link" (click)="openModal()">{{user.studentData.supervisorName}}</button>
         </div>
-        <div *ngIf="user.workplaceSupervisor">
-          Work Supervisor: {{user.workplaceSupervisor}}
+        <div *ngIf="user.studentData.workplaceSupervisor">
+          Work Supervisor: {{user.studentData.workplaceSupervisor}}
         </div>
         <div *ngIf="user.startDate">
           Start Date: {{user.startDate}}

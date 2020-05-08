@@ -38,6 +38,15 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import { ViewTasksComponent } from './view-tasks/view-tasks.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { StudentTableComponent } from './student-table/student-table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { ViewStudentsComponent } from './view-students/view-students.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { AssignSupervisorModalComponent } from './assign-supervisor-modal/assign-supervisor-modal.component';
+
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview, FilePondPluginFilePoster, FilePondPluginFileEncode);
 
 
@@ -65,7 +74,10 @@ export const protectedResourceMap: [string, string[]][] = [
     LoadingSpinnerComponent,
     ModalDeleteComponent,
     CreateTaskComponent,
-    ViewTasksComponent
+    ViewTasksComponent,
+    StudentTableComponent,
+    ViewStudentsComponent,
+    AssignSupervisorModalComponent
   ],
   imports: [
     BrowserModule,
@@ -109,11 +121,15 @@ export const protectedResourceMap: [string, string[]][] = [
         component: DashboardComponent
       },
       {
+        path: 'admin/view-students',
+        component: ViewStudentsComponent
+      },
+      {
         path: 'dashboard',
         component: DashboardComponent
       },
       {
-        path: 'edit/:taskId/:taskName',
+        path: 'admin/edit-task/:taskId/:taskName',
         component: CreateTaskComponent
       },
       {
@@ -125,7 +141,7 @@ export const protectedResourceMap: [string, string[]][] = [
         component: FileUploadComponent
       },
       {
-        path: 'tasks/create',
+        path: 'admin/create-task',
         component: CreateTaskComponent
       },
       {
@@ -133,7 +149,7 @@ export const protectedResourceMap: [string, string[]][] = [
         component: SubmissionComponent
       },
       {
-        path: 'tasks/view',
+        path: 'admin/view-tasks',
         component: ViewTasksComponent
       }
     ]),
@@ -142,7 +158,12 @@ export const protectedResourceMap: [string, string[]][] = [
     MatInputModule,
     MatSelectModule,
     MatCardModule,
-    DragDropModule
+    DragDropModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     UserService,

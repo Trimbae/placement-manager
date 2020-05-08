@@ -14,8 +14,14 @@ export class DashboardMyTasksComponent implements OnInit, OnChanges {
 
   getPercentageCompleted() {
     if (this.user && this.tasks) {
-      const completedTaskCount = this.user.tasksCompleted.length;
-      console.log(this.user.tasksCompleted);
+      // const completedTaskCount = this.user.tasksCompleted.length;
+      // console.log(this.user.tasksCompleted);
+      let completedTaskCount = 0;
+      for (const task of this.tasks) {
+        if (this.user.tasksCompleted.includes(task.taskId)) {
+          completedTaskCount ++;
+        }
+      }
       return Math.floor(completedTaskCount / this.tasks.length * 100);
     }
     return null;

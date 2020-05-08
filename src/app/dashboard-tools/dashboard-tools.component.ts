@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-dashboard-tools',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard-tools.component.css']
 })
 export class DashboardToolsComponent implements OnInit {
+
+  @Input() user;
 
   tools = [
     {id: 1, name: 'Upload Documents', link: ''},

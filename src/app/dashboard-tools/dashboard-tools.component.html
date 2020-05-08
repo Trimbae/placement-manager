@@ -4,6 +4,14 @@
   </div>
   <div class="card-body">
     <ul class="list-unstyled">
+      <li *ngIf="user?.accessLevel?.isAdmin">
+        <a routerLink="/admin/view-students">View Students</a>
+        <hr>
+      </li>
+      <li *ngIf="user?.accessLevel?.isAdmin">
+        <a routerLink="/admin/view-tasks">View Tasks</a>
+        <hr>
+      </li>
       <li *ngFor="let tool of tools; let i = index">
         <hr *ngIf="i !== 0"/>
         <a routerLink="{{tool.link}}">{{ tool.name }}</a>

@@ -27,6 +27,26 @@ a:hover {
   background-color: rgba(227, 58, 75, 0.9);
   border: 1px solid #d73a4b;
 }
+
+.btn-secondary, .btn-secondary:focus {
+  background-color: white;
+  border: 1px solid #d73a4b !important;
+  color: #d73a4b;
+  box-shadow: none;
+}
+.btn-primary:disabled {
+  background-color: rgba(203, 58, 73, 0.74);
+  border: 1px solid #d73a4b;
+}
+.btn-secondary:not(:disabled):not(.disabled):active {
+  background-color: #cb3a49;
+}
+.btn-secondary:hover {
+  background-color: rgba(227, 58, 75, 0.9);
+  color: white;
+  border: 1px solid #d73a4b;
+}
+
 .clickable{
   cursor: pointer;
 }
@@ -34,10 +54,24 @@ a:hover {
   border-radius: 0;
 }
 
+.list-group-item.active {
+  background-color: #d73a4b;
+  color: white;
+  border: 1px solid #d73a4b;
+}
+.list-group-item, .list-group-item:focus, .list-group-item:active {
+  outline: 0;
+}
+
 .modal-holder{
   animation-name: fade-in-down;
   animation-duration: 0.5s;
 }
+
+.mat-sort-header-arrow {
+  color: #cccccc;
+}
+
 .spinner-wrapper {
   width: 100%;
   height: 100%;

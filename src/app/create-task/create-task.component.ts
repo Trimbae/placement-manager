@@ -159,13 +159,13 @@ export class CreateTaskComponent implements OnInit {
   submit() {
     if (this.isEdit) {
       this.taskService.editTask(this.buildData())
-        .subscribe(response => {
-          this.router.navigate(['/tasks/view']);
+        .subscribe(() => {
+          this.router.navigate(['/admin/view-tasks']);
         });
     } else {
       this.taskService.createTask(this.buildData())
-        .subscribe(response => {
-          this.router.navigate(['/tasks/view']);
+        .subscribe(() => {
+          this.router.navigate(['/admin/view-tasks']);
         });
     }
   }

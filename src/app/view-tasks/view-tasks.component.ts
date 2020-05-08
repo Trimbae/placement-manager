@@ -36,7 +36,7 @@ export class ViewTasksComponent implements OnInit {
   }
 
   editClicked(task) {
-    this.router.navigate(['/edit', task.taskId, task.name]);
+    this.router.navigate(['/admin/edit-task', task.taskId, task.name]);
   }
 
   isOrderChanged() {

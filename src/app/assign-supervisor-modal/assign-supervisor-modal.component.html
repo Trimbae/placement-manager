@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">{{isReassign ? 'Re-Assign' : 'Assign'}} Supervisor</h4>
+  <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p><strong>{{isReassign ? 'Re-Assign' : 'Assign'}} supervisor for <span class="text-danger">{{ student.name }}</span>:</strong></p>
+  <div *ngIf="supervisors" class="list-group modalList">
+    <button *ngFor="let supervisor of supervisors"
+            class="list-group-item list-group-item-action"
+            [ngClass]="{'active': supervisor.universityId === selected?.universityId}"
+            (click)="select(supervisor)">{{supervisor.name}}</button>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss('cancel click')">Cancel</button>
+  <button type="button"
+          class="btn btn-primary"
+          [disabled]="!selected"
+          (click)="activeModal.close(selected)">Assign</button>
+</div>

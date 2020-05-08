@@ -8,7 +8,13 @@ export const environment = {
   urls: {
       PLACEMENT_MANAGER_API: 'http://localhost:3000',
       MICROSOFT_API: 'https://graph.microsoft.com/v1.0/'
-    }
+    },
+
+  userTypes: {
+    USER_TYPE_STUDENT: 'student',
+    USER_TYPE_STAFF: 'staff',
+    USER_TYPE_SUPERVISOR: 'supervisor'
+  }
 };
 
 /*
