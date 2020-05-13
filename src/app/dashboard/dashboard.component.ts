@@ -5,6 +5,7 @@ import {UserService} from '../services/user-service/user.service';
 import {MsalService} from '@azure/msal-angular';
 import {InvalidMsalTokenError} from '../common/invalid-msal-token.error';
 import {ClientAuthError} from 'msal';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,7 @@ export class DashboardComponent implements OnInit {
   userToken: string;
   errorMessage: string;
 
-  constructor(private userService: UserService, private authService: MsalService) { }
+  constructor(private userService: UserService, private authService: MsalService, private router: Router) { }
 
   ngOnInit(): void {
     this.getUserToken();
@@ -24,10 +25,13 @@ export class DashboardComponent implements OnInit {
 
   getCurrentUser() {
     this.userService.getCurrentUser(this.userToken).
-    subscribe(data => this.userData = data,
+    subscribe(data => {
+        this.userData = data;
+        console.log(data);
+    },
       (error: AppError) => {
         if (error instanceof NotFoundError) {
-          alert('Resource not found');
+          this.router.navigate(['error'], { queryParams: { errorCode: 'userNotFound' }});
         } else if (error instanceof InvalidMsalTokenError) {
           this.getUserConsent();
         } else {

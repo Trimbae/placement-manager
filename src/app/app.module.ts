@@ -49,6 +49,7 @@ import { AssignSupervisorModalComponent } from './assign-supervisor-modal/assign
 import {environment} from '../environments/environment';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview, FilePondPluginFilePoster, FilePondPluginFileEncode);
 
@@ -84,7 +85,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ViewTasksComponent,
     StudentTableComponent,
     ViewStudentsComponent,
-    AssignSupervisorModalComponent
+    AssignSupervisorModalComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
@@ -128,16 +130,28 @@ export function HttpLoaderFactory(http: HttpClient) {
         component: DashboardComponent
       },
       {
+        path: 'admin/create-task',
+        component: CreateTaskComponent
+      },
+      {
+        path: 'admin/edit-task/:taskId/:taskName',
+        component: CreateTaskComponent
+      },
+      {
         path: 'admin/view-students',
         component: ViewStudentsComponent
+      },
+      {
+        path: 'admin/view-tasks',
+        component: ViewTasksComponent
       },
       {
         path: 'dashboard',
         component: DashboardComponent
       },
       {
-        path: 'admin/edit-task/:taskId/:taskName',
-        component: CreateTaskComponent
+        path: 'error',
+        component: ErrorPageComponent
       },
       {
         path: 'login',
@@ -148,16 +162,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         component: FileUploadComponent
       },
       {
-        path: 'admin/create-task',
-        component: CreateTaskComponent
-      },
-      {
         path: 'tasks/submitted/:userId/:taskId/:taskName',
         component: SubmissionComponent
-      },
-      {
-        path: 'admin/view-tasks',
-        component: ViewTasksComponent
       }
     ]),
     NgbModule,

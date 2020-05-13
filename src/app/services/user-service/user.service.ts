@@ -5,6 +5,7 @@ import {catchError, map} from 'rxjs/operators';
 import {StudentTableItem} from '../../student-table/student-table-datasource';
 import {Observable, throwError} from 'rxjs';
 import {InvalidMsalTokenError} from '../../common/invalid-msal-token.error';
+import {NotFoundError} from '../../common/not-found.error';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,9 @@ export class UserService {
       // back-end returned unsuccessful response code
       if (error.status === 401) {
         return throwError( new InvalidMsalTokenError(error));
+      }
+      if (error.status === 404) {
+        return throwError(new NotFoundError());
       }
     }
 

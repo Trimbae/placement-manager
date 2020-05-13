@@ -1,0 +1,15 @@
+<app-navbar></app-navbar>
+
+<br>
+
+<div class="container">
+  <h3 class="errorHeading">Oops,</h3>
+  <div class="errorMessageWrapper" *ngIf="loaded && !errorCode">
+    <div class="text-muted">Something went wrong, but we're not sure what.</div>
+    <div class="text-muted">Sorry about that.</div>
+  </div>
+  <div class="errorMessageWrapper" *ngIf="loaded && errorCode === 'userNotFound'">
+    <div class="text-muted"><strong>It looks like you aren't registered with the placement management system yet.</strong></div>
+    <div class="text-muted">If you think this is wrong, please contact a member of the placement team.</div>
+  </div>
+</div>
