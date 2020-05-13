@@ -42,4 +42,8 @@ export class DashboardProfileComponent implements OnInit, OnChanges {
       phone: '029 555 5555'
     };
   }
+
+  setDefaultAvatar() {
+    this.photoUrl = './assets/img/default-user-icon.png';
+  }
 }

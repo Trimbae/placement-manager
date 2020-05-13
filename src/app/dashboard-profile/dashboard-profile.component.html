@@ -6,7 +6,11 @@
     <app-loading-spinner *ngIf="!user"></app-loading-spinner>
     <div class="row">
       <div class="col-md-4 avatar">
-        <img *ngIf="user && isImageLoaded" [src]="photoUrl" alt="user icon" class="rounded-circle dashboardAvatar">
+        <img *ngIf="user && isImageLoaded"
+             [src]="photoUrl"
+             (error)="setDefaultAvatar()"
+             alt="user icon"
+             class="rounded-circle dashboardAvatar">
         <span *ngIf="user && !isImageLoaded" class="material-icons placeholderPhoto">account_circle</span>
       </div>
       <div *ngIf="user" class="col-md-8">

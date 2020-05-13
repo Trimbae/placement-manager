@@ -7,7 +7,8 @@ export const environment = {
 
   urls: {
       PLACEMENT_MANAGER_API: 'http://localhost:3000',
-      MICROSOFT_API: 'https://graph.microsoft.com/v1.0/'
+      MICROSOFT_API: 'https://graph.microsoft.com/v1.0/',
+      REDIRECT_URL: 'http://localhost:4200'
     },
 
   userTypes: {

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {StudentTableItem} from '../../student-table/student-table-datasource';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
+import {InvalidMsalTokenError} from '../../common/invalid-msal-token.error';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,22 @@ export class UserService {
   url = environment.urls.PLACEMENT_MANAGER_API + '/users';
 
   constructor(private http: HttpClient) { }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      console.log('An unknown error occurred: ', error.error.message);
+    } else {
+      // back-end returned unsuccessful response code
+      if (error.status === 401) {
+        return throwError( new InvalidMsalTokenError(error));
+      }
+    }
+
+    return throwError(
+      'Something bad happened, please try again later'
+    );
+  }
 
   // tslint:disable-next-line:max-line-length
   findUsers(
@@ -40,8 +57,14 @@ export class UserService {
     return this.http.get(this.url);
   }
 
-  getCurrentUser() {
-    return this.http.get(this.url + '/me');
+  getCurrentUser(token: string) {
+    return this.http.get(this.url + '/me', {
+      headers: new HttpHeaders()
+        .set('Authorization', token)
+    })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
   getUserCount(userType: string) {

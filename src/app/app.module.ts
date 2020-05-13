@@ -11,7 +11,7 @@ import { DashboardMyTasksComponent } from './dashboard-my-tasks/dashboard-my-tas
 import { DashboardProfileComponent } from './dashboard-profile/dashboard-profile.component';
 import { DashboardToolsComponent } from './dashboard-tools/dashboard-tools.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {UserService} from './services/user-service/user.service';
 import {AppErrorHandler} from './common/app-error-handler';
 import {MsalGuard, MsalInterceptor, MsalModule} from '@azure/msal-angular';
@@ -46,6 +46,9 @@ import { ViewStudentsComponent } from './view-students/view-students.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AssignSupervisorModalComponent } from './assign-supervisor-modal/assign-supervisor-modal.component';
+import {environment} from '../environments/environment';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview, FilePondPluginFilePoster, FilePondPluginFileEncode);
 
@@ -53,9 +56,13 @@ registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview, FileP
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 export const protectedResourceMap: [string, string[]][] = [
-  ['https://graph.microsoft.com/v1.0/me', ['user.read']],
-  ['http://localhost:3000/user', ['user.read']]
+  ['https://graph.microsoft.com/v1.0/me', ['user.read']]
+  // [ environment.urls.PLACEMENT_MANAGER_API + '/user', ['user.read']]
 ];
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
 
 
 @NgModule({
@@ -91,8 +98,8 @@ export const protectedResourceMap: [string, string[]][] = [
           clientId: '55d3f751-f735-4fcc-91eb-66ed273ce2ec',
           authority: 'https://login.microsoftonline.com/bdb74b30-9568-4856-bdbf-06759778fcbc',
           validateAuthority: true,
-          redirectUri: 'http://localhost:4200/',
-          postLogoutRedirectUri: 'http://localhost:4200/',
+          redirectUri: environment.urls.REDIRECT_URL,
+          postLogoutRedirectUri: 'https://matt-trimby.com',
           navigateToLoginRequestUrl: true,
         },
         cache: {
@@ -163,7 +170,15 @@ export const protectedResourceMap: [string, string[]][] = [
     MatPaginatorModule,
     MatSortModule,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     UserService,

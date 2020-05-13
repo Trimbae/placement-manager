@@ -1,0 +1,7 @@
+{
+  "dashboard": {
+    "errors": {
+      "needPermissions": "<strong>Permissions required</strong>, please allow pop-ups in your browser and then re-load the page."
+    }
+  }
+}

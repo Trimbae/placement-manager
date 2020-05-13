@@ -1,6 +1,8 @@
 <app-navbar></app-navbar>
 
 <div class="container">
+  <div *ngIf="errorMessage" class="alert alert-danger topError" [innerHTML]="errorMessage | translate"> </div>
+
   <div class="row">
     <div class="col-md-6">
       <br/>
