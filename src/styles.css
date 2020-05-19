@@ -50,6 +50,11 @@ a:hover {
 .clickable{
   cursor: pointer;
 }
+
+.full-width {
+  width: 100%;
+}
+
 .progress {
   border-radius: 0;
 }
@@ -81,7 +86,12 @@ a:hover {
   background-color: #f6f6f6;
   opacity: 40%;
 }
-
+/* remove annoying spinner from number input boxes*/
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 /*Animation classes*/
 .fadeIn {

@@ -6,6 +6,7 @@ import {StudentTableItem} from '../../student-table/student-table-datasource';
 import {Observable, throwError} from 'rxjs';
 import {InvalidMsalTokenError} from '../../common/invalid-msal-token.error';
 import {NotFoundError} from '../../common/not-found.error';
+import {FeedbackData} from '../../common/classes/feedback-data';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,10 @@ export class UserService {
     );
   }
 
-  // tslint:disable-next-line:max-line-length
+  addFeedback(universityId: string, feedback: FeedbackData ) {
+    return this.http.patch(this.url + '/' + universityId + '/feedback', feedback);
+  }
+
   findUsers(
     filter = '',
     pageIndex = 0,
@@ -84,6 +88,22 @@ export class UserService {
         .set('userType', userType)
     }).pipe(
       map(res => res as [])
+    );
+  }
+
+  getStudentById(universityId: string) {
+    return this.http.get(this.url + '/' + universityId)
+      .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getStudentsBySupervisor(supervisorId: string) {
+    return this.http.get(this.url, {
+      params: new HttpParams()
+        .set('supervisorId', supervisorId)
+    }).pipe(
+      catchError(this.handleError)
     );
   }
 

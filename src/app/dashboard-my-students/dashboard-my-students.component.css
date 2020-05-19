@@ -1,0 +1,24 @@
+h3 {
+  font-size: 17px;
+  font-weight: lighter;
+}
+.badge-pill {
+  float: right;
+}
+
+.dashboardListTitle {
+  font-weight: bold;
+  color: #3a446a;
+}
+
+.indentedList {
+  padding-left: 0 !important;
+}
+
+.list-group-item {
+  border: none;
+}
+
+.noStudents {
+  padding: 20px 0;
+}

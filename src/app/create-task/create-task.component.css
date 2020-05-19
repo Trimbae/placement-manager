@@ -1,9 +1,6 @@
 .buttonContainer {
   text-align: right;
 }
-.full-width {
-  width: 100%;
-}
 .smallerIcons {
   font-size: medium;
 }
@@ -15,8 +12,3 @@ mat-form-field {
   margin: 10px 0;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}

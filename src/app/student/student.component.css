@@ -1,0 +1,40 @@
+.detailsHeading {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #d73a4b;
+}
+.list-group-flush {
+  padding-left: 0;
+}
+.markIcon {
+  vertical-align: bottom;
+}
+.nameContainer {
+  margin-left: 10px;
+}
+.nameText {
+  font-size: xx-large;
+  color: #2c354c;
+  padding-left: 15px;
+  vertical-align: middle;
+}
+.navSection {
+  border-right: 1px solid #cccccc;
+}
+.noSubmissions {
+  padding: 40px 0;
+}
+.peopleIcon {
+  font-size: 30px;
+  vertical-align: middle;
+}
+.rightSection {
+  min-height: 25rem;
+}
+.studentAvatar {
+  width: 5rem;
+}
+.taskItem {
+  display: flex;
+  justify-content: space-between;
+}

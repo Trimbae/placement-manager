@@ -50,6 +50,10 @@ import {environment} from '../environments/environment';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { DashboardMyStudentsComponent } from './dashboard-my-students/dashboard-my-students.component';
+import { StudentComponent } from './student/student.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { MarkAssignmentModalComponent } from './mark-assignment-modal/mark-assignment-modal.component';
 
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview, FilePondPluginFilePoster, FilePondPluginFileEncode);
 
@@ -86,7 +90,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     StudentTableComponent,
     ViewStudentsComponent,
     AssignSupervisorModalComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    DashboardMyStudentsComponent,
+    StudentComponent,
+    MarkAssignmentModalComponent
   ],
   imports: [
     BrowserModule,
@@ -158,6 +165,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         component: LoginComponent
       },
       {
+        path: 'student/:universityId',
+        component: StudentComponent
+      },
+      {
         path: 'tasks/upload/:userId/:taskId/:taskName',
         component: FileUploadComponent
       },
@@ -184,7 +195,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    MatTooltipModule
   ],
   providers: [
     UserService,

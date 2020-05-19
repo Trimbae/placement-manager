@@ -13,6 +13,8 @@
     <div class="col-md-6">
       <br/>
       <app-dashboard-my-tasks [user]="userData"></app-dashboard-my-tasks>
+      <br>
+      <app-dashboard-my-students *ngIf="userData.accessLevel.isSupervisor" [user]="userData"></app-dashboard-my-students>
     </div>
   </div>
   <br>

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
+import {map} from 'rxjs/operators';
+import {Task} from '../../common/classes/task';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +26,10 @@ export class TaskService {
     return this.http.get(this.url + '/drafts');
   }
   getPublishedTasks() {
-    return this.http.get(this.url + '/published');
+    return this.http.get(this.url + '/published')
+      .pipe(
+        map(res => res as Task[])
+      );
   }
 
   getTasks() {

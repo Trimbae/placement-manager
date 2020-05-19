@@ -1,0 +1,74 @@
+<app-navbar></app-navbar>
+<br>
+<div class="container">
+  <h1 class="nameHeader">
+    <span class="material-icons peopleIcon">person</span>
+    <span class="">Student</span>
+  </h1>
+
+  <div *ngIf="feedbackSubmitted" class="alert alert-success alert-dismissible">
+    Feedback submitted for '{{feedbackTaskName}}'
+    <button type="button" class="close" (click)="feedbackSubmitted = false">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <mat-card class="fadeIn">
+    <div class="nameContainer">
+      <img *ngIf="student"
+           [src]="photoUrl"
+           (error)="setDefaultAvatar()"
+           alt="user icon"
+           class="rounded-circle studentAvatar">
+      <span class="nameText">{{student.name}}</span>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="list-group-flush">
+          <button *ngFor="let section of sections"
+                  [ngClass]="{'active': activeSection === section}"
+                  (click)="show(section)" class="list-group-item list-group-item-action">
+            {{section}}
+          </button>
+
+        </div>
+      </div>
+      <div class="col-md-9 rightSection">
+        <div *ngIf="activeSection==='Details'" class="rightSection">
+          <div class="detailsHeading">Student Details</div>
+          <ul class="list-group-flush">
+            <li class="list-group-item"><strong>Name: </strong>{{student.name}}</li>
+            <li class="list-group-item"><strong>Student Id: </strong>{{student.universityId}}</li>
+            <li class="list-group-item"><strong>Email: </strong>{{student.email}}</li>
+          </ul>
+          <div class="detailsHeading">Placement Details</div>
+          <ul class="list-group-flush">
+            <li class="list-group-item"><strong>Supervisor: </strong>{{student.studentData.supervisorName}}</li>
+            <li class="list-group-item"><strong>Moderator: </strong>{{student.studentData.moderatorName}}</li>
+            <li class="list-group-item"><strong>Placement Provider: </strong>{{student.studentData.placementProvider}}</li>
+            <li class="list-group-item"><strong>Start Date: </strong>{{student.studentData.startDate}}</li>
+            <li class="list-group-item"><strong>Workplace Supervisor: </strong>{{student.studentData.workplaceSupervisor}}</li>
+          </ul>
+        </div>
+
+        <div *ngIf="activeSection==='Submissions'">
+          <div class="detailsHeading">Completed tasks</div>
+          <div *ngIf="tasks.length === 0" class="text-center text-muted noSubmissions">
+            This student hasn't submitted any work yet.
+          </div>
+          <div *ngIf="tasks.length > 0">
+            <ul class="list-group-flush">
+              <button *ngFor="let task of tasks"
+                 [routerLink]="['/tasks', 'submitted', student.universityId, task.taskId, task.name]"
+                 class="list-group-item list-group-item-action taskItem">
+                <span class="text-primary">{{task.displayName}}</span>
+                <span (click)="onMarkClicked(task); $event.stopPropagation();" class="material-icons markIcon" matTooltip="Mark Assignment">assignment_turned_in</span>
+              </button>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
