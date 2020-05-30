@@ -2,8 +2,8 @@
   <div class="card-header">
     <h3> My Students </h3>
   </div>
-  <app-loading-spinner *ngIf="!user"></app-loading-spinner>
-  <div class="card-body" *ngIf="user">
+  <app-loading-spinner *ngIf="!user || loading"></app-loading-spinner>
+  <div class="card-body" *ngIf="user && studentsSupervising">
     <div class="dashboardListTitle">Supervising</div>
     <div *ngIf="studentsSupervising.length === 0" class="text-muted text-center noStudents">You aren't currently supervising any students.</div>
     <ul class="list-group-flush indentedList">

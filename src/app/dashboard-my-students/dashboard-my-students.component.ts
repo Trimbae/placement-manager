@@ -8,6 +8,7 @@ import {UserService} from '../services/user-service/user.service';
 })
 export class DashboardMyStudentsComponent implements OnInit {
   @Input() user;
+  loading = true;
   studentsSupervising;
   studentsModerating;
 
@@ -21,6 +22,7 @@ export class DashboardMyStudentsComponent implements OnInit {
     this.userService.getStudentsBySupervisor(this.user.universityId)
       .subscribe(response => {
         this.studentsSupervising = response;
+        this.loading = false;
       });
   }
 }

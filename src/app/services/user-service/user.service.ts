@@ -3,19 +3,26 @@ import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/c
 import {environment} from '../../../environments/environment';
 import {catchError, map} from 'rxjs/operators';
 import {StudentTableItem} from '../../student-table/student-table-datasource';
-import {Observable, throwError} from 'rxjs';
+import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {InvalidMsalTokenError} from '../../common/invalid-msal-token.error';
 import {NotFoundError} from '../../common/not-found.error';
-import {FeedbackData} from '../../common/classes/feedback-data';
+import {User, FeedbackData} from '../../common/classes/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private currentUserSubject: BehaviorSubject<User>;
 
   url = environment.urls.PLACEMENT_MANAGER_API + '/users';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')) as User);
+  }
+
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -71,6 +78,11 @@ export class UserService {
         .set('Authorization', token)
     })
       .pipe(
+        map(res => {
+          localStorage.setItem('currentUser', JSON.stringify(res));
+          this.currentUserSubject.next(res as User);
+          return res as User;
+        }),
         catchError(this.handleError)
       );
   }

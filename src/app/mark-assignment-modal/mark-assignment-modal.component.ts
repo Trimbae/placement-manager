@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Student} from '../common/classes/student';
+import {User} from '../common/classes/user';
 import { Task } from '../common/classes/task';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
@@ -11,7 +11,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class MarkAssignmentModalComponent implements OnInit, AfterViewInit {
 
-  @Input() student: Student;
+  @Input() student: User;
   @Input() task: Task;
   max: number;
 

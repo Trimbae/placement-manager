@@ -66,11 +66,11 @@
 }
 .loginInput:focus{
   background-color: #fff;
-  border-bottom: 2px solid #d73a4b;
+  border-bottom: 2px solid #d4374a;
   box-shadow: none;
 }
 button[type=submit] {
-  background-color: #d73a4b;
+  background-color: #d4374a;
   border: none;
   color: white;
   padding: 25px 100px;

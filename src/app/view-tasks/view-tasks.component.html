@@ -4,49 +4,58 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <h2>Tasks</h2>
-      <br>
-      <div cdkDropListGroup>
-        <app-loading-spinner *ngIf="!isLoaded"></app-loading-spinner>
-        <div *ngIf="isLoaded" cdkDropList class="taskList" [cdkDropListData]="publishedTasks" (cdkDropListDropped)="drop($event)">
-          <div class="taskBox" *ngFor="let task of publishedTasks; let i = index" cdkDragLockAxis="y" cdkDrag>
-            <div>
-              <span class="prefix text-muted">{{i + 1}}</span>
-              <span class="taskName">{{task.displayName}}</span>
+    <div class="col-md-10 offset-md-1">
+      <h1><span class="material-icons">note</span> Manage Tasks</h1>
+        <div class="col-md-12">
+          <div cdkDropListGroup>
+            <div class="headerContainer">
+              <span class="viewTasksSubheading">Published Tasks</span>
+              <span routerLink="/admin/create-task" matTooltip="Create task" class="material-icons clickable addIcon">add</span>
             </div>
-            <div class="suffix">
-              <span *ngIf="task.type === 'upload'" class="material-icons typeIcon text-muted">description</span>
-              <span *ngIf="task.type === 'meeting'" class="material-icons typeIcon text-muted">schedule</span>
-              <span class="material-icons suffixIcon editIcon" (click)="editClicked(task)">edit</span>
-              <span class="material-icons suffixIcon deleteIcon text-danger">delete_forever</span>
-              <span cdkDragHandle class="material-icons text-muted suffixIcon dragIcon">drag_indicator</span>
+            <app-loading-spinner *ngIf="!isLoaded"></app-loading-spinner>
+            <div *ngIf="isLoaded" cdkDropList class="taskList" [cdkDropListData]="publishedTasks" (cdkDropListDropped)="drop($event)">
+              <div class="taskBox" *ngFor="let task of publishedTasks; let i = index" cdkDragLockAxis="y" cdkDrag>
+                <div>
+                  <span class="prefix text-muted">{{i + 1}}</span>
+                  <span class="taskName">{{task.displayName}}</span>
+                </div>
+                <div class="suffix">
+                  <span *ngIf="task.type === 'upload'" class="material-icons typeIcon text-muted">description</span>
+                  <span *ngIf="task.type === 'meeting'" class="material-icons typeIcon text-muted">schedule</span>
+                  <span class="material-icons suffixIcon editIcon" matTooltip="Edit task" (click)="editClicked(task)">edit</span>
+                  <span class="material-icons suffixIcon deleteIcon text-danger" matTooltip="Delete task">delete_forever</span>
+                  <span cdkDragHandle class="material-icons text-muted suffixIcon dragIcon">drag_indicator</span>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="headerContainer">
+              <div class="viewTasksSubheading">Drafts</div>
+            </div>
+            <app-loading-spinner *ngIf="!isLoaded"></app-loading-spinner>
+            <div *ngIf="isLoaded" cdkDropList class="taskList" [cdkDropListData]="draftTasks" (cdkDropListDropped)="drop($event)">
+              <div class="taskBox" *ngFor="let task of draftTasks; let i = index" cdkDragLockAxis="y" cdkDrag>
+                <div>
+                  <span class="material-icons-outlined prefix text-muted">note</span>
+                  <span class="taskName">{{task.displayName}}</span>
+                </div>
+                <div class="suffix">
+                  <span *ngIf="task.type === 'upload'" class="material-icons typeIcon text-muted">description</span>
+                  <span *ngIf="task.type === 'meeting'" class="material-icons typeIcon text-muted">schedule</span>
+                  <span class="material-icons suffixIcon editIcon" matTooltip="Edit task" (click)="editClicked(task)">edit</span>
+                  <span class="material-icons suffixIcon deleteIcon text-danger" matTooltip="Delete task">delete_forever</span>
+                  <span cdkDragHandle class="material-icons text-muted suffixIcon dragIcon">drag_indicator</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <br>
-        <h3>Drafts</h3>
-        <br>
-        <app-loading-spinner *ngIf="!isLoaded"></app-loading-spinner>
-        <div *ngIf="isLoaded" cdkDropList class="taskList" [cdkDropListData]="draftTasks" (cdkDropListDropped)="drop($event)">
-          <div class="taskBox" *ngFor="let task of draftTasks; let i = index" cdkDragLockAxis="y" cdkDrag>
-            <div>
-              <span class="material-icons-outlined prefix text-muted">note</span>
-              <span class="taskName">{{task.displayName}}</span>
-            </div>
-            <div class="suffix">
-              <span *ngIf="task.type === 'upload'" class="material-icons typeIcon text-muted">description</span>
-              <span *ngIf="task.type === 'meeting'" class="material-icons typeIcon text-muted">schedule</span>
-              <span class="material-icons suffixIcon editIcon" (click)="editClicked(task)">edit</span>
-              <span class="material-icons suffixIcon deleteIcon text-danger">delete_forever</span>
-              <span cdkDragHandle class="material-icons text-muted suffixIcon dragIcon">drag_indicator</span>
-            </div>
+          <div class="saveButton">
+            <button class="btn btn-primary" [disabled]="!orderChanged" (click)="onSaveChanges()">Save Changes</button>
           </div>
+          <br>
         </div>
-      </div>
-      <div class="saveButton">
-        <button class="btn btn-primary" [disabled]="!orderChanged" (click)="onSaveChanges()">Save Changes</button>
-      </div>
+
+
       <br>
     </div>
   </div>

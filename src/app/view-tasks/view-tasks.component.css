@@ -1,3 +1,8 @@
+.addIcon {
+  font-weight: bolder;
+  font-size: 1.75rem;
+  vertical-align: bottom;
+}
 .cdk-drag-preview {
   box-sizing: border-box;
   border-radius: 4px;
@@ -24,6 +29,12 @@
 
 .editIcon, .deleteIcon, .suffixIcon, .prefix, .typeIcon {
   vertical-align: text-bottom;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .prefix {
@@ -62,6 +73,7 @@
   background: white;
   border-radius: 4px;
   overflow: hidden;
+  margin: auto;
 }
 .taskList.cdk-drop-list-dragging .taskBox:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
@@ -74,4 +86,10 @@
 
 .typeIcon {
   margin-right: 15px;
+}
+
+.viewTasksSubheading {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #d4374a;
 }

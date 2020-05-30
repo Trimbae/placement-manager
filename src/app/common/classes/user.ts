@@ -1,4 +1,4 @@
-export interface Student {
+export interface User {
   name: string;
   universityId: string;
   email: string;
@@ -6,6 +6,18 @@ export interface Student {
   tasksCompleted: number[];
   accessLevel: AccessLevel;
   userType: string;
+  feedback: FeedbackData[];
+}
+
+export interface AccessLevel {
+  isAdmin: boolean;
+  isSupervisor: boolean;
+}
+
+export interface FeedbackData {
+  taskId: number;
+  mark: number;
+  comments: string;
 }
 
 export interface StudentData {
@@ -18,7 +30,3 @@ export interface StudentData {
   startDate: Date;
 }
 
-export interface AccessLevel {
-  isAdmin: boolean;
-  isSupervisor: boolean;
-}

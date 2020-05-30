@@ -16,9 +16,11 @@
   color: white;
 }
 .navbarText {
+  font-family: tee_frank_thin, "Helvetica Neue", sans-serif;
   margin-left: 1rem;
-  font-size: 30px;
+  font-size: 42px;
   font-weight: lighter;
+  vertical-align: middle;
 }
 
 @media only screen and (max-width: 768px) {

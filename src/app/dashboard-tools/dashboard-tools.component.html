@@ -9,7 +9,11 @@
         <hr>
       </li>
       <li *ngIf="user?.accessLevel?.isAdmin">
-        <a routerLink="/admin/view-tasks">View Tasks</a>
+        <a routerLink="/admin/view-tasks">Manage Tasks</a>
+        <hr>
+      </li>
+      <li *ngIf="user?.userType === 'student'">
+        <a routerLink="/feedback">My Feedback</a>
         <hr>
       </li>
       <li *ngFor="let tool of tools; let i = index">

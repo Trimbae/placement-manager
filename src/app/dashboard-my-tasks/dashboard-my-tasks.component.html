@@ -8,7 +8,7 @@
     <ul class="list-unstyled">
         <li *ngFor="let task of tasks; let i = index;">
           <hr *ngIf="i !== 0"/>
-          <a *ngIf="!isTaskCompleted(task.taskId)" [routerLink]="['/tasks', 'upload', user.universityId, task.taskId, task.name]">{{task.displayName}}</a>
+          <a *ngIf="!isTaskCompleted(task.taskId)" [routerLink]="['/tasks', task.type, user.universityId, task.taskId, task.name]">{{task.displayName}}</a>
           <a *ngIf="isTaskCompleted(task.taskId)" [routerLink]="['/tasks', 'submitted', user.universityId, task.taskId, task.name]" class="text-muted">{{task.displayName}}</a>
           <span *ngIf="isTaskCompleted(task.taskId)" class="material-icons text-success font-weight-bold">done</span>
         </li>

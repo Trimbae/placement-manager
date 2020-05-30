@@ -32,7 +32,7 @@ import { ModalDeleteComponent } from './modal-delete/modal-delete.component';
 import { CreateTaskComponent } from './create-task/create-task.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
@@ -54,6 +54,8 @@ import { DashboardMyStudentsComponent } from './dashboard-my-students/dashboard-
 import { StudentComponent } from './student/student.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MarkAssignmentModalComponent } from './mark-assignment-modal/mark-assignment-modal.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { CreateMeetingComponent } from './create-meeting/create-meeting.component';
 
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview, FilePondPluginFilePoster, FilePondPluginFileEncode);
 
@@ -93,7 +95,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ErrorPageComponent,
     DashboardMyStudentsComponent,
     StudentComponent,
-    MarkAssignmentModalComponent
+    MarkAssignmentModalComponent,
+    FeedbackComponent,
+    CreateMeetingComponent
   ],
   imports: [
     BrowserModule,
@@ -161,12 +165,20 @@ export function HttpLoaderFactory(http: HttpClient) {
         component: ErrorPageComponent
       },
       {
+        path: 'feedback',
+        component: FeedbackComponent
+      },
+      {
         path: 'login',
         component: LoginComponent
       },
       {
         path: 'student/:universityId',
         component: StudentComponent
+      },
+      {
+        path: 'tasks/meeting/:userId/:taskId/:taskName',
+        component: CreateMeetingComponent
       },
       {
         path: 'tasks/upload/:userId/:taskId/:taskName',
@@ -201,7 +213,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     UserService,
     {provide: ErrorHandler, useClass: AppErrorHandler},
-    {provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true},
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
   bootstrap: [AppComponent]
 })

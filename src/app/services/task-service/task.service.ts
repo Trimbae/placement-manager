@@ -38,7 +38,10 @@ export class TaskService {
 
   getTaskById(id: number) {
     if (id) {
-      return this.http.get(this.url + '/' + id);
+      return this.http.get(this.url + '/' + id)
+        .pipe(
+          map(response => response as Task)
+        );
     }
   }
 

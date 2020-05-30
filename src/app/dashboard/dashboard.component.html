@@ -1,20 +1,22 @@
 <app-navbar></app-navbar>
-
-<div class="container">
+<div *ngIf="loading" class="spinner-container">
+  <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="!loading" class="container">
   <div *ngIf="errorMessage" class="alert alert-danger topError" [innerHTML]="errorMessage | translate"> </div>
 
   <div class="row">
     <div class="col-md-6">
       <br/>
-      <app-dashboard-profile [user]="userData"></app-dashboard-profile>
+      <app-dashboard-profile [user]="user"></app-dashboard-profile>
       <br/>
-      <app-dashboard-tools [user]="userData"></app-dashboard-tools>
+      <app-dashboard-tools [user]="user"></app-dashboard-tools>
     </div>
     <div class="col-md-6">
       <br/>
-      <app-dashboard-my-tasks [user]="userData"></app-dashboard-my-tasks>
+      <app-dashboard-my-tasks [user]="user"></app-dashboard-my-tasks>
       <br>
-      <app-dashboard-my-students *ngIf="userData.accessLevel.isSupervisor" [user]="userData"></app-dashboard-my-students>
+      <app-dashboard-my-students *ngIf="user.accessLevel.isSupervisor" [user]="user"></app-dashboard-my-students>
     </div>
   </div>
   <br>

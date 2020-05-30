@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {User} from '../common/classes/user';
 
 @Component({
   selector: 'app-dashboard-tools',
@@ -7,11 +8,10 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class DashboardToolsComponent implements OnInit {
 
-  @Input() user;
+  @Input() user: User;
 
   tools = [
     {id: 1, name: 'Upload Documents', link: ''},
-    {id: 2, name: 'My Feedback', link: ''},
     {id: 3, name: 'Edit Profile', link: ''},
     {id: 4, name: 'Contact Placement Team', link: ''}
   ];

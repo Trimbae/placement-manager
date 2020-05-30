@@ -3,7 +3,7 @@
 <div class="container">
   <h1 class="nameHeader">
     <span class="material-icons peopleIcon">person</span>
-    <span class="">Student</span>
+    <span class=""> Student</span>
   </h1>
 
   <div *ngIf="feedbackSubmitted" class="alert alert-success alert-dismissible">
@@ -36,10 +36,10 @@
       </div>
       <div class="col-md-9 rightSection">
         <div *ngIf="activeSection==='Details'" class="rightSection">
-          <div class="detailsHeading">Student Details</div>
+          <div class="detailsHeading">User Details</div>
           <ul class="list-group-flush">
             <li class="list-group-item"><strong>Name: </strong>{{student.name}}</li>
-            <li class="list-group-item"><strong>Student Id: </strong>{{student.universityId}}</li>
+            <li class="list-group-item"><strong>User Id: </strong>{{student.universityId}}</li>
             <li class="list-group-item"><strong>Email: </strong>{{student.email}}</li>
           </ul>
           <div class="detailsHeading">Placement Details</div>
@@ -68,6 +68,41 @@
             </ul>
           </div>
         </div>
+
+        <div *ngIf="activeSection==='Meetings'">
+          <div class="detailsHeading">Scheduled Meetings</div>
+          <div *ngIf="scheduledMeetings.length === 0" class="text-center text-muted noSubmissions">
+            No meetings scheduled.
+          </div>
+          <div *ngIf="scheduledMeetings.length > 0">
+            <ul class="list-group-flush">
+              <button *ngFor="let meeting of scheduledMeetings" class="list-group-item list-group-item-action meetingItem">
+                <span>
+                  <span class="font-weight-bold">{{meeting.name}}</span> -
+                  <span class="text-muted">{{ meeting.time | date:'HH:mm - dd/MM/yyyy'}}</span>
+                </span>
+                <button *ngIf="canEdit" (click)="cancelMeeting(meeting);" class="btn btn-secondary">Cancel</button>
+              </button>
+            </ul>
+          </div>
+
+          <div class="detailsHeading">Pending Approval</div>
+          <div *ngIf="pendingMeetings.length === 0" class="text-center text-muted noSubmissions">
+            No meetings pending approval.
+          </div>
+          <div *ngIf="pendingMeetings.length > 0">
+            <ul class="list-group-flush">
+              <button *ngFor="let meeting of pendingMeetings" class="list-group-item list-group-item-action meetingItem">
+                <span>
+                  <span class="font-weight-bold">{{meeting.name}}</span> -
+                  <span class="text-muted">{{ meeting.time | date:'HH:mm - dd/MM/yyyy'}}</span>
+                </span>
+                <button *ngIf="canEdit" (click)="approveMeeting(meeting);" class="btn btn-primary">Approve</button>
+              </button>
+            </ul>
+          </div>
+        </div>
+
       </div>
     </div>
   </mat-card>

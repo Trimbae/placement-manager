@@ -6,6 +6,7 @@ import {MsalService} from '@azure/msal-angular';
 import {InvalidMsalTokenError} from '../common/invalid-msal-token.error';
 import {ClientAuthError} from 'msal';
 import {Router} from '@angular/router';
+import {User} from '../common/classes/user';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,9 +14,10 @@ import {Router} from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  userData;
+  user: User;
   userToken: string;
   errorMessage: string;
+  loading = true;
 
   constructor(private userService: UserService, private authService: MsalService, private router: Router) { }
 
@@ -26,7 +28,8 @@ export class DashboardComponent implements OnInit {
   getCurrentUser() {
     this.userService.getCurrentUser(this.userToken).
     subscribe(data => {
-        this.userData = data;
+        this.user = data;
+        this.loading = false;
         console.log(data);
     },
       (error: AppError) => {
