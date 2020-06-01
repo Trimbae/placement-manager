@@ -56,6 +56,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { MarkAssignmentModalComponent } from './mark-assignment-modal/mark-assignment-modal.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { CreateMeetingComponent } from './create-meeting/create-meeting.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview, FilePondPluginFilePoster, FilePondPluginFileEncode);
 
@@ -200,6 +202,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSortModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    MatFormFieldModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
       loader: {

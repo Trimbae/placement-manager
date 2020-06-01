@@ -7,6 +7,7 @@ import {ActivatedRoute, convertToParamMap} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {TaskService} from '../services/task-service/task.service';
 import {DebugElement} from '@angular/core';
+import {Task} from '../common/classes/task';
 
 describe('FileUploadComponent', () => {
   let component: FileUploadComponent;
@@ -42,7 +43,7 @@ describe('FileUploadComponent', () => {
     de = fixture.debugElement;
 
     taskService = de.injector.get(TaskService);
-    spy = spyOn(taskService, 'getTaskById').and.returnValue(of(4));
+    spy = spyOn(taskService, 'getTaskById').and.returnValue(of({} as Task));
 
     fixture.detectChanges();
   });

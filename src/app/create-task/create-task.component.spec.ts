@@ -9,6 +9,7 @@ import {CUSTOM_ELEMENTS_SCHEMA, DebugElement} from '@angular/core';
 import {ActivatedRouteStub} from '../../testing/activated-route.stub';
 import {of} from 'rxjs';
 import {ViewTasksComponent} from '../view-tasks/view-tasks.component';
+import {Task} from '../common/classes/task';
 
 fdescribe('CreateTaskComponent', () => {
   let component: CreateTaskComponent;
@@ -153,7 +154,7 @@ fdescribe('CreateTaskComponent', () => {
   describe('editTask', () => {
     it('should call TaskService with taskId', () => {
       const testTaskId = 3;
-      spyOn(taskService, 'getTaskById').and.returnValue(of({}));
+      spyOn(taskService, 'getTaskById').and.returnValue(of({} as Task));
 
       component.editTask(testTaskId);
 
@@ -162,7 +163,7 @@ fdescribe('CreateTaskComponent', () => {
     });
     it('should set isEdit to true if response from TaskService', () => {
       const testTaskId = 3;
-      spyOn(taskService, 'getTaskById').and.returnValue(of({}));
+      spyOn(taskService, 'getTaskById').and.returnValue(of({} as Task));
       expect(component.isEdit).toBeFalsy();
 
       component.editTask(testTaskId);
@@ -173,7 +174,7 @@ fdescribe('CreateTaskComponent', () => {
       const testTaskId = 3;
       const testTaskData = {};
 
-      spyOn(taskService, 'getTaskById').and.returnValue(of(testTaskData));
+      spyOn(taskService, 'getTaskById').and.returnValue(of(testTaskData as Task));
       spyOn(component, 'patchValuesToForm');
 
       component.editTask(testTaskId);

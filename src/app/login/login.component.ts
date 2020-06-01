@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {LoginValidators} from './login.validators';
 import {Router} from '@angular/router';
 import {MsalService} from '@azure/msal-angular';
 
@@ -12,28 +10,22 @@ import {MsalService} from '@azure/msal-angular';
 export class LoginComponent implements OnInit {
   loginForm: any;
 
-  constructor(private router: Router, fb: FormBuilder, private authService: MsalService, ) {
-    this.loginForm = fb.group({
-      username: ['', [
-        Validators.required,
-        Validators.minLength(3),
-        LoginValidators.cannotContainSpace]
-        , LoginValidators.shouldBeUnique
-      ],
-      password: ['', Validators.required]
-    });
+  constructor(private router: Router, private authService: MsalService, ) {
   }
 
   ngOnInit(): void {
   }
-
+  // function called when user clicks log in button
   login() {
+    // check if user is on Internet Explorer
     const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
     if (isIE) {
+      // if on internet explorer, log in with redirect
       this.authService.loginRedirect();
       this.loginSuccess();
     } else {
+      // if not IE, use popup - on success call loginSuccess function
       this.authService.loginPopup().then(() => {
         this.loginSuccess();
       });
@@ -41,6 +33,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginSuccess() {
+    // navigate to dashboard on login
     this.router.navigate(['/dashboard']);
   }
 
