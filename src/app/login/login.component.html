@@ -6,11 +6,9 @@
     </div>
     <!-- Title -->
     <div class="loginTitle">Placement Management System</div>
-    <!--  Login Form  -->
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
-      <div *ngIf="loginForm.errors && loginForm.errors.invalidLogin" class="alert alert-warning">Invalid username/password combination</div>
-      <button class="btn btn-primary" type="submit">Log in with Office 365</button>
-    </form>
+
+    <!--  Login Button  -->
+    <button class="btn btn-primary loginButton" (click)="login()">Log in with Office 365</button>
 
     <!--footer-->
     <div class="formFooter">

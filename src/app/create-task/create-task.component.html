@@ -98,7 +98,8 @@
                          [min]="minDate"
                          [matDatepicker]="deadlineDatepicker"
                          formControlName="dueDate"
-                         autocomplete="off">
+                         autocomplete="off"
+                         readonly>
                   <mat-datepicker-toggle matSuffix
                                          [for]="deadlineDatepicker">
                   </mat-datepicker-toggle>
@@ -121,7 +122,7 @@
               </div>
             </div>
             <div class="buttonContainer">
-              <button class="btn btn-primary" type="submit">{{isEdit ? 'Save' : 'Create'}} Task</button>
+              <button class="btn btn-primary" type="submit" [disabled]="!form.valid">{{isEdit ? 'Save' : 'Create'}} Task</button>
             </div>
           </form>
         </mat-card-content>

@@ -3,7 +3,7 @@ export interface Meeting {
   name: string;
   studentId: string;
   supervisorId: string;
-  taskId: number;
+  taskId: string;
   time: Date;
   location: string;
   approved: boolean;

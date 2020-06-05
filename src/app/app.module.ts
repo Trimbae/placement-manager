@@ -57,6 +57,9 @@ import { MarkAssignmentModalComponent } from './mark-assignment-modal/mark-assig
 import { FeedbackComponent } from './feedback/feedback.component';
 import { CreateMeetingComponent } from './create-meeting/create-meeting.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { StudentDetailsComponent } from './student-details/student-details.component';
+import { StudentSubmissionsComponent } from './student-submissions/student-submissions.component';
+import { StudentMeetingsComponent } from './student-meetings/student-meetings.component';
 
 
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview, FilePondPluginFilePoster, FilePondPluginFileEncode);
@@ -99,7 +102,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     StudentComponent,
     MarkAssignmentModalComponent,
     FeedbackComponent,
-    CreateMeetingComponent
+    CreateMeetingComponent,
+    StudentDetailsComponent,
+    StudentSubmissionsComponent,
+    StudentMeetingsComponent
   ],
   imports: [
     BrowserModule,

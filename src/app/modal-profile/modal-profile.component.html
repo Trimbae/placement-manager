@@ -1,33 +1,35 @@
 <div class="modal-header">
+
+  <span class="modal-title">Supervisor Profile</span>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
+
 </div>
 <div class="modal-body">
-
-  <div class="row">
-    <div class="col-6 offset-3 col-md-6 offset-md-3">
-      <img [src]="photoUrl" alt="user icon" class="rounded-circle modalProfilePhoto">
-      <h4 class="modal-title">{{userData.name}}</h4>
-      <hr/>
-    </div>
+  <div *ngIf="loading" class="spinner-container">
+    <mat-spinner></mat-spinner>
   </div>
-  <div class="card-subtitle modalSubtitle text-center">{{userData.jobTitle}}</div>
-  <div class="infoContainer text-center">
-    <div class="contact">
-      <span class="material-icons text-center">mail_outline</span>
-    </div>
-    <div>
-      <b>Email: </b>
-      <a href="#">{{userData.email}}</a>
-    </div>
-    <div>
-      <b>Phone: </b>
-      {{userData.phone}}
-    </div>
-    <div>
-      <b>Location: </b>
-      {{userData.officeLocation}}
+  <div *ngIf="!loading">
+    <div class="row">
+      <div class="col-md-4 avatar">
+        <img
+             [src]="photoUrl"
+             (error)="setDefaultAvatar()"
+             alt="supervisor icon"
+             class="rounded-circle dashboardAvatar">
+      </div>
+      <div *ngIf="supervisor" class="col-md-8">
+        <div *ngIf="supervisor.name" class="profileName">{{ supervisor.name }}</div>
+        <div class="text-muted">Supervisor</div>
+        <div class="text-muted">
+          Cardiff University - {{supervisor.universityId}}
+        </div>
+        <br/>
+        <div *ngIf="supervisor.email">
+          Email: <a target="_blank" [href]="'mailto:' + supervisor.email">{{supervisor.email}}</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

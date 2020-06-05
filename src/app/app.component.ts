@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
 
       console.log('Redirect Success: ', response.accessToken);
     });
-
+    // creates logger for MSAL
     this.authService.setLogger(new Logger((logLevel, message) => {
       console.log('MSAL Logging: ', message);
     }, {
@@ -50,3 +50,6 @@ export class AppComponent implements OnInit {
     }
   }
 }
+
+// Much of this code is adapted from the Angular 9 MSAL Example App
+// available at: https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/samples/angular9-sample-app

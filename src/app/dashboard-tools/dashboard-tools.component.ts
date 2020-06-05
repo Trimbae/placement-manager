@@ -10,12 +10,6 @@ export class DashboardToolsComponent implements OnInit {
 
   @Input() user: User;
 
-  tools = [
-    {id: 1, name: 'Upload Documents', link: ''},
-    {id: 3, name: 'Edit Profile', link: ''},
-    {id: 4, name: 'Contact Placement Team', link: ''}
-  ];
-
   constructor() { }
 
   ngOnInit(): void {

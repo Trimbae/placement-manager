@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {ModalProfileComponent} from '../modal-profile/modal-profile.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {User} from '../common/classes/user';
 
 @Component({
   selector: 'app-dashboard-profile',
@@ -10,7 +11,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class DashboardProfileComponent implements OnInit, OnChanges {
 
-  @Input() user: any;
+  @Input() user: User;
   photoUrl;
   isImageLoaded = false;
 
@@ -33,14 +34,8 @@ export class DashboardProfileComponent implements OnInit, OnChanges {
 
   openModal() {
     const modalRef = this.modalService.open(ModalProfileComponent, {windowClass: 'modal-holder', centered: true});
-    modalRef.componentInstance.userData = {
-      name: 'Carl Jones',
-      jobTitle: 'Staff In Computer Science',
-      department: 'COMSC',
-      officeLocation: 'NSA NEWPORT',
-      email: 'JonesC162@cardiff.ac.uk',
-      phone: '029 555 5555'
-    };
+    console.log(this.user.studentData.supervisorId);
+    modalRef.componentInstance.supervisorId = this.user.studentData.supervisorId;
   }
 
   setDefaultAvatar() {

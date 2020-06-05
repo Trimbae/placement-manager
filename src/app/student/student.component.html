@@ -35,75 +35,14 @@
         </div>
       </div>
       <div class="col-md-9 rightSection">
-        <div *ngIf="activeSection==='Details'" class="rightSection">
-          <div class="detailsHeading">User Details</div>
-          <ul class="list-group-flush">
-            <li class="list-group-item"><strong>Name: </strong>{{student.name}}</li>
-            <li class="list-group-item"><strong>User Id: </strong>{{student.universityId}}</li>
-            <li class="list-group-item"><strong>Email: </strong>{{student.email}}</li>
-          </ul>
-          <div class="detailsHeading">Placement Details</div>
-          <ul class="list-group-flush">
-            <li class="list-group-item"><strong>Supervisor: </strong>{{student.studentData.supervisorName}}</li>
-            <li class="list-group-item"><strong>Moderator: </strong>{{student.studentData.moderatorName}}</li>
-            <li class="list-group-item"><strong>Placement Provider: </strong>{{student.studentData.placementProvider}}</li>
-            <li class="list-group-item"><strong>Start Date: </strong>{{student.studentData.startDate}}</li>
-            <li class="list-group-item"><strong>Workplace Supervisor: </strong>{{student.studentData.workplaceSupervisor}}</li>
-          </ul>
-        </div>
+        <app-student-details *ngIf="activeSection==='Details'" [student]="student"></app-student-details>
 
-        <div *ngIf="activeSection==='Submissions'">
-          <div class="detailsHeading">Completed tasks</div>
-          <div *ngIf="tasks.length === 0" class="text-center text-muted noSubmissions">
-            This student hasn't submitted any work yet.
-          </div>
-          <div *ngIf="tasks.length > 0">
-            <ul class="list-group-flush">
-              <button *ngFor="let task of tasks"
-                 [routerLink]="['/tasks', 'submitted', student.universityId, task.taskId, task.name]"
-                 class="list-group-item list-group-item-action taskItem">
-                <span class="text-primary">{{task.displayName}}</span>
-                <span (click)="onMarkClicked(task); $event.stopPropagation();" class="material-icons markIcon" matTooltip="Mark Assignment">assignment_turned_in</span>
-              </button>
-            </ul>
-          </div>
-        </div>
+        <app-student-submissions [student]="student" [tasks]="tasks" [canEdit]="canEdit" *ngIf="activeSection==='Submissions'"></app-student-submissions>
 
-        <div *ngIf="activeSection==='Meetings'">
-          <div class="detailsHeading">Scheduled Meetings</div>
-          <div *ngIf="scheduledMeetings.length === 0" class="text-center text-muted noSubmissions">
-            No meetings scheduled.
-          </div>
-          <div *ngIf="scheduledMeetings.length > 0">
-            <ul class="list-group-flush">
-              <button *ngFor="let meeting of scheduledMeetings" class="list-group-item list-group-item-action meetingItem">
-                <span>
-                  <span class="font-weight-bold">{{meeting.name}}</span> -
-                  <span class="text-muted">{{ meeting.time | date:'HH:mm - dd/MM/yyyy'}}</span>
-                </span>
-                <button *ngIf="canEdit" (click)="cancelMeeting(meeting);" class="btn btn-secondary">Cancel</button>
-              </button>
-            </ul>
-          </div>
-
-          <div class="detailsHeading">Pending Approval</div>
-          <div *ngIf="pendingMeetings.length === 0" class="text-center text-muted noSubmissions">
-            No meetings pending approval.
-          </div>
-          <div *ngIf="pendingMeetings.length > 0">
-            <ul class="list-group-flush">
-              <button *ngFor="let meeting of pendingMeetings" class="list-group-item list-group-item-action meetingItem">
-                <span>
-                  <span class="font-weight-bold">{{meeting.name}}</span> -
-                  <span class="text-muted">{{ meeting.time | date:'HH:mm - dd/MM/yyyy'}}</span>
-                </span>
-                <button *ngIf="canEdit" (click)="approveMeeting(meeting);" class="btn btn-primary">Approve</button>
-              </button>
-            </ul>
-          </div>
-        </div>
+        <app-student-meetings *ngIf="activeSection==='Meetings'" [meetings]="meetings" [canEdit]="canEdit"></app-student-meetings>
 
       </div>
     </div>
   </mat-card>
+  <br>
 </div>

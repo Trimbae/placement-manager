@@ -17,14 +17,19 @@ export class TaskService {
     return this.http.post(this.url, taskData);
   }
 
+  deleteTaskById(taskId: string) {
+    return this.http.delete(this.url + '/' + taskId);
+  }
+
   editTask(taskData) {
-    const id = taskData.taskId;
-    return this.http.put(this.url + '/' + id, taskData);
+    const taskId = taskData.taskId;
+    return this.http.put(this.url + '/' + taskId, taskData);
   }
 
   getDraftTasks() {
     return this.http.get(this.url + '/drafts');
   }
+
   getPublishedTasks() {
     return this.http.get(this.url + '/published')
       .pipe(
@@ -36,9 +41,9 @@ export class TaskService {
     return this.http.get(this.url);
   }
 
-  getTaskById(id: number) {
-    if (id) {
-      return this.http.get(this.url + '/' + id)
+  getTaskById(taskId: string) {
+    if (taskId) {
+      return this.http.get(this.url + '/' + taskId)
         .pipe(
           map(response => response as Task)
         );

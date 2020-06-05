@@ -68,7 +68,7 @@ fdescribe('CreateTaskComponent', () => {
   describe('buildData', () => {
     it('should map data from form correctly to object', () => {
       component.form.patchValue({
-        taskId: 1,
+        taskId: '1',
         taskName: 'Upload Report',
         description: 'test description',
         type: 'upload',
@@ -79,7 +79,7 @@ fdescribe('CreateTaskComponent', () => {
       });
 
       const expectedOutput = {
-        taskId: 1,
+        taskId: '1',
         displayName: 'Upload Report',
         description: 'test description',
         name: 'upload-report',
@@ -126,7 +126,7 @@ fdescribe('CreateTaskComponent', () => {
       spyOn(component, 'editTask');
     });
     it('should call editTask if taskID route param detected', fakeAsync(() => {
-      const testTaskId = 3;
+      const testTaskId = '3';
       spyOn(component, 'editTask');
       activatedRoute.setParamMap({taskId: testTaskId});
 
@@ -153,7 +153,7 @@ fdescribe('CreateTaskComponent', () => {
 
   describe('editTask', () => {
     it('should call TaskService with taskId', () => {
-      const testTaskId = 3;
+      const testTaskId = '3';
       spyOn(taskService, 'getTaskById').and.returnValue(of({} as Task));
 
       component.editTask(testTaskId);
@@ -162,7 +162,7 @@ fdescribe('CreateTaskComponent', () => {
       expect(taskService.getTaskById).toHaveBeenCalledWith(testTaskId);
     });
     it('should set isEdit to true if response from TaskService', () => {
-      const testTaskId = 3;
+      const testTaskId = '3';
       spyOn(taskService, 'getTaskById').and.returnValue(of({} as Task));
       expect(component.isEdit).toBeFalsy();
 
@@ -171,7 +171,7 @@ fdescribe('CreateTaskComponent', () => {
       expect(component.isEdit).toBeTruthy();
     });
     it('should call patchValuesToForm if response from TaskService', () => {
-      const testTaskId = 3;
+      const testTaskId = '3';
       const testTaskData = {};
 
       spyOn(taskService, 'getTaskById').and.returnValue(of(testTaskData as Task));

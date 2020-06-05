@@ -31,7 +31,8 @@
                  [min]="minDate"
                  [matDatepicker]="meetingDatepicker"
                  formControlName="date"
-                 autocomplete="off">
+                 autocomplete="off"
+                 readonly>
           <mat-datepicker-toggle matSuffix
                                  [for]="meetingDatepicker">
           </mat-datepicker-toggle>
@@ -60,7 +61,7 @@
 
         <!-- submit form button -->
         <div class="buttonContainer">
-          <button class="btn btn-primary" type="submit">Submit</button>
+          <button [disabled]="!form.valid" class="btn btn-primary" type="submit">Submit</button>
         </div>
 
       </form>

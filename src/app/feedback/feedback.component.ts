@@ -29,6 +29,8 @@ export class FeedbackComponent implements OnInit {
 
   getTasksWithFeedback(tasks: Task[]) {
     if (this.user.feedback) {
+      console.log(this.user.feedback);
+      console.log(tasks);
       for (const feedbackObject of this.user.feedback) {
         for (const task of tasks) {
           if (feedbackObject.taskId === task.taskId) {

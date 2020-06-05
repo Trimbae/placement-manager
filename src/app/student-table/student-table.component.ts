@@ -35,23 +35,30 @@ export class StudentTableComponent implements AfterViewInit, OnInit {
     this.dataSource = new StudentTableDataSource(this.userService);
     this.dataSource.loadStudents();
   }
-
+  // function called after view initialised (all children paginator, sort etc are loaded)
   ngAfterViewInit() {
 
     this.table.dataSource = this.dataSource;
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
+    // function executed whenever user types in filter input box
     fromEvent(this.input.nativeElement, 'keyup')
       .pipe(
+        // limits calls to load students to every 200 milliseconds, prevents unnecessary calls while typing
         debounceTime(200),
+        // only calls if filter input has changed
         distinctUntilChanged(),
         tap(() => {
+          // reset page index to 0 for paginator
           this.paginator.pageIndex = 0;
+          // load student data from datasource
           this.loadStudentsPage();
         })
       )
       .subscribe();
 
+    // merge function waits for observables to emit from paginator and sort, then emits them concurrently
+    // in effect this function waits for a change in either paginator or sort (or both) and calls the load students function
     merge(this.paginator.page, this.sort.sortChange)
       .pipe(
         tap(() => this.loadStudentsPage())
@@ -59,12 +66,16 @@ export class StudentTableComponent implements AfterViewInit, OnInit {
       .subscribe();
   }
 
+  // function called when 'assign' or 'reassign' button clicked, arguments are passed from the list item where the button is clicked
   assignSupervisor(student, isReassign: boolean) {
+    // open ngBootstrap modal for assigning supervisors and set input parameters
     const modalRef = this.modalService.open(AssignSupervisorModalComponent, {size: 'lg', windowClass: 'modal-holder', centered: true});
     modalRef.componentInstance.student = student;
     modalRef.componentInstance.isReassign = isReassign;
 
+    // after modal closed
     modalRef.result.then( selectedSupervisor => {
+      // if assign button was clicked, set supervisor name and id for student then push data to backend
       student.studentData.supervisorName = selectedSupervisor.name;
       student.studentData.supervisorId = selectedSupervisor.universityId;
       this.userService.updateUser(student).
@@ -72,10 +83,11 @@ export class StudentTableComponent implements AfterViewInit, OnInit {
           console.log(response);
       });
     }, () => {
-      // modal dismissed
+      // modal dismissed, do nothing
     });
   }
 
+  // gets total count of students for pagination
   getTableSize() {
     this.userService.getUserCount(environment.userTypes.USER_TYPE_STUDENT)
       .subscribe(res => {
@@ -83,7 +95,7 @@ export class StudentTableComponent implements AfterViewInit, OnInit {
         this.tableSize = countObj.userCount;
       });
   }
-
+  // calls the loadStudents method of the data source according to user parameters
   loadStudentsPage() {
     this.dataSource.loadStudents(
       this.input.nativeElement.value,

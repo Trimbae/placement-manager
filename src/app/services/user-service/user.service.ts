@@ -79,8 +79,10 @@ export class UserService {
     })
       .pipe(
         map(res => {
+          // store current user in localStorage while user logged in
           localStorage.setItem('currentUser', JSON.stringify(res));
           this.currentUserSubject.next(res as User);
+          // return response as User object
           return res as User;
         }),
         catchError(this.handleError)
@@ -103,10 +105,11 @@ export class UserService {
     );
   }
 
-  getStudentById(universityId: string) {
+  getUserById(universityId: string) {
     return this.http.get(this.url + '/' + universityId)
       .pipe(
-      catchError(this.handleError)
+        map( response => response as User),
+        catchError(this.handleError)
     );
   }
 
@@ -119,11 +122,11 @@ export class UserService {
     );
   }
 
-  markTaskCompleteForUser(universityId, task) {
+  markTaskCompleteForUser(universityId: string, task: string) {
     return this.http.patch(this.url + '/' + universityId + '/tasks', {taskId: task});
   }
 
-  updateUser(userData) {
-    return this.http.patch(this.url, userData);
+  updateUser(userData: User) {
+    return this.http.patch(this.url + '/' + userData.universityId, userData);
   }
 }

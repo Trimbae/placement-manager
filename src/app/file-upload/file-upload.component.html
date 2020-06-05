@@ -12,6 +12,9 @@
       <h3>File Upload: {{task.displayName}}</h3>
 
       <hr>
+      <div class="uploadSubtitle">Task Description:</div>
+      <div>{{task.description}}</div>
+      <hr>
 
       <!-- File details -->
       <div class="uploadSubtitle">Details:</div>
@@ -66,9 +69,9 @@
         <!-- Pdf previewer -->
         <div class="preview">
           <div class="uploadSubtitle">Preview: </div>
-          <div class="text-center text-muted" *ngIf="!pdfData"> Select file to see preview... </div>
-          <div class="text-center text-muted" *ngIf="pdfData && previewType !== 'application/pdf'"> Preview only available for pdf files </div>
-          <app-pdf-viewer *ngIf="pdfData && previewType === 'application/pdf'" [height]="500" [sourceData]="pdfData"></app-pdf-viewer>
+          <div class="text-center text-muted" *ngIf="!fileData"> Select file to see preview... </div>
+          <div class="text-center text-muted" *ngIf="fileData && previewType !== 'application/pdf'"> Preview only available for pdf files </div>
+          <app-pdf-viewer *ngIf="fileData && previewType === 'application/pdf'" [height]="500" [sourceData]="fileData"></app-pdf-viewer>
         </div>
 
         <hr>
@@ -83,7 +86,9 @@
                    (onpreparefile)="pondHandleAddFile($event)"
                    class="clickable">
         </file-pond>
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <!-- upload button -->
+        <button type="submit" [disabled]="!uploadForm.valid" class="btn btn-primary">Upload</button>
+
       </form>
     </div>
   </div>

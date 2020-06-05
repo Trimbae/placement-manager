@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {Router} from '@angular/router';
 import {MsalService} from '@azure/msal-angular';
 
@@ -7,14 +7,11 @@ import {MsalService} from '@azure/msal-angular';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-  loginForm: any;
+export class LoginComponent {
 
   constructor(private router: Router, private authService: MsalService, ) {
   }
 
-  ngOnInit(): void {
-  }
   // function called when user clicks log in button
   login() {
     // check if user is on Internet Explorer

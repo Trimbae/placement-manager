@@ -51,7 +51,7 @@ export class SubmissionComponent implements OnInit, OnChanges {
   getSubmissions() {
     this.route.paramMap
       .subscribe(params => {
-        const taskId = +params.get('taskId');
+        const taskId = params.get('taskId');
         this.task = this.taskService.getTaskById(taskId);
         this.universityId = params.get('userId');
         this.filesService.getFilesByTaskId(taskId, this.universityId)
@@ -70,7 +70,8 @@ export class SubmissionComponent implements OnInit, OnChanges {
 
   onDelete(file: any) {
     const modalRef = this.modalService.open(ModalDeleteComponent, {windowClass: 'modal-holder', centered: true});
-    modalRef.componentInstance.filename = file.filename;
+    modalRef.componentInstance.name = file.filename;
+    modalRef.componentInstance.type = 'File';
 
     modalRef.result.then( () => {
       this.filesService.deleteFileById(file._id)

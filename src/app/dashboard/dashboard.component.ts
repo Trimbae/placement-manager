@@ -26,16 +26,21 @@ export class DashboardComponent implements OnInit {
   }
 
   getCurrentUser() {
-    this.userService.getCurrentUser(this.userToken).
-    subscribe(data => {
+    // get user data from user service
+    this.userService.getCurrentUser(this.userToken)
+      .subscribe(data => {
+        // set user data
         this.user = data;
+        console.log(this.user);
+        // set loading to false
         this.loading = false;
-        console.log(data);
     },
       (error: AppError) => {
+        // if user not found, redirect to error page
         if (error instanceof NotFoundError) {
           this.router.navigate(['error'], { queryParams: { errorCode: 'userNotFound' }});
         } else if (error instanceof InvalidMsalTokenError) {
+          // if token retrieved does not have required permissions, we need to explicitly ask for users consent for app to get their data
           this.getUserConsent();
         } else {
           throw error;
@@ -44,6 +49,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getUserToken() {
+    // get token to use to read user data from Microsoft Graph Authentication from MsalService
     this.authService.acquireTokenSilent({scopes: ['user.read']})
       .then(response => {
         this.userToken = response.accessToken;
@@ -58,6 +64,7 @@ export class DashboardComponent implements OnInit {
         this.getCurrentUser();
       }).catch( err => {
         if (err instanceof ClientAuthError) {
+          // displays error message to user informing them they need to disable pop-ups to grant permissions
           this.errorMessage = 'dashboard.errors.needPermissions';
         }
     });

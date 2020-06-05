@@ -8,7 +8,8 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class ModalDeleteComponent implements OnInit {
 
-  @Input() filename: string;
+  @Input() name: string;
+  @Input() type: string;
 
   constructor(public activeModal: NgbActiveModal) { }
 

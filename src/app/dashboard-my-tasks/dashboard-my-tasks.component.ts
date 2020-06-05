@@ -15,8 +15,6 @@ export class DashboardMyTasksComponent implements OnInit, OnChanges {
 
   getPercentageCompleted() {
     if (this.user && this.tasks) {
-      // const completedTaskCount = this.user.tasksCompleted.length;
-      // console.log(this.user.tasksCompleted);
       let completedTaskCount = 0;
       for (const task of this.tasks) {
         if (this.user.tasksCompleted.includes(task.taskId)) {
@@ -33,7 +31,6 @@ export class DashboardMyTasksComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.taskService.getPublishedTasks()
       .subscribe(response => {
-        console.log(response);
         this.tasks = response;
         this.sortTasks();
         this.percentageCompleted = this.getPercentageCompleted();
@@ -43,7 +40,7 @@ export class DashboardMyTasksComponent implements OnInit, OnChanges {
     this.percentageCompleted = this.getPercentageCompleted();
   }
 
-  isTaskCompleted(taskId: number) {
+  isTaskCompleted(taskId: string) {
     return this.user && this.user.tasksCompleted.includes(taskId);
   }
 

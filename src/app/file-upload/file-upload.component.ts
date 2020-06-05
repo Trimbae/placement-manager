@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FileService} from '../services/file-service/file.service';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {TaskService} from '../services/task-service/task.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../services/user-service/user.service';
@@ -14,25 +14,26 @@ export class FileUploadComponent implements OnInit {
 
   @ViewChild('fileInput', {static: false}) fileInput: ElementRef;
   @ViewChild('fileInputPond') inputPond: any;
-  pdfData: any;
-  previewType: string;
-  isError = false;
+  fileData: string = null;
+  previewType: string = null;
   task: any;
   userId: string;
   showSpinner = false;
 
+  // create formGroup
   uploadForm = new FormGroup({
     comments: new FormControl(),
-    files: new FormControl()
+    files: new FormControl('', Validators.required)
   });
 
+  // set default options for filepond
   pondOptions = {
     class: 'my-filepond',
     multiple: 'false',
     labelIdle: 'Drag + Drop or Click to add files',
     acceptedFileTypes: ['application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/pdf']
 };
-
+  // initialise empty list of files
   pondFiles = [];
 
   constructor(
@@ -44,13 +45,16 @@ export class FileUploadComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // get the task id from the url parameters
     this.route.paramMap
       .subscribe(params => {
-        const taskId = +params.get('taskId');
+        const taskId = params.get('taskId');
+        // get task data by Id
         this.taskService.getTaskById(taskId)
           .subscribe(response => {
             this.task = response;
           });
+        // set user Id from URL parameters
         this.userId = params.get('userId');
       });
   }
@@ -58,16 +62,20 @@ export class FileUploadComponent implements OnInit {
   pondHandleInit() {
     console.log('FilePond has initialised', this.inputPond);
   }
-
+  // method called when file added to the filepond
   pondHandleAddFile(event) {
-    console.log('A file was added', event);
+    // build file object
     const fileObject = this.buildFileObject(event.file);
-    this.pdfData = fileObject.data;
+    // set pdfData for preview
+    this.previewType = event.file.fileType;
+    this.fileData = fileObject.data;
+
+    // set the value of the 'files' form control to file object
     this.uploadForm.get('files').setValue(fileObject);
   }
 
+  // creates file data object
   buildFileObject(file) {
-    this.previewType = file.fileType;
     return {
       fileId: file.id,
       filename: file.filename,
@@ -85,25 +93,29 @@ export class FileUploadComponent implements OnInit {
         console.log(response);
       });
   }
-
+  // set preview pdfData to null if file removed from filepond
   onFileRemove() {
-    this.pdfData = null;
+    this.fileData = null;
+    this.uploadForm.get('files').setValue(null);
   }
 
+  // method called when user clicks upload button
   onFileUpload() {
+    // show user spinner while file being uploaded
     this.showSpinner = true;
-    if (!this.uploadForm.get('files').value) {
-      this.isError = true;
-    } else {
-      this.filesService.uploadFile(this.uploadForm.value)
-        .subscribe( (response: any) => {
-          this.markTaskCompleted();
-          this.showSpinner = false;
-          const uploadId = response._id;
-          const navigationUrl = '/tasks/submitted/' + this.userId + '/' + this.task.taskId + '/' + this.task.name;
-          this.router.navigate([navigationUrl], {queryParams : { idSelected: uploadId, isUploadRedirect: true}});
-        });
-    }
+
+    this.filesService.uploadFile(this.uploadForm.value)
+      .subscribe( (response: any) => {
+        // mark task as completed
+        this.markTaskCompleted();
+        // file uploaded so stop showing spinner
+        this.showSpinner = false;
+        const uploadId = response._id;
+        // set navigation url based on userId, taskId and file uploadId
+        const navigationUrl = '/tasks/submitted/' + this.userId + '/' + this.task.taskId + '/' + this.task.name;
+        // navigate to submissions page for user to view submissions for this task
+        this.router.navigate([navigationUrl], {queryParams : { idSelected: uploadId, isUploadRedirect: true}});
+      });
   }
 
 }

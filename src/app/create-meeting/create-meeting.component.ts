@@ -48,7 +48,7 @@ export class CreateMeetingComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap
       .subscribe( params => {
-        const taskId = +params.get('taskId');
+        const taskId = params.get('taskId');
         this.getTask(taskId);
       });
     this.currentUser = this.userService.currentUserValue;
@@ -74,7 +74,7 @@ export class CreateMeetingComponent implements OnInit {
     return newDate;
   }
 
-  getTask(taskId: number) {
+  getTask(taskId: string) {
     this.taskService.getTaskById(taskId)
       .subscribe(response => {
         this.task = response;
@@ -85,8 +85,9 @@ export class CreateMeetingComponent implements OnInit {
   submit() {
     const meetingData = this.buildMeetingData();
     this.meetingService.scheduleMeeting(meetingData)
-      .subscribe(res => {
-        console.log(res);
+      .subscribe(() => {
+        this.userService.markTaskCompleteForUser(this.currentUser.universityId, this.task.taskId)
+          .subscribe();
         this.router.navigate(['/student', this.currentUser.universityId], {queryParams: {active: 'Meetings'}});
       });
   }

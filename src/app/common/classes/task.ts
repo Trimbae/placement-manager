@@ -2,9 +2,10 @@ export interface Task {
   date: Date;
   isPublished: boolean;
   displayName: string;
+  description: string;
   name: string;
   orderIndex: number;
-  taskId: number;
+  taskId: string;
   type: string;
   uploadInfo: UploadInfo;
 }

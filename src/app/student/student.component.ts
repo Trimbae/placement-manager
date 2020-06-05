@@ -4,9 +4,7 @@ import {UserService} from '../services/user-service/user.service';
 import {environment} from '../../environments/environment';
 import {TaskService} from '../services/task-service/task.service';
 import { Task } from '../common/classes/task';
-import {User, FeedbackData} from '../common/classes/user';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {MarkAssignmentModalComponent} from '../mark-assignment-modal/mark-assignment-modal.component';
+import {User} from '../common/classes/user';
 import {MeetingService} from '../services/meeting-service/meeting.service';
 import {Meeting} from '../common/classes/meeting';
 
@@ -22,8 +20,7 @@ export class StudentComponent implements OnInit {
   currentUser: User;
   feedbackSubmitted = false;
   feedbackTaskName: string;
-  scheduledMeetings: Meeting[] = [];
-  pendingMeetings: Meeting[] = [];
+  meetings: Meeting[];
   student: User;
   photoUrl: string;
   tasks: Task[] = [];
@@ -35,7 +32,6 @@ export class StudentComponent implements OnInit {
 
   constructor( private route: ActivatedRoute,
                private meetingService: MeetingService,
-               private modalService: NgbModal,
                private router: Router,
                private userService: UserService,
                private taskService: TaskService) { }
@@ -58,29 +54,12 @@ export class StudentComponent implements OnInit {
       });
   }
 
-  approveMeeting(meeting: Meeting) {
-    const index = this.pendingMeetings.indexOf(meeting);
-    this.meetingService.approveMeeting(meeting)
-      .subscribe(() => {
-        console.log('meeting approved');
-        this.pendingMeetings.splice(index, 1);
-        this.scheduledMeetings.push(meeting);
-      });
-  }
 
-  cancelMeeting(meeting: Meeting): void {
-    const index = this.scheduledMeetings.indexOf(meeting);
-    this.meetingService.cancelMeeting(meeting)
-      .subscribe(response => {
-        console.log('meeting cancelled', response);
-        this.scheduledMeetings.splice(index, 1);
-      });
-  }
 
   checkPermissions(universityId: string): void {
     this.currentUser = this.userService.currentUserValue;
     if (this.currentUser.universityId !== universityId
-      && !this.currentUser.accessLevel.isAdmin && !this.currentUser.accessLevel.isSupervisor) {
+      && !this.currentUser.accessLevel.isAdmin && this.currentUser.userType !== 'supervisor') {
       this.router.navigate(['error'], { queryParams: { errorCode: 'userNotAuthorized' }});
     }
   }
@@ -88,7 +67,7 @@ export class StudentComponent implements OnInit {
   getMeetings() {
     this.meetingService.getMeetingsById(this.student.universityId, this.student.studentData.supervisorId)
       .subscribe( meetings => {
-        this.sortMeetings(meetings);
+        this.meetings = meetings;
       });
   }
 
@@ -99,9 +78,9 @@ export class StudentComponent implements OnInit {
   }
 
   getStudent(universityId: string) {
-    this.userService.getStudentById(universityId)
+    this.userService.getUserById(universityId)
       .subscribe(response => {
-        this.student = response as User;
+        this.student = response;
         this.setEditPrivileges();
         this.getProfilePhotoUrl();
         this.getTasks();
@@ -120,26 +99,6 @@ export class StudentComponent implements OnInit {
       });
   }
 
-  onMarkClicked(task: Task) {
-    console.log('mark clicked');
-    const modalRef = this.modalService.open(MarkAssignmentModalComponent, {size: 'lg', windowClass: 'modal-holder', centered: true});
-    modalRef.componentInstance.student = this.student;
-    modalRef.componentInstance.task = task;
-
-    modalRef.result.then( (feedback: FeedbackData) => {
-      feedback.taskId = task.taskId;
-      console.log(feedback);
-      this.userService.addFeedback(this.student.universityId, feedback)
-        .subscribe(response => {
-          console.log(response);
-          this.feedbackSubmitted = true;
-          this.feedbackTaskName = task.displayName;
-        });
-    }, () => {
-      // modal dismissed
-    });
-}
-
   setDefaultAvatar() {
     this.photoUrl = './assets/img/default-user-icon.png';
   }
@@ -154,13 +113,5 @@ export class StudentComponent implements OnInit {
     this.activeSection = section;
   }
 
-  sortMeetings(meetings: Meeting[]) {
-    for (const meeting of meetings) {
-      if (meeting.approved) {
-        this.scheduledMeetings.push(meeting);
-      } else {
-        this.pendingMeetings.push(meeting);
-      }
-    }
-  }
+
 }

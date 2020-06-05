@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {TaskService} from '../services/task-service/task.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {formatDate} from '@angular/common';
+import {UUID} from 'angular2-uuid';
 
 // TODO: add option to publish task as draft, make multiple spaces invalid input
 
@@ -12,7 +13,8 @@ import {formatDate} from '@angular/common';
   styleUrls: ['./create-task.component.css']
 })
 export class CreateTaskComponent implements OnInit {
-  newTaskId = this.getRandomInt(10, 50);
+  // assign random string as ID
+  newTaskId = UUID.UUID();
   minDate: Date;
   isEdit = false;
 
@@ -91,7 +93,7 @@ export class CreateTaskComponent implements OnInit {
   checkParamsForTask() {
     this.route.paramMap
       .subscribe(params => {
-        const taskId = +params.get('taskId');
+        const taskId = params.get('taskId');
         if (taskId) {
           this.editTask(taskId);
         }

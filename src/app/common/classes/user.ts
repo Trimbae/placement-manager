@@ -3,10 +3,12 @@ export interface User {
   universityId: string;
   email: string;
   studentData: StudentData;
-  tasksCompleted: number[];
+  tasksCompleted: string[];
   accessLevel: AccessLevel;
   userType: string;
   feedback: FeedbackData[];
+  jobTitle: string;
+  startDate: Date;
 }
 
 export interface AccessLevel {
@@ -15,7 +17,7 @@ export interface AccessLevel {
 }
 
 export interface FeedbackData {
-  taskId: number;
+  taskId: string;
   mark: number;
   comments: string;
 }

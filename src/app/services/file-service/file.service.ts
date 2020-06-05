@@ -15,8 +15,8 @@ export class FileService {
     return this.http.delete(this.url + '/' + fileId);
   }
 
-  getFilesByTaskId(taskId: number, universityId: string) {
-    return this.http.get(this.url + '/' + taskId.toString() + '/' + universityId);
+  getFilesByTaskId(taskId: string, universityId: string) {
+    return this.http.get(this.url + '/' + taskId + '/' + universityId);
   }
 
   uploadFile(file) {

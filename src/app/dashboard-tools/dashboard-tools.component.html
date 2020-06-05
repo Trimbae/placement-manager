@@ -16,10 +16,10 @@
         <a routerLink="/feedback">My Feedback</a>
         <hr>
       </li>
-      <li *ngFor="let tool of tools; let i = index">
-        <hr *ngIf="i !== 0"/>
-        <a routerLink="{{tool.link}}">{{ tool.name }}</a>
+      <li *ngIf="user?.userType === 'student'">
+        <a [routerLink]="['/student', user.universityId]">View Profile</a>
       </li>
+
     </ul>
   </div>
 </div>
