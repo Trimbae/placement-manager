@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {formatDate} from '@angular/common';
 import {UUID} from 'angular2-uuid';
 import {Task} from '../common/classes/task';
+import {PermissionService} from '../services/permission-service/permission.service';
 
 // TODO: add option to publish task as draft, make multiple spaces invalid input
 
@@ -43,9 +44,13 @@ export class CreateTaskComponent implements OnInit {
     { id: 'supporting-documents', name: 'Supporting Documents'}
   ];
 
-  constructor(private taskService: TaskService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private taskService: TaskService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private permissionService: PermissionService) { }
 
   ngOnInit(): void {
+    this.checkPermissions();
     // set minimum date for form task due date as today
     this.minDate = new Date();
     this.checkParamsForTask();
@@ -100,6 +105,13 @@ export class CreateTaskComponent implements OnInit {
         }
       });
   }
+
+  checkPermissions(): void {
+    if (!this.permissionService.isAdmin()) {
+      this.router.navigate(['error'], { queryParams: { errorCode: 'userNotAuthorized' }});
+    }
+  }
+
   // combines date and time values from form into single date object
   createDateTime(): Date {
     const hours = this.dueTime.value.split(':')[0];

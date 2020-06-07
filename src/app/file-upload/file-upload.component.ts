@@ -5,6 +5,7 @@ import {TaskService} from '../services/task-service/task.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../services/user-service/user.service';
 import {Task} from '../common/classes/task';
+import {PermissionService} from '../services/permission-service/permission.service';
 
 @Component({
   selector: 'app-file-upload',
@@ -39,6 +40,7 @@ export class FileUploadComponent implements OnInit {
 
   constructor(
     private filesService: FileService,
+    private permissionService: PermissionService,
     private route: ActivatedRoute,
     private router: Router,
     private taskService: TaskService,
@@ -57,7 +59,14 @@ export class FileUploadComponent implements OnInit {
           });
         // set user Id from URL parameters
         this.userId = params.get('userId');
+        this.checkPermissions();
       });
+  }
+
+  checkPermissions(): void {
+    if (!this.permissionService.isCurrentUser(this.userId)) {
+      this.router.navigate(['error'], { queryParams: { errorCode: 'userNotAuthorized' }});
+    }
   }
 
   pondHandleInit() {

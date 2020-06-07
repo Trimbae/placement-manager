@@ -64,6 +64,7 @@ export class CreateMeetingComponent implements OnInit {
       location: this.location.value
     };
   }
+
   // takes time and date values and combines them into single date object
   createDateTime(): Date {
     const hours = this.time.value.split(':')[0];

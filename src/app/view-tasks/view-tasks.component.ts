@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {Task} from '../common/classes/task';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ModalDeleteComponent} from '../modal-delete/modal-delete.component';
+import {PermissionService} from '../services/permission-service/permission.service';
 
 @Component({
   selector: 'app-view-tasks',
@@ -22,10 +23,20 @@ export class ViewTasksComponent implements OnInit {
   originalPublishedTasks: any;
   originalDraftTasks: any;
 
-  constructor(private taskService: TaskService, private modalService: NgbModal,  private router: Router) { }
+  constructor(private taskService: TaskService,
+              private modalService: NgbModal,
+              private permissionService: PermissionService,
+              private router: Router) { }
 
   ngOnInit(): void {
+    this.checkPermissions();
     this.getTasks();
+  }
+
+  checkPermissions(): void {
+    if (!this.permissionService.isAdmin()) {
+      this.router.navigate(['error'], { queryParams: { errorCode: 'userNotAuthorized' }});
+    }
   }
 
   clearNotifications(): void {

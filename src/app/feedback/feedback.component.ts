@@ -30,7 +30,6 @@ export class FeedbackComponent implements OnInit {
       for (const feedbackObject of this.user.feedback) {
         for (const task of tasks) {
           if (feedbackObject.taskId === task.taskId) {
-            console.log(feedbackObject);
             this.taskFeedback.push({task, feedback: feedbackObject});
           }
         }

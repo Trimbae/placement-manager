@@ -12,7 +12,6 @@
         <a routerLink="/admin/view-tasks">{{'dashboardTools.manageTasks' | translate}}</a>
       </li>
       <li *ngIf="user?.userType === 'student'">
-        <hr>
         <a routerLink="/feedback">{{'dashboardTools.feedback' | translate}}</a>
       </li>
       <li *ngIf="user?.userType === 'student'">

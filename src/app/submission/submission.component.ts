@@ -1,10 +1,11 @@
 import {Component, OnChanges, OnInit} from '@angular/core';
 import {FileService} from '../services/file-service/file.service';
 import {TaskService} from '../services/task-service/task.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ModalDeleteComponent} from '../modal-delete/modal-delete.component';
 import {Task} from '../common/classes/task';
+import {PermissionService} from '../services/permission-service/permission.service';
 
 @Component({
   selector: 'app-submission',
@@ -23,9 +24,11 @@ export class SubmissionComponent implements OnInit, OnChanges {
   fileDeleted: any;
 
   constructor(
-    private route: ActivatedRoute,
     private filesService: FileService,
     private modalService: NgbModal,
+    private permissionService: PermissionService,
+    private route: ActivatedRoute,
+    private router: Router,
     private taskService: TaskService
   ) { }
 
@@ -36,6 +39,15 @@ export class SubmissionComponent implements OnInit, OnChanges {
   ngOnChanges(): void {
     this.getPreview(this.idSelected);
   }
+
+  checkPermissions(): void {
+    if (!this.permissionService.isCurrentUser(this.universityId) &&
+      !this.permissionService.isSupervisorOfStudent(this.universityId) &&
+      !this.permissionService.isAdmin()) {
+        this.router.navigate(['error'], { queryParams: { errorCode: 'userNotAuthorized' }});
+    }
+  }
+
   // get files for this student for this task
   getFiles(taskId: string, universityId: string) {
     this.filesService.getFilesByTaskId(taskId, universityId)
@@ -70,6 +82,7 @@ export class SubmissionComponent implements OnInit, OnChanges {
       .subscribe(params => {
         const taskId = params.get('taskId');
         this.universityId = params.get('userId');
+        this.checkPermissions();
         this.getTask(taskId);
         this.getFiles(taskId, this.universityId);
       });
