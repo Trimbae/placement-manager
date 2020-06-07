@@ -20,7 +20,6 @@ describe('ModalProfileComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ModalProfileComponent);
     component = fixture.componentInstance;
-    component.userData = {name: 'Matt'};
     fixture.detectChanges();
   });
 

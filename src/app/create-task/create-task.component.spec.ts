@@ -172,9 +172,9 @@ fdescribe('CreateTaskComponent', () => {
     });
     it('should call patchValuesToForm if response from TaskService', () => {
       const testTaskId = '3';
-      const testTaskData = {};
+      const testTaskData = {} as Task;
 
-      spyOn(taskService, 'getTaskById').and.returnValue(of(testTaskData as Task));
+      spyOn(taskService, 'getTaskById').and.returnValue(of(testTaskData));
       spyOn(component, 'patchValuesToForm');
 
       component.editTask(testTaskId);
