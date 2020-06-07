@@ -1,6 +1,9 @@
 .buttonContainer {
   text-align: right;
 }
+.taskDescription {
+  margin-bottom: 20px;
+}
 
 mat-form-field {
   margin-bottom: 20px;

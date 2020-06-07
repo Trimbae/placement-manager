@@ -7,9 +7,9 @@
   </button>
 </div>
 
-<div class="detailsHeading">Scheduled Meetings</div>
+<div class="detailsHeading">{{'studentMeetings.scheduledHeading' | translate}}</div>
 <div *ngIf="scheduledMeetings.length === 0" class="text-center text-muted noSubmissions">
-  No meetings scheduled.
+  {{'studentMeetings.noMeetingsScheduled' | translate}}
 </div>
 <div *ngIf="scheduledMeetings.length > 0">
   <ul class="list-group-flush">
@@ -23,9 +23,9 @@
   </ul>
 </div>
 
-<div class="detailsHeading">Pending Approval</div>
+<div class="detailsHeading">{{'studentMeetings.pendingHeading' | translate}}</div>
 <div *ngIf="pendingMeetings.length === 0" class="text-center text-muted noMeetings">
-  No meetings pending approval.
+  {{'studentMeetings.noMeetingsPending' | translate}}
 </div>
 <div *ngIf="pendingMeetings.length > 0">
   <ul class="list-group-flush">

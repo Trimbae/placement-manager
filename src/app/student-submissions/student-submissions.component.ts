@@ -23,16 +23,16 @@ export class StudentSubmissionsComponent implements OnInit {
   ngOnInit(): void {
   }
   onMarkClicked(task: Task) {
+    // call mark assignment modal for student and task
     const modalRef = this.modalService.open(MarkAssignmentModalComponent, {size: 'lg', windowClass: 'modal-holder', centered: true});
     modalRef.componentInstance.student = this.student;
     modalRef.componentInstance.task = task;
-
+    // called when user clicks 'submit' button on modal
     modalRef.result.then( (feedback: FeedbackData) => {
+      // post feedback to userService, set notification
       feedback.taskId = task.taskId;
-      console.log(feedback);
       this.userService.addFeedback(this.student.universityId, feedback)
         .subscribe(response => {
-          console.log(response);
           this.feedbackSubmitted = true;
           this.feedbackTaskName = task.displayName;
         });

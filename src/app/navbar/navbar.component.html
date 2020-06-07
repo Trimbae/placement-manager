@@ -4,10 +4,10 @@
       <img src="./assets/img/logo.png" alt="Cardiff Univeristy Logo" class="img-fluid navbarLogo">
 
       <a class="navbar-brand navbarText" routerLink="/dashboard">
-        Placement Manager
+        {{'navbar.title' | translate}}
       </a>
     </div>
-    <a class="btn-link navbarLogOut clickable" (click)="logout()">Log out</a>
+    <a class="btn-link navbarLogOut clickable" (click)="logout()">{{'navbar.logout' | translate}}</a>
   </div>
 
 </nav>

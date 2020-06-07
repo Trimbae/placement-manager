@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {TaskService} from '../services/task-service/task.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../services/user-service/user.service';
+import {Task} from '../common/classes/task';
 
 @Component({
   selector: 'app-file-upload',
@@ -16,7 +17,7 @@ export class FileUploadComponent implements OnInit {
   @ViewChild('fileInputPond') inputPond: any;
   fileData: string = null;
   previewType: string = null;
-  task: any;
+  task: Task;
   userId: string;
   showSpinner = false;
 

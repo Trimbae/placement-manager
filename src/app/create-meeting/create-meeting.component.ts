@@ -24,14 +24,14 @@ export class CreateMeetingComponent implements OnInit {
               private router: Router,
               private userService: UserService,
               private taskService: TaskService) { }
-
+  // set up form
   form = new FormGroup({
     name: new FormControl('', Validators.required),
     date: new FormControl('', Validators.required),
     time: new FormControl('', Validators.required),
     location: new FormControl('')
   });
-
+  // getter functions for form variables
   get name() {
     return this.form.get('name');
   }
@@ -44,7 +44,7 @@ export class CreateMeetingComponent implements OnInit {
   get location() {
     return this.form.get('location');
   }
-
+  // on component init, get taskId from url params and use it to get Task
   ngOnInit(): void {
     this.route.paramMap
       .subscribe( params => {
@@ -53,7 +53,7 @@ export class CreateMeetingComponent implements OnInit {
       });
     this.currentUser = this.userService.currentUserValue;
   }
-
+  // gathers data from form into object
   buildMeetingData() {
     return {
       name: this.name.value,
@@ -64,7 +64,7 @@ export class CreateMeetingComponent implements OnInit {
       location: this.location.value
     };
   }
-
+  // takes time and date values and combines them into single date object
   createDateTime(): Date {
     const hours = this.time.value.split(':')[0];
     const mins = this.time.value.split(':')[1];
@@ -73,7 +73,7 @@ export class CreateMeetingComponent implements OnInit {
     newDate.setHours(hours, mins);
     return newDate;
   }
-
+  // retrieve task from taskService by Id
   getTask(taskId: string) {
     this.taskService.getTaskById(taskId)
       .subscribe(response => {
@@ -81,7 +81,8 @@ export class CreateMeetingComponent implements OnInit {
         this.loading = false;
       });
   }
-
+  // called on form submission, post meeting data to back-end, mark task completed for user,
+  // then navigate to student details page on the meetings tab
   submit() {
     const meetingData = this.buildMeetingData();
     this.meetingService.scheduleMeeting(meetingData)

@@ -1,5 +1,5 @@
 <div class="spinner-wrapper" *ngIf="showSpinner">
-  <app-loading-spinner></app-loading-spinner>
+  <mat-spinner></mat-spinner>
 </div>
 
 <app-navbar></app-navbar>
@@ -9,43 +9,46 @@
 <div *ngIf="task" class="container">
   <div class="row">
     <div class="col-md-8 offset-md-2">
-      <h3>File Upload: {{task.displayName}}</h3>
+      <h3>{{'fileUpload.heading' | translate : {taskName: task.displayName} }}</h3>
 
       <hr>
-      <div class="uploadSubtitle">Task Description:</div>
+      <div class="uploadSubtitle">{{'fileUpload.description' | translate}}</div>
       <div>{{task.description}}</div>
       <hr>
 
       <!-- File details -->
-      <div class="uploadSubtitle">Details:</div>
+      <div class="uploadSubtitle">{{'fileUpload.details' | translate}}</div>
       <div class="row">
         <div class="col-md-4 ">
           <div class="card box-shadow fadeIn">
             <div class="card-header">
-              Deadline:
+              {{'fileUpload.deadlineLabel' | translate}}
             </div>
             <div class="card-body uploadCardText">
               {{ task.dueDateTime | date:'HH:mm dd/MM/yyyy'}}
             </div>
           </div>
         </div>
+
         <div class="col-md-4 ">
           <div class="card box-shadow fadeIn">
             <div class="card-header">
-              Marks available:
-            </div>
-            <div class="card-body uploadCardText">
-              N/A
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 ">
-          <div class="card box-shadow fadeIn">
-            <div class="card-header">
-              Type:
+              {{'fileUpload.typeLabel' | translate}}
             </div>
             <div *ngIf="task.uploadInfo" class="card-body uploadCardText">
               {{ task.uploadInfo.uploadType}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 ">
+          <div class="card box-shadow fadeIn">
+            <div class="card-header">
+              {{'fileUpload.marksLabel' | translate}}
+            </div>
+            <div class="card-body uploadCardText">
+              <span *ngIf="task.uploadInfo.marksAvailable">{{task.uploadInfo.marksAvailable}}</span>
+              <span *ngIf="!task.uploadInfo.marksAvailable">{{'fileUpload.na' | translate}}</span>
             </div>
           </div>
         </div>
@@ -56,7 +59,7 @@
       <!-- Description -->
       <form [formGroup]="uploadForm" (ngSubmit)="onFileUpload()" class="fadeIn">
         <div class="form-group">
-          <label for="comments">Comments:</label>
+          <label for="comments">{{'fileUpload.commentsLabel' | translate}}</label>
           <textarea
             formControlName="comments"
             id="comments"
@@ -68,16 +71,16 @@
         <hr>
         <!-- Pdf previewer -->
         <div class="preview">
-          <div class="uploadSubtitle">Preview: </div>
-          <div class="text-center text-muted" *ngIf="!fileData"> Select file to see preview... </div>
-          <div class="text-center text-muted" *ngIf="fileData && previewType !== 'application/pdf'"> Preview only available for pdf files </div>
+          <div class="uploadSubtitle">{{'fileUpload.previewLabel' | translate}}</div>
+          <div class="text-center text-muted" *ngIf="!fileData"> {{'fileUpload.selectFile' | translate}} </div>
+          <div class="text-center text-muted" *ngIf="fileData && previewType !== 'application/pdf'"> {{'fileUpload.noPreview' | translate}} </div>
           <app-pdf-viewer *ngIf="fileData && previewType === 'application/pdf'" [height]="500" [sourceData]="fileData"></app-pdf-viewer>
         </div>
 
         <hr>
 
         <!-- FILE POND (Add file section) -->
-        <div class="uploadSubtitle">Add Files: </div>
+        <div class="uploadSubtitle">{{'fileUpload.pondLabel' | translate}}</div>
         <file-pond #fileInputPond
                    [options]="pondOptions"
                    [files]="pondFiles"
@@ -87,7 +90,7 @@
                    class="clickable">
         </file-pond>
         <!-- upload button -->
-        <button type="submit" [disabled]="!uploadForm.valid" class="btn btn-primary">Upload</button>
+        <button type="submit" [disabled]="!uploadForm.valid" class="btn btn-primary">{{'fileUpload.uploadButton' | translate}}</button>
 
       </form>
     </div>

@@ -3,8 +3,6 @@ import {TaskService} from '../services/task-service/task.service';
 import { Task } from '../common/classes/task';
 import {FeedbackData, User} from '../common/classes/user';
 import {UserService} from '../services/user-service/user.service';
-import {MsalService} from '@azure/msal-angular';
-import {forkJoin} from 'rxjs';
 
 export interface Feedback {
   task: Task;
@@ -21,40 +19,34 @@ export class FeedbackComponent implements OnInit {
   taskFeedback: Feedback[] = [];
   activeTaskFeedback: Feedback;
 
-  constructor(private taskService: TaskService, private userService: UserService, private authService: MsalService) { }
+  constructor(private taskService: TaskService, private userService: UserService) { }
 
   ngOnInit(): void {
     this.getPageData();
   }
-
+  // iterate through user feedback, if taskId matches taskId of a published task, push to array
   getTasksWithFeedback(tasks: Task[]) {
     if (this.user.feedback) {
-      console.log(this.user.feedback);
-      console.log(tasks);
       for (const feedbackObject of this.user.feedback) {
         for (const task of tasks) {
           if (feedbackObject.taskId === task.taskId) {
+            console.log(feedbackObject);
             this.taskFeedback.push({task, feedback: feedbackObject});
           }
         }
       }
     }
+    // set first feedback object as active
     if (this.taskFeedback.length > 0) {
       this.activeTaskFeedback = this.taskFeedback[0];
     }
   }
-
+  // get user and task data
   getPageData() {
-    this.authService.acquireTokenSilent({scopes: ['user.read']})
-      .then(response => {
-        forkJoin({
-          user: this.userService.getCurrentUser(response.accessToken),
-          tasks: this.taskService.getPublishedTasks()
-        })
-          .subscribe(res => {
-            this.user = res.user;
-            this.getTasksWithFeedback(res.tasks);
-          });
+    this.user = this.userService.currentUserValue;
+    this.taskService.getPublishedTasks()
+      .subscribe(tasks => {
+        this.getTasksWithFeedback(tasks);
       });
   }
 

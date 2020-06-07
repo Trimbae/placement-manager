@@ -4,19 +4,19 @@
 
 <div class="container">
   <!-- Undefined Error -->
-  <h3 class="errorHeading">Oops,</h3>
+  <h3 class="errorHeading">{{'errorPage.oops' | translate}}</h3>
   <div class="errorMessageWrapper" *ngIf="loaded && !errorCode">
-    <div class="text-muted">Something went wrong, but we're not sure what.</div>
-    <div class="text-muted">Sorry about that.</div>
+    <div class="text-muted">{{'errorPage.subheading1' | translate}}</div>
+    <div class="text-muted">{{'errorPage.subheading2' | translate}}</div>
   </div>
   <!-- Error if no data for user -->
   <div class="errorMessageWrapper" *ngIf="loaded && errorCode === 'userNotFound'">
-    <div class="text-muted"><strong>It looks like you aren't registered with the placement management system yet.</strong></div>
-    <div class="text-muted">If you think this is wrong, please contact a member of the placement team.</div>
+    <div class="text-muted"><strong>{{'errorPage.userNotFound1' | translate}}</strong></div>
+    <div class="text-muted">{{'errorPage.userNotFound1' | translate}}</div>
   </div>
   <!-- Permission denied error -->
   <div class="errorMessageWrapper" *ngIf="loaded && errorCode === 'userNotAuthorized'">
-    <div class="text-muted"><strong>It looks like you aren't authorised to view this content.</strong></div>
-    <div class="text-muted">If you think this is wrong, please contact a member of the placement team.</div>
+    <div class="text-muted"><strong>{{'errorPage.userNotAuthorized1' | translate}}</strong></div>
+    <div class="text-muted">{{'errorPage.userNotAuthorized1' | translate}}</div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 <div class="card box-shadow fadeIn">
   <div class="card-header">
-    <h3> My Tasks </h3>
+    <h3>{{'dashboardMyTasks.heading' | translate}}</h3>
   </div>
   <p><ngb-progressbar type="success" [value]="percentageCompleted" style="border-radius: 0"></ngb-progressbar></p>
   <app-loading-spinner *ngIf="!user"></app-loading-spinner>

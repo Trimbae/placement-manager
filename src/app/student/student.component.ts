@@ -18,8 +18,7 @@ export class StudentComponent implements OnInit {
   activeSection = 'Details';
   canEdit = false;
   currentUser: User;
-  feedbackSubmitted = false;
-  feedbackTaskName: string;
+  loading = true;
   meetings: Meeting[];
   student: User;
   photoUrl: string;
@@ -35,7 +34,7 @@ export class StudentComponent implements OnInit {
                private router: Router,
                private userService: UserService,
                private taskService: TaskService) { }
-
+  // on init get university id from url params and use it to get student and check permissions
   ngOnInit(): void {
     this.route.paramMap
       .subscribe(params => {
@@ -45,6 +44,7 @@ export class StudentComponent implements OnInit {
           this.getStudent(universityId);
         }
     });
+    // get active tab from query params if passed
     this.route.queryParamMap
       .subscribe( queryParams => {
         const active = queryParams.get('active');
@@ -55,28 +55,28 @@ export class StudentComponent implements OnInit {
   }
 
 
-
+  // should only be able to view this page if supervisor or if current student is viewing their own details
   checkPermissions(universityId: string): void {
     this.currentUser = this.userService.currentUserValue;
-    if (this.currentUser.universityId !== universityId
-      && !this.currentUser.accessLevel.isAdmin && this.currentUser.userType !== 'supervisor') {
+    if (this.currentUser.universityId !== universityId && this.currentUser.userType !== 'supervisor') {
+      // if not authorised, go to error page
       this.router.navigate(['error'], { queryParams: { errorCode: 'userNotAuthorized' }});
     }
   }
-
+  // get meetings between student and their supervisor
   getMeetings() {
     this.meetingService.getMeetingsById(this.student.universityId, this.student.studentData.supervisorId)
       .subscribe( meetings => {
         this.meetings = meetings;
       });
   }
-
+  // create url to get profile photo
   getProfilePhotoUrl() {
     if (this.student) {
       this.photoUrl = environment.urls.PLACEMENT_MANAGER_API + '/images/' + this.student.universityId + '.jpg';
     }
   }
-
+  // get Student from id, then call other tasks that use student info
   getStudent(universityId: string) {
     this.userService.getUserById(universityId)
       .subscribe(response => {
@@ -85,9 +85,10 @@ export class StudentComponent implements OnInit {
         this.getProfilePhotoUrl();
         this.getTasks();
         this.getMeetings();
+        this.loading = false;
       });
   }
-
+  // get upload tasks completed by student for submissions tab
   getTasks() {
     this.taskService.getPublishedTasks()
       .subscribe(response  => {
@@ -98,17 +99,17 @@ export class StudentComponent implements OnInit {
         }
       });
   }
-
+  // if no profile photo, use default avatar
   setDefaultAvatar() {
     this.photoUrl = './assets/img/default-user-icon.png';
   }
-
+  // user can mark assignment or approve meetings if they are this students supervisor or an admin
   setEditPrivileges(): void {
     if (this.currentUser.universityId === this.student.studentData.supervisorId || this.currentUser.accessLevel.isAdmin) {
       this.canEdit = true;
     }
   }
-
+  // change section to show
   show(section: string) {
     this.activeSection = section;
   }

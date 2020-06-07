@@ -4,6 +4,7 @@ import {TaskService} from '../services/task-service/task.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {formatDate} from '@angular/common';
 import {UUID} from 'angular2-uuid';
+import {Task} from '../common/classes/task';
 
 // TODO: add option to publish task as draft, make multiple spaces invalid input
 
@@ -17,7 +18,7 @@ export class CreateTaskComponent implements OnInit {
   newTaskId = UUID.UUID();
   minDate: Date;
   isEdit = false;
-
+  // set up form
   form = new FormGroup({
     taskName: new FormControl('', [
       Validators.required,
@@ -75,7 +76,7 @@ export class CreateTaskComponent implements OnInit {
   get dueTime() {
     return this.form.get('dueTime');
   }
-
+  // formats data into object to be posted
   buildData() {
     const data = this.form.getRawValue();
     return {
@@ -89,7 +90,7 @@ export class CreateTaskComponent implements OnInit {
       isPublished: true
     };
   }
-
+  // get taskId from url parameters if one has been past
   checkParamsForTask() {
     this.route.paramMap
       .subscribe(params => {
@@ -99,7 +100,7 @@ export class CreateTaskComponent implements OnInit {
         }
       });
   }
-
+  // combines date and time values from form into single date object
   createDateTime(): Date {
     const hours = this.dueTime.value.split(':')[0];
     const mins = this.dueTime.value.split(':')[1];
@@ -108,7 +109,7 @@ export class CreateTaskComponent implements OnInit {
     newDate.setHours(hours, mins);
     return newDate;
   }
-
+  // gets task details from taskService and passes response to patchValuesToForm method
   editTask(taskId) {
     this.taskService.getTaskById(taskId)
       .subscribe((response: any) => {
@@ -116,32 +117,25 @@ export class CreateTaskComponent implements OnInit {
         this.isEdit = true;
       });
   }
-
-  getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
+  // gets time value from Date object
   getTimeFromFullDate(dateTime: Date) {
     return formatDate(dateTime, 'HH:mm', 'en');
   }
-
+  // populates uploadInfo
   getUploadInfoObject() {
     return {
       uploadType: this.uploadType.value,
       marksAvailable: this.uploadType.value === 'assessment' ? this.marksAvailable.value : null
     };
   }
-
+  // converts task name into a version that can be used in urls, removes caps, replaces spaces with dashes
   getUrlFriendlyName() {
     let urlFriendlyName = this.taskName.value.toLowerCase();
     urlFriendlyName = urlFriendlyName.replace(/\s/g , '-');
-    console.log(urlFriendlyName);
     return urlFriendlyName;
   }
-
-  patchValuesToForm(task) {
+  // takes values from task object and patches them to form field values
+  patchValuesToForm(task: Task) {
     let parsedDueDateTime = null;
     if (task.dueDateTime) {
       parsedDueDateTime = new Date(task.dueDateTime);
@@ -152,12 +146,12 @@ export class CreateTaskComponent implements OnInit {
       description: task.description,
       type: task.type,
       uploadType: task.uploadInfo ? task.uploadInfo.uploadType : '',
-      marksAvailable: task.uploadInfo && task.uploadInfo.marksAvailable ? task.uploadInfo.taskType : '',
+      marksAvailable: task.uploadInfo && task.uploadInfo.marksAvailable ? task.uploadInfo.marksAvailable : '',
       dueDate: parsedDueDateTime,
       dueTime: parsedDueDateTime ? this.getTimeFromFullDate(parsedDueDateTime) : null
     });
   }
-
+  // called on submit, if edit: patches task data, else creates new task. then navigate back to view tasks page
   submit() {
     if (this.isEdit) {
       this.taskService.editTask(this.buildData())

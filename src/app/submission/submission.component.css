@@ -6,6 +6,10 @@
   align-self: center;
   padding: 10px;
 }
+.newSubmission {
+  width: 100% !important;
+  color: #d4374a;
+}
 .previewText{
   padding: 200px 0 600px 0
 }

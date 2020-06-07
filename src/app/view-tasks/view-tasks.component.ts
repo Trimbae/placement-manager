@@ -32,7 +32,7 @@ export class ViewTasksComponent implements OnInit {
     this.notificationText = null;
     this.notificationType = null;
   }
-
+  // event called when a task item is dropped in a new place in group
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -42,18 +42,17 @@ export class ViewTasksComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
-    this.orderChanged =  this.isOrderChanged();
+    this.orderChanged = this.isOrderChanged();
   }
-
+  // navigate to edit task page
   editClicked(task) {
     this.router.navigate(['/admin/edit-task', task.taskId, task.name]);
   }
-
+  // check if order has changed, this tells us whether to enable save changes button
   isOrderChanged() {
     for (const task of this.publishedTasks) {
       const currentIndex = this.publishedTasks.indexOf(task);
       if (task.orderIndex !== currentIndex || !task.isPublished) {
-        console.log('prev: ' + task.orderIndex + ' current: ' + currentIndex);
         return true;
       }
     }
@@ -64,7 +63,7 @@ export class ViewTasksComponent implements OnInit {
     }
     return false;
   }
-
+  // get tasks
   getTasks() {
     this.taskService.getTasks()
       .subscribe(response => {
@@ -72,12 +71,13 @@ export class ViewTasksComponent implements OnInit {
         this.isLoaded = true;
       });
   }
-
+  // called when delete icon is clicked for a task
   onDelete(task: Task) {
+    // open delete modal for task
     const modalRef = this.modalService.open(ModalDeleteComponent, {windowClass: 'modal-holder', centered: true});
     modalRef.componentInstance.name = task.displayName;
     modalRef.componentInstance.type = 'Task';
-
+    // if user clicks ok, delete task and set notification
     modalRef.result.then( () => {
       this.taskService.deleteTaskById(task.taskId)
         .subscribe(() => {
@@ -88,21 +88,25 @@ export class ViewTasksComponent implements OnInit {
       // modal dismissed
     });
   }
-
+  // called when save changes button clicked, so that we dont have to update every task every time we save
+  // this function finds tasks that need updating and only posts these tasks for update
   onSaveChanges() {
     const tasksToUpdate = [];
+    // iterate through list of published tasks
     for (const task of this.publishedTasks) {
       const currentIndex = this.publishedTasks.indexOf(task);
+      // if original orderIndex doesnt match current index, save new index and push to array of tasks to update
       if (currentIndex !== task.orderIndex) {
         task.isPublished = true;
         task.orderIndex = currentIndex;
         tasksToUpdate.push(task);
-
+      // this accounts for tasks that match the orderIndex but were originally in the drafts list
       } else if (!task.isPublished) {
         task.isPublished = true;
         tasksToUpdate.push(task);
       }
     }
+    // iterate through draft tasks and push any tasks that were previously in published list for update
     for (const task of this.draftTasks) {
       if (task.isPublished) {
         task.isPublished = false;
@@ -110,13 +114,13 @@ export class ViewTasksComponent implements OnInit {
         tasksToUpdate.push(task);
       }
     }
+    // post all tasks to be updated
     this.taskService.updateTasks(tasksToUpdate)
       .subscribe(response => {
-        console.log(response);
         this.orderChanged = false;
       });
   }
-
+  // removes task from the appropriate array maintained in browser
   removeTaskFromList(task: Task) {
     if (task.isPublished) {
       const index = this.publishedTasks.indexOf(task);

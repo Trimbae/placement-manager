@@ -2,12 +2,12 @@
 <br>
 <div class="container">
   <h1 class="studentsHeading">
-    <span class="material-icons feedbackIcon">assignment_turned_in</span> Feedback
+    <span class="material-icons feedbackIcon">assignment_turned_in</span> {{'feedback.heading' | translate}}
   </h1>
   <mat-card class="feedbackCard">
     <div *ngIf="taskFeedback.length === 0" class="row">
       <div class="col-md-12">
-        <div class="noFeedback">You haven't received any feedback on your work yet.</div>
+        <div class="noFeedback">{{'feedback.noFeedback' | translate}}</div>
       </div>
     </div>
     <div *ngIf="taskFeedback.length > 0" class="row">
@@ -25,11 +25,11 @@
         <div class="feedbackCardHeading">{{activeTaskFeedback.task.displayName}}</div>
         <hr>
         <div>
-          <div class="feedbackCardSubheading">Mark:</div>
+          <div class="feedbackCardSubheading">{{'feedback.mark' |translate}}</div>
           <div class="markWrapper"><span class="markValue">{{activeTaskFeedback.feedback.mark}}</span>/{{activeTaskFeedback.task.uploadInfo.marksAvailable}}</div>
         </div>
         <hr>
-        <div class="feedbackCardSubheading">Comments:</div>
+        <div class="feedbackCardSubheading">{{'feedback.comments' | translate}}</div>
         <div class="comments">"{{activeTaskFeedback.feedback.comments}}"</div>
         <hr>
       </div>

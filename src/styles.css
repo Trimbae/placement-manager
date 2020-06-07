@@ -101,6 +101,8 @@ a:hover {
   height: 100%;
   padding-top: 20%;
   position: fixed;
+  display: flex;
+  justify-content: center;
   z-index: 1;
   background-color: #f6f6f6;
   opacity: 40%;

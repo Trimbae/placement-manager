@@ -1,23 +1,23 @@
 <div class="card fadeIn">
   <div class="card-header">
-    <h3>Tools</h3>
+    <h3>{{'dashboardTools.heading' | translate}}</h3>
   </div>
   <div class="card-body">
     <ul class="list-unstyled">
       <li *ngIf="user?.accessLevel?.isAdmin">
-        <a routerLink="/admin/view-students">View Students</a>
-        <hr>
+        <a routerLink="/admin/view-students">{{'dashboardTools.manageStudents' | translate}}</a>
       </li>
       <li *ngIf="user?.accessLevel?.isAdmin">
-        <a routerLink="/admin/view-tasks">Manage Tasks</a>
         <hr>
+        <a routerLink="/admin/view-tasks">{{'dashboardTools.manageTasks' | translate}}</a>
       </li>
       <li *ngIf="user?.userType === 'student'">
-        <a routerLink="/feedback">My Feedback</a>
         <hr>
+        <a routerLink="/feedback">{{'dashboardTools.feedback' | translate}}</a>
       </li>
       <li *ngIf="user?.userType === 'student'">
-        <a [routerLink]="['/student', user.universityId]">View Profile</a>
+        <hr>
+        <a [routerLink]="['/student', user.universityId]">{{'dashboardTools.placement' | translate}}</a>
       </li>
 
     </ul>

@@ -13,6 +13,22 @@ export class DashboardMyTasksComponent implements OnInit, OnChanges {
   percentageCompleted: number;
   tasks: Task[];
 
+  constructor(private taskService: TaskService) { }
+
+  ngOnInit(): void {
+    this.taskService.getPublishedTasks()
+      .subscribe(response => {
+        this.tasks = response;
+        this.sortTasks();
+        this.percentageCompleted = this.getPercentageCompleted();
+      });
+  }
+  // updates if changes to input data
+  ngOnChanges(): void {
+    this.percentageCompleted = this.getPercentageCompleted();
+  }
+
+  // compares number of published tasks to number of tasks completed by student to get percentage
   getPercentageCompleted() {
     if (this.user && this.tasks) {
       let completedTaskCount = 0;
@@ -25,25 +41,11 @@ export class DashboardMyTasksComponent implements OnInit, OnChanges {
     }
     return null;
   }
-
-  constructor(private taskService: TaskService) { }
-
-  ngOnInit(): void {
-    this.taskService.getPublishedTasks()
-      .subscribe(response => {
-        this.tasks = response;
-        this.sortTasks();
-        this.percentageCompleted = this.getPercentageCompleted();
-      });
-  }
-  ngOnChanges(): void {
-    this.percentageCompleted = this.getPercentageCompleted();
-  }
-
+  // checks taskId against array of tasks completed for user
   isTaskCompleted(taskId: string) {
     return this.user && this.user.tasksCompleted.includes(taskId);
   }
-
+  // sorts tasks by order index to display them in correct order
   sortTasks() {
     this.tasks.sort((a, b) => {
       return a.orderIndex - b.orderIndex;

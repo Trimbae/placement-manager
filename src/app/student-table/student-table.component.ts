@@ -23,7 +23,6 @@ export class StudentTableComponent implements AfterViewInit, OnInit {
 
   dataSource: StudentTableDataSource;
   tableSize: number;
-  showSpinner = true;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['universityId', 'name', 'supervisorName', 'placementProvider', 'assign'];

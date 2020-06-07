@@ -13,6 +13,7 @@ export class ErrorPageComponent implements OnInit {
 
   constructor(private route: ActivatedRoute) { }
 
+  // on init, get error code from query params
   ngOnInit(): void {
     this.route.queryParamMap
       .subscribe( params => {

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {User} from '../common/classes/user';
 import { Task } from '../common/classes/task';
@@ -9,11 +9,10 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
   templateUrl: './mark-assignment-modal.component.html',
   styleUrls: ['./mark-assignment-modal.component.css']
 })
-export class MarkAssignmentModalComponent implements OnInit, AfterViewInit {
+export class MarkAssignmentModalComponent implements AfterViewInit {
 
   @Input() student: User;
   @Input() task: Task;
-  max: number;
 
   constructor(public activeModal: NgbActiveModal) { }
 
@@ -21,19 +20,16 @@ export class MarkAssignmentModalComponent implements OnInit, AfterViewInit {
     mark: new FormControl('', [Validators.required, Validators.min(0)]),
     comments: new FormControl()
   });
-
+  // this validator must be set after view init so input task information can be used
   ngAfterViewInit() {
     this.mark.setValidators(Validators.max(this.task.uploadInfo.marksAvailable));
   }
-
+  // getters for form
   get mark() {
     return this.form.get('mark');
   }
   get comments() {
     return this.form.get('comments');
-  }
-
-  ngOnInit(): void {
   }
 
 }

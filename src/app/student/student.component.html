@@ -1,19 +1,17 @@
 <app-navbar></app-navbar>
 <br>
 <div class="container">
+  <!--  Heading -->
   <h1 class="nameHeader">
     <span class="material-icons peopleIcon">person</span>
-    <span class=""> Student</span>
+    <span class="">{{'student.heading' | translate}}</span>
   </h1>
-
-  <div *ngIf="feedbackSubmitted" class="alert alert-success alert-dismissible">
-    Feedback submitted for '{{feedbackTaskName}}'
-    <button type="button" class="close" (click)="feedbackSubmitted = false">
-      <span aria-hidden="true">&times;</span>
-    </button>
+  <!-- Loading spinner -->
+  <div *ngIf="loading" class="spinner-container">
+    <mat-spinner></mat-spinner>
   </div>
-
-  <mat-card class="fadeIn">
+  <!-- Main body -->
+  <mat-card *ngIf="!loading" class="fadeIn">
     <div class="nameContainer">
       <img *ngIf="student"
            [src]="photoUrl"
@@ -23,6 +21,7 @@
       <span class="nameText">{{student.name}}</span>
     </div>
     <hr>
+    <!-- Section tabs -->
     <div class="row">
       <div class="col-md-3">
         <div class="list-group-flush">
@@ -31,9 +30,9 @@
                   (click)="show(section)" class="list-group-item list-group-item-action">
             {{section}}
           </button>
-
         </div>
       </div>
+      <!-- Section viewer -->
       <div class="col-md-9 rightSection">
         <app-student-details *ngIf="activeSection==='Details'" [student]="student"></app-student-details>
 

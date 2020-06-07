@@ -4,6 +4,7 @@ export interface Task {
   displayName: string;
   description: string;
   name: string;
+  dueDateTime: Date;
   orderIndex: number;
   taskId: string;
   type: string;

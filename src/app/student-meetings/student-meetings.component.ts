@@ -22,7 +22,8 @@ export class StudentMeetingsComponent implements OnChanges {
       this.sortMeetings(this.meetings);
     }
   }
-
+  // approve meeting via meetingService, on success set page notification, remove meeting from
+  // array of pending meetings and add to scheduled meetings
   approveMeeting(meeting: Meeting) {
     const index = this.pendingMeetings.indexOf(meeting);
     this.meetingService.approveMeeting(meeting)
@@ -32,21 +33,31 @@ export class StudentMeetingsComponent implements OnChanges {
         this.scheduledMeetings.push(meeting);
       });
   }
-
+  // cancel meeting via meetingService, on success set page notification and remove meeting from
+  // array of meetings on page
   cancelMeeting(meeting: Meeting): void {
-    const index = this.scheduledMeetings.indexOf(meeting);
-    this.meetingService.cancelMeeting(meeting)
-      .subscribe(() => {
-        this.setNotification('Meeting Cancelled: ' + meeting.name, 'warning');
-        this.scheduledMeetings.splice(index, 1);
-      });
+    if (meeting.approved) {
+      const index = this.scheduledMeetings.indexOf(meeting);
+      this.meetingService.cancelMeeting(meeting)
+        .subscribe(() => {
+          this.setNotification('Meeting Cancelled: ' + meeting.name, 'warning');
+          this.scheduledMeetings.splice(index, 1);
+        });
+    } else {
+      const index = this.pendingMeetings.indexOf(meeting);
+      this.meetingService.cancelMeeting(meeting)
+        .subscribe(() => {
+          this.setNotification('Meeting Cancelled: ' + meeting.name, 'warning');
+          this.pendingMeetings.splice(index, 1);
+        });
+    }
   }
 
   clearNotifications(): void {
     this.meetingNotificationText = null;
     this.meetingNotificationText = null;
   }
-
+  // sort meetings into two arrays based on if approved or not
   sortMeetings(meetings: Meeting[]) {
     for (const meeting of meetings) {
       if (meeting.approved) {

@@ -21,19 +21,20 @@ export class ModalProfileComponent {
   get supervisorId(): string {
     return this.id;
   }
+  // set id variable and call get supervisor when supervisorId is set externally
   set supervisorId(supervisorId: string) {
     this.id = supervisorId;
     this.getSupervisor();
   }
-
+  // get supervisor data
   getSupervisor(): void {
-    console.log('called');
     this.userService.getUserById(this.supervisorId)
       .subscribe(response => {
         this.supervisor = response;
         this.loading = false;
       });
   }
+  // if no profile photo, use default avatar
   setDefaultAvatar() {
     this.photoUrl = './assets/img/default-user-icon.png';
   }

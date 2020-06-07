@@ -96,12 +96,12 @@ export class UserService {
     });
   }
 
-  getUsersByType(userType = ''): Observable<[]> {
+  getUsersByType(userType = '') {
     return this.http.get(this.url, {
       params: new HttpParams()
         .set('userType', userType)
     }).pipe(
-      map(res => res as [])
+      map(res => res as User[])
     );
   }
 
@@ -120,6 +120,11 @@ export class UserService {
     }).pipe(
       catchError(this.handleError)
     );
+  }
+  logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
   }
 
   markTaskCompleteForUser(universityId: string, task: string) {
