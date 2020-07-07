@@ -1,0 +1,47 @@
+<app-navbar></app-navbar>
+<br>
+<div class="container">
+  <!--  Heading -->
+  <h1 class="nameHeader">
+    <span class="material-icons peopleIcon">person</span>
+    <span class="">{{'student.heading' | translate}}</span>
+  </h1>
+  <!-- Loading spinner -->
+  <div *ngIf="loading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+  <!-- Main body -->
+  <mat-card *ngIf="!loading" class="fadeIn">
+    <div class="nameContainer">
+      <img *ngIf="student"
+           [src]="photoUrl"
+           (error)="setDefaultAvatar()"
+           alt="user icon"
+           class="rounded-circle studentAvatar">
+      <span class="nameText">{{student.name}}</span>
+    </div>
+    <hr>
+    <!-- Section tabs -->
+    <div class="row">
+      <div class="col-md-3">
+        <div class="list-group-flush">
+          <button *ngFor="let section of sections"
+                  [ngClass]="{'active': activeSection === section}"
+                  (click)="show(section)" class="list-group-item list-group-item-action">
+            {{section}}
+          </button>
+        </div>
+      </div>
+      <!-- Section viewer -->
+      <div class="col-md-9 rightSection">
+        <app-student-details *ngIf="activeSection==='Details'" [student]="student"></app-student-details>
+
+        <app-student-submissions [student]="student" [tasks]="tasks" [canEdit]="canEdit" *ngIf="activeSection==='Submissions'"></app-student-submissions>
+
+        <app-student-meetings *ngIf="activeSection==='Meetings'" [meetings]="meetings" [canEdit]="canEdit"></app-student-meetings>
+
+      </div>
+    </div>
+  </mat-card>
+  <br>
+</div>

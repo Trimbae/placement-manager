@@ -1,0 +1,41 @@
+.listContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.material-icons {
+  align-self: center;
+  padding: 10px;
+}
+.newSubmission {
+  width: 100% !important;
+  color: #d4374a;
+}
+.previewText{
+  padding: 200px 0 600px 0
+}
+.previewSegment {
+  padding: 0;
+}
+.previewViewer {
+  margin-right: 15px;
+}
+.selected {
+  background-color: #f6f6f6;
+}
+
+.submissionsBody {
+  padding: 0;
+}
+.submissionList {
+  border-right: solid 1px #dce8f1;
+  padding: 0 0 10px 15px;
+}
+button {
+  text-align: left;
+  width: 85%;
+  /*margin: 5px;*/
+}
+hr {
+  margin: 0
+}
+

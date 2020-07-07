@@ -3,7 +3,19 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+
+  urls: {
+      PLACEMENT_MANAGER_API: 'http://localhost:3000',
+      MICROSOFT_API: 'https://graph.microsoft.com/v1.0/',
+      REDIRECT_URL: 'http://localhost:4200'
+    },
+
+  userTypes: {
+    USER_TYPE_STUDENT: 'student',
+    USER_TYPE_STAFF: 'staff',
+    USER_TYPE_SUPERVISOR: 'supervisor'
+  }
 };
 
 /*

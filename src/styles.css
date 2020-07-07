@@ -1,18 +1,143 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.css';
+@import "~filepond/dist/filepond.css";
+@import "~filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
-body{
-  /*padding: 20px;*/
-  /*font-family: sans-serif;*/
+@font-face {
+  font-family: 'tee_franklin_thin';
+  src: url('assets/fonts/TeeFraThi-webfont.eot');
+  src: url('assets/fonts/TeeFraThi-webfont.eot?#iefix') format('embedded-opentype'), url('assets/fonts/TeeFraThi-webfont.woff') format('woff'), url('assets/fonts/TeeFraThi-webfont.ttf') format('truetype'), url('assets/fonts/TeeFraThi-webfont.svg#tee_franklin_thin') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'franklin_gothic_fs_bookRg';
+  src: url('assets/fonts/FranklinGothic-Book-webfont.eot');
+  src: url('assets/fonts/FranklinGothic-Book-webfont.eot?#iefix') format('embedded-opentype'), url('assets/fonts/FranklinGothic-Book-webfont.woff') format('woff'), url('assets/fonts/FranklinGothic-Book-webfont.ttf') format('truetype'), url('assets/fonts/FranklinGothic-Book-webfont.svg#franklin_gothic_fs_bookRg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
+a:hover {
+  text-decoration: none;
 }
 .box-shadow {
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
 }
+.btn-primary, .btn-primary:focus {
+  background-color: #d4374a;
+  border: 1px solid #d4374a;
+  box-shadow: none;
+}
+.btn-primary:disabled {
+  background-color: rgba(203, 58, 73, 0.74);
+  border: 1px solid #d4374a;
+}
+.btn-primary:not(:disabled):not(.disabled):active {
+  background-color: #cb3a49;
+}
+.btn-primary:hover {
+  background-color: rgba(227, 58, 75, 0.9);
+  border: 1px solid #d4374a;
+}
+
+.btn-secondary, .btn-secondary:focus {
+  background-color: white;
+  border: 1px solid #d4374a !important;
+  color: #d4374a;
+  box-shadow: none;
+}
+.btn-primary:disabled {
+  background-color: rgba(203, 58, 73, 0.74);
+  border: 1px solid #d4374a;
+}
+.btn-secondary:not(:disabled):not(.disabled):active {
+  background-color: #cb3a49;
+}
+.btn-secondary:hover {
+  background-color: rgba(227, 58, 75, 0.9);
+  color: white;
+  border: 1px solid #d4374a;
+}
+
 .clickable{
   cursor: pointer;
 }
 
-/*.form-control.ng-touched.ng-invalid {
-  border: 2px solid red;
-}*/
+.full-width {
+  width: 100%;
+}
+
+.progress {
+  border-radius: 0;
+}
+
+.list-group-item.active {
+  background-color: #d4374a;
+  color: white;
+  border: 1px solid #d4374a;
+}
+.list-group-item, .list-group-item:focus, .list-group-item:active {
+  outline: 0;
+}
+
+.modal-holder{
+  animation-name: fade-in-down;
+  animation-duration: 0.5s;
+}
+
+.mat-sort-header-arrow {
+  color: #cccccc;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.spinner-wrapper {
+  width: 100%;
+  height: 100%;
+  padding-top: 20%;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+  background-color: #f6f6f6;
+  opacity: 40%;
+}
+/* remove annoying spinner from number input boxes*/
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/*Animation classes*/
+.fadeIn {
+  opacity:0;
+  animation:fadeIn ease-in 1;
+  animation-fill-mode:forwards;
+  animation-duration:1s;
+}
+.fadeInDown {
+  animation-name: fade-in-down;
+  animation-duration: 1s;
+}
+/*Animation Keyframes*/
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -50%, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: franklin_gothic_fs_bookRg, "Helvetica Neue", sans-serif; }

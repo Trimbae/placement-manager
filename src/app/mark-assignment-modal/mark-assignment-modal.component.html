@@ -1,0 +1,48 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">{{'markAssignmentModal.heading' | translate}}</h4>
+  <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p><strong>{{'markAssignmentModal.submitFeedback' | translate}}<span class="text-danger">{{ task.displayName }}</span>:</strong></p>
+  <form [formGroup]="form">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <mat-form-field>
+            <mat-label>{{'markAssignmentModal.markLabel' | translate}}</mat-label>
+            <input matInput
+                   placeholder="Ex. 50"
+                   type="number"
+                   autocomplete="off" formControlName="mark">
+            <mat-error *ngIf="mark.hasError('required')">{{'markAssignmentModal.markRequiredError' | translate}}</mat-error>
+            <mat-error *ngIf="mark.hasError('max')">{{'markAssignmentModal.markMaxError' | translate : {marksAvailable: task.uploadInfo.marksAvailable} }}</mat-error>
+            <mat-error *ngIf="mark.hasError('min')">{{'markAssignmentModal.markMinError' | translate}}</mat-error>
+          </mat-form-field>
+          <span>/{{task.uploadInfo.marksAvailable}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <mat-form-field class="full-width">
+            <mat-label>{{'markAssignmentModal.commentsLabel' | translate}}</mat-label>
+            <textarea matInput
+                      placeholder=""
+                      autocomplete="off"
+                      formControlName="comments">
+            </textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss('cancel click')">Cancel</button>
+  <button type="button"
+          class="btn btn-primary"
+          [disabled]="!form.valid"
+          (click)="activeModal.close(form.value)">{{'markAssignmentModal.submitButton' | translate}}</button>
+</div>
+

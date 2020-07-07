@@ -1,0 +1,85 @@
+<app-navbar></app-navbar>
+
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 offset-md-1">
+      <h1><span class="material-icons">note</span>{{'viewTasks.heading' | translate}}</h1>
+      <!-- Loading spinner -->
+      <div *ngIf="!isLoaded" class="spinner-container">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <div *ngIf="isLoaded" class="col-md-12">
+
+        <!-- Notifications banner -->
+        <div *ngIf="notificationText"
+             class="alert alert-dismissible"
+             [ngClass]="{'alert-success': notificationType === 'success', 'alert-warning': notificationType === 'warning'}">
+          <span>{{notificationText}}</span>
+          <button type="button" class="close" (click)="clearNotifications()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <!-- Body -->
+        <div cdkDropListGroup>
+          <!-- Published Tasks Heading -->
+          <div class="headerContainer">
+            <span class="viewTasksSubheading">{{'viewTasks.published' | translate}}</span>
+            <span routerLink="/admin/create-task" matTooltip="Create task" class="material-icons clickable addIcon">add</span>
+          </div>
+          <!-- Published Tasks -->
+          <div cdkDropList class="taskList" [cdkDropListData]="publishedTasks" (cdkDropListDropped)="drop($event)">
+            <div class="taskBox" *ngFor="let task of publishedTasks; let i = index" cdkDragLockAxis="y" cdkDrag>
+              <div>
+                <span class="prefix text-muted">{{i + 1}}</span>
+                <span class="taskName">{{task.displayName}}</span>
+              </div>
+              <div class="suffix">
+                <span *ngIf="task.type === 'upload'" class="material-icons typeIcon text-muted">description</span>
+                <span *ngIf="task.type === 'meeting'" class="material-icons typeIcon text-muted">schedule</span>
+                <span (click)="editClicked(task)" class="material-icons suffixIcon editIcon" matTooltip="Edit task">edit</span>
+                <span (click)="onDelete(task)" class="material-icons suffixIcon deleteIcon text-danger" matTooltip="Delete task">delete_forever</span>
+                <span cdkDragHandle class="material-icons text-muted suffixIcon dragIcon">drag_indicator</span>
+              </div>
+            </div>
+          </div>
+
+          <br>
+
+          <!-- Drafts Heading -->
+          <div class="headerContainer">
+            <div class="viewTasksSubheading">{{'viewTasks.drafts' | translate}}</div>
+          </div>
+
+          <!-- Draft Tasks Group -->
+          <div cdkDropList class="taskList" [cdkDropListData]="draftTasks" (cdkDropListDropped)="drop($event)">
+            <div class="taskBox" *ngFor="let task of draftTasks; let i = index" cdkDragLockAxis="y" cdkDrag>
+              <div>
+                <span class="material-icons-outlined prefix text-muted">note</span>
+                <span class="taskName">{{task.displayName}}</span>
+              </div>
+              <div class="suffix">
+                <span *ngIf="task.type === 'upload'" class="material-icons typeIcon text-muted">description</span>
+                <span *ngIf="task.type === 'meeting'" class="material-icons typeIcon text-muted">schedule</span>
+                <span (click)="editClicked(task)" class="material-icons suffixIcon editIcon" matTooltip="Edit task">edit</span>
+                <span (click)="onDelete(task)" class="material-icons suffixIcon deleteIcon text-danger" matTooltip="Delete task">delete_forever</span>
+                <span cdkDragHandle class="material-icons text-muted suffixIcon dragIcon">drag_indicator</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Save Changes button-->
+        <div class="saveButton">
+          <button class="btn btn-primary" [disabled]="!orderChanged" (click)="onSaveChanges()">{{'viewTasks.saveButton' | translate}}</button>
+        </div>
+
+        <br>
+      </div>
+      <br>
+    </div>
+  </div>
+</div>

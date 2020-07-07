@@ -1,0 +1,19 @@
+.approveButton {
+  margin-right: 10px;
+}
+.detailsHeading {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #d4374a;
+}
+.list-group-flush {
+  padding-left: 0;
+}
+.meetingItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.noMeetings {
+  padding: 40px 0;
+}

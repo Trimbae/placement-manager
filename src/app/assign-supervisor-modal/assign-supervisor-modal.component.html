@@ -1,0 +1,26 @@
+<!-- Header Text-->
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">{{'assignSupervisorModal.' + (isReassign ? 'reassign' : 'assign') + 'Heading' | translate}}</h4>
+  <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!-- Body -->
+<div class="modal-body">
+  <p><strong>{{'assignSupervisorModal.' + (isReassign ? 'reassign' : 'assign') + 'Subheading' | translate}}<span class="text-danger">{{ student.name }}</span>:</strong></p>
+  <!-- List of supervisors-->
+  <div *ngIf="supervisors" class="list-group modalList">
+    <button *ngFor="let supervisor of supervisors"
+            class="list-group-item list-group-item-action"
+            [ngClass]="{'active': supervisor.universityId === selected?.universityId}"
+            (click)="select(supervisor)">{{supervisor.name}}</button>
+  </div>
+</div>
+<!-- Footer will buttons -->
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss('cancel click')">{{'assignSupervisorModal.cancelButton' | translate}}</button>
+  <button type="button"
+          class="btn btn-primary"
+          [disabled]="!selected"
+          (click)="activeModal.close(selected)">{{'assignSupervisorModal.assignButton' | translate}}</button>
+</div>

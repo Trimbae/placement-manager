@@ -1,0 +1,19 @@
+<div class="card box-shadow fadeIn">
+  <div class="card-header">
+    <h3>{{'dashboardMyStudents.heading' | translate}}</h3>
+  </div>
+  <app-loading-spinner *ngIf="!user || loading"></app-loading-spinner>
+  <div class="card-body" *ngIf="user && studentsSupervising">
+    <div class="dashboardListTitle">{{'dashboardMyStudents.supervising' | translate}}</div>
+    <div *ngIf="studentsSupervising.length === 0" class="text-muted text-center noStudents">{{'dashboardMyStudents.noStudentsSupervising' | translate}}</div>
+    <ul class="list-group-flush indentedList">
+      <a *ngFor="let student of studentsSupervising"
+         class="list-group-item list-group-item-action text-primary" [routerLink]="['/student', student.universityId]">
+        {{student.name}}
+<!--        <span class="badge badge-pill badge-primary">1</span>-->
+      </a>
+    </ul>
+    <div class="dashboardListTitle">{{'dashboardMyStudents.moderating' | translate}}</div>
+    <div class="text-muted text-center noStudents">{{'dashboardMyStudents.noStudentsModerating' | translate}}</div>
+  </div>
+</div>

@@ -4,18 +4,23 @@
 .navbarCardiff {
   background-color: #2c354c;
 }
-.container{
-  justify-content: normal;
-}
 .navbarLogo {
   max-width: 5rem;
   margin-right: 10px;
 }
-.navbarText {
-  margin-left: 1rem;
-  float: left;
-  font-size: 30px;
+.btn-link {
+  color: white;
   font-weight: lighter;
+}
+.btn-link:hover{
+  color: white;
+}
+.navbarText {
+  font-family: tee_frank_thin, "Helvetica Neue", sans-serif;
+  margin-left: 1rem;
+  font-size: 42px;
+  font-weight: lighter;
+  vertical-align: middle;
 }
 
 @media only screen and (max-width: 768px) {

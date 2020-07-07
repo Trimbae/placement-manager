@@ -1,0 +1,74 @@
+<app-navbar></app-navbar>
+
+<br>
+
+<div *ngIf="loading" class="spinner-container">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading" class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h2><span class="material-icons">schedule</span> {{'createMeeting.heading' | translate: {taskName: task.displayName} }}</h2>
+      <br>
+      <!-- Meeting task description -->
+      <div class="taskDescription">{{task.description}}</div>
+      <br>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <!-- meeting name input-->
+        <mat-form-field class="full-width">
+          <mat-label>{{'createMeeting.nameLabel' | translate}}</mat-label>
+          <input matInput
+                 placeholder="Ex. First Visit"
+                 autocomplete="off" formControlName="name">
+          <mat-error *ngIf="name.hasError('required')">{{'createMeeting.nameRequiredError' | translate}}</mat-error>
+        </mat-form-field>
+
+
+        <!-- date input -->
+        <mat-form-field class="full-width">
+          <mat-label>{{'createMeeting.dateLabel' | translate}}</mat-label>
+          <input matInput
+                 [min]="minDate"
+                 [matDatepicker]="meetingDatepicker"
+                 formControlName="date"
+                 autocomplete="off"
+                 readonly>
+          <mat-datepicker-toggle matSuffix
+                                 [for]="meetingDatepicker">
+          </mat-datepicker-toggle>
+          <mat-datepicker #meetingDatepicker></mat-datepicker>
+          <mat-error *ngIf="date.hasError('required')">{{'createMeeting.dateRequiredError' | translate}}</mat-error>
+        </mat-form-field>
+
+        <!-- time input-->
+        <mat-form-field class="full-width">
+          <mat-label>{{'createMeeting.timeLabel' | translate}}</mat-label>
+          <input matInput
+                 formControlName="time"
+                 type="time">
+          <span matSuffix class="material-icons smallerIcons">alarm</span>
+          <mat-error *ngIf="time.hasError('required')">{{'createMeeting.timeRequiredError' | translate}}</mat-error>
+        </mat-form-field>
+
+        <!-- location input -->
+        <mat-form-field class="full-width">
+          <mat-label>{{'createMeeting.locationLabel' | translate}}</mat-label>
+          <input matInput
+                 placeholder="Ex. IBM Headquarters, London"
+                 autocomplete="off" formControlName="location">
+          <mat-hint align="end">{{'createMeeting.optionalHint' | translate}}</mat-hint>
+        </mat-form-field>
+
+        <!-- submit form button -->
+        <div class="buttonContainer">
+          <button [disabled]="!form.valid" class="btn btn-primary" type="submit">{{'createMeeting.submitButton' | translate}}</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,49 @@
+.full-width-table {
+  width: 100%;
+}
+.mat-form-field {
+  font-size: 18px;
+  width: 30%;
+}
+.formFieldWrapper {
+  text-align: right;
+  padding-left: 10px;
+}
+
+.mat-column-id {
+  max-width: 10px;
+}
+
+
+.searchIcon {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.spinner-container {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-header-row, .mat-header-row:hover {
+  color: white;
+  background-color: #565f78;
+}
+.mat-header-cell {
+  color: white;
+}
+
+
+td, th {
+  width: 20%;
+}
+
+tr:hover {
+  background-color: #faf8f9;
+}
+tr button {
+  opacity: 0;
+}
+
+tr:hover button {
+  opacity: 1;
+}

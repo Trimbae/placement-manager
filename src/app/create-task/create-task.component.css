@@ -1,0 +1,14 @@
+.buttonContainer {
+  text-align: right;
+}
+.smallerIcons {
+  font-size: medium;
+}
+
+mat-card-content {
+  padding: 10px;
+}
+mat-form-field {
+  margin: 10px 0;
+}
+

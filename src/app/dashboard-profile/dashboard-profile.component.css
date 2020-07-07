@@ -2,13 +2,21 @@ h3 {
   font-size: 17px;
   font-weight: lighter;
 }
+.btn-link {
+  padding: 0;
+}
+.btn-link:hover {
+  text-decoration: none;
+}
 .dashboardAvatar {
   width: 100%;
 }
 .dashboardProfileHeading {
   font-size: 20px;
 }
-
+.placeholderPhoto{
+  font-size: 10rem;
+}
 /*mobile only styles*/
 @media only screen and (max-width: 768px) {
   .dashboardAvatar {

@@ -1,0 +1,25 @@
+<!-- Notifications -->
+<div *ngIf="feedbackSubmitted" class="alert alert-success alert-dismissible">
+  {{'studentSubmissions.feedbackSubmitted' | translate: {taskName:feedbackTaskName} }}
+  <button type="button" class="close" (click)="feedbackSubmitted = false">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!-- Heading -->
+<div class="detailsHeading">{{'studentSubmissions.heading' | translate}}</div>
+<!-- Tasks view -->
+<div *ngIf="tasks.length === 0" class="text-center text-muted noSubmissions">
+  {{'studentSubmissions.noSubmissions' | translate}}
+</div>
+<div *ngIf="tasks.length > 0">
+  <ul class="list-group-flush">
+    <button *ngFor="let task of tasks"
+            [routerLink]="['/tasks', 'submitted', student.universityId, task.taskId, task.name]"
+            class="list-group-item list-group-item-action taskItem">
+      <span class="text-primary">{{task.displayName}}</span>
+      <span *ngIf="canEdit && task.uploadInfo?.uploadType === 'assessment'"
+            (click)="onMarkClicked(task); $event.stopPropagation();"
+            class="material-icons markIcon" matTooltip="Mark Assignment">assignment_turned_in</span>
+    </button>
+  </ul>
+</div>

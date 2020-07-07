@@ -1,0 +1,101 @@
+<div class="spinner-wrapper" *ngIf="showSpinner">
+  <mat-spinner></mat-spinner>
+</div>
+
+<app-navbar></app-navbar>
+
+<br>
+
+<div *ngIf="task" class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h3>{{'fileUpload.heading' | translate : {taskName: task.displayName} }}</h3>
+
+      <hr>
+      <div class="uploadSubtitle">{{'fileUpload.description' | translate}}</div>
+      <div>{{task.description}}</div>
+      <hr>
+
+      <!-- File details -->
+      <div class="uploadSubtitle">{{'fileUpload.details' | translate}}</div>
+      <div class="row">
+        <div class="col-md-4 ">
+          <div class="card box-shadow fadeIn">
+            <div class="card-header">
+              {{'fileUpload.deadlineLabel' | translate}}
+            </div>
+            <div class="card-body uploadCardText">
+              {{ task.dueDateTime | date:'HH:mm dd/MM/yyyy'}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 ">
+          <div class="card box-shadow fadeIn">
+            <div class="card-header">
+              {{'fileUpload.typeLabel' | translate}}
+            </div>
+            <div *ngIf="task.uploadInfo" class="card-body uploadCardText">
+              {{ task.uploadInfo.uploadType}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 ">
+          <div class="card box-shadow fadeIn">
+            <div class="card-header">
+              {{'fileUpload.marksLabel' | translate}}
+            </div>
+            <div class="card-body uploadCardText">
+              <span *ngIf="task.uploadInfo.marksAvailable">{{task.uploadInfo.marksAvailable}}</span>
+              <span *ngIf="!task.uploadInfo.marksAvailable">{{'fileUpload.na' | translate}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Description -->
+      <form [formGroup]="uploadForm" (ngSubmit)="onFileUpload()" class="fadeIn">
+        <div class="form-group">
+          <label for="comments">{{'fileUpload.commentsLabel' | translate}}</label>
+          <textarea
+            formControlName="comments"
+            id="comments"
+            class="form-control"
+            rows="3">
+          </textarea>
+        </div>
+
+        <hr>
+        <!-- Pdf previewer -->
+        <div class="preview">
+          <div class="uploadSubtitle">{{'fileUpload.previewLabel' | translate}}</div>
+          <div class="text-center text-muted" *ngIf="!fileData"> {{'fileUpload.selectFile' | translate}} </div>
+          <div class="text-center text-muted" *ngIf="fileData && previewType !== 'application/pdf'"> {{'fileUpload.noPreview' | translate}} </div>
+          <app-pdf-viewer *ngIf="fileData && previewType === 'application/pdf'" [height]="500" [sourceData]="fileData"></app-pdf-viewer>
+        </div>
+
+        <hr>
+
+        <!-- FILE POND (Add file section) -->
+        <div class="uploadSubtitle">{{'fileUpload.pondLabel' | translate}}</div>
+        <file-pond #fileInputPond
+                   [options]="pondOptions"
+                   [files]="pondFiles"
+                   (oninit)="pondHandleInit()"
+                   (onremovefile)="onFileRemove()"
+                   (onpreparefile)="pondHandleAddFile($event)"
+                   class="clickable">
+        </file-pond>
+        <!-- upload button -->
+        <button type="submit" [disabled]="!uploadForm.valid" class="btn btn-primary">{{'fileUpload.uploadButton' | translate}}</button>
+
+      </form>
+    </div>
+  </div>
+  <br>
+</div>
+
+

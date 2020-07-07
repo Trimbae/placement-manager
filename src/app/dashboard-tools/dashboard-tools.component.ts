@@ -1,22 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, } from '@angular/core';
+import {User} from '../common/classes/user';
 
 @Component({
   selector: 'app-dashboard-tools',
   templateUrl: './dashboard-tools.component.html',
   styleUrls: ['./dashboard-tools.component.css']
 })
-export class DashboardToolsComponent implements OnInit {
+export class DashboardToolsComponent {
 
-  tools = [
-    {id: 1, name: 'Upload Documents', link: ''},
-    {id: 2, name: 'My Marks', link: ''},
-    {id: 3, name: 'Edit Profile', link: ''},
-    {id: 4, name: 'Contact Placement Team', link: ''}
-  ];
+  @Input() user: User;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

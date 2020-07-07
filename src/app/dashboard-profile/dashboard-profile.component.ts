@@ -1,28 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {ModalProfileComponent} from '../modal-profile/modal-profile.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {User} from '../common/classes/user';
 
 @Component({
   selector: 'app-dashboard-profile',
   templateUrl: './dashboard-profile.component.html',
   styleUrls: ['./dashboard-profile.component.css']
 })
-export class DashboardProfileComponent implements OnInit {
+export class DashboardProfileComponent implements OnChanges {
 
-  user = {
-    id: 'C1525379',
-    name: 'Matthew Trimby',
-    placementEmployer: 'BT',
-    img: './assets/img/Profile-pic-example.JPG',
-    supervisor: {
-      id: 1,
-      name: 'Carl Jones'
-    },
-    workSupervisor: 'Clare Lewis',
-    startDate: '09/09/2019'
-  };
+  @Input() user: User;
+  photoUrl;
+  isImageLoaded = false;
 
-  constructor() { }
+  constructor(private modalService: NgbModal ) {}
 
-  ngOnInit(): void {
+  ngOnChanges() {
+    this.getProfilePhotoUrl();
   }
-
+  // makes url for user profile photo
+  getProfilePhotoUrl() {
+    if (this.user) {
+      this.photoUrl = environment.urls.PLACEMENT_MANAGER_API + '/images/' + this.user.universityId + '.jpg';
+      this.isImageLoaded = true;
+    }
+  }
+  // opens supervisor profile modal
+  openModal() {
+    const modalRef = this.modalService.open(ModalProfileComponent, {windowClass: 'modal-holder', centered: true});
+    modalRef.componentInstance.supervisorId = this.user.studentData.supervisorId;
+  }
+  // if no profile photo, sets default
+  setDefaultAvatar() {
+    this.photoUrl = './assets/img/default-user-icon.png';
+  }
 }

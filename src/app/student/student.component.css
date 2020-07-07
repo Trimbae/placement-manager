@@ -1,0 +1,27 @@
+.list-group-flush {
+  padding-left: 0;
+}
+.nameContainer {
+  margin-left: 10px;
+}
+.nameText {
+  font-size: xx-large;
+  color: #2c354c;
+  padding-left: 15px;
+  vertical-align: middle;
+}
+.navSection {
+  border-right: 1px solid #cccccc;
+}
+
+.peopleIcon {
+  font-size: 30px;
+  vertical-align: middle;
+}
+.rightSection {
+  min-height: 25rem;
+}
+.studentAvatar {
+  width: 5rem;
+}
+

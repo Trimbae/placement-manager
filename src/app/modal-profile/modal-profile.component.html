@@ -1,0 +1,37 @@
+<div class="modal-header">
+
+  <span class="modal-title">{{"modalProfile.heading" |translate}}</span>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+</div>
+<div class="modal-body">
+  <div *ngIf="loading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div *ngIf="!loading">
+    <div class="row">
+      <div class="col-md-4 avatar">
+        <img
+             [src]="photoUrl"
+             (error)="setDefaultAvatar()"
+             alt="supervisor icon"
+             class="rounded-circle dashboardAvatar">
+      </div>
+      <div *ngIf="supervisor" class="col-md-8">
+        <div *ngIf="supervisor.name" class="profileName">{{ supervisor.name }}</div>
+        <div class="text-muted">Supervisor</div>
+        <div class="text-muted">
+          {{'modalProfile.cardiff' | translate}}{{supervisor.universityId}}
+        </div>
+        <br/>
+        <div *ngIf="supervisor.email">
+          {{'modalProfile.email' | translate}}<a target="_blank" [href]="'mailto:' + supervisor.email">{{supervisor.email}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+</div>

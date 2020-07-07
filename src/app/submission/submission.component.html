@@ -1,0 +1,51 @@
+<app-navbar></app-navbar>
+
+<br>
+
+<div *ngIf="task" class="container">
+  <h3>{{'submission.heading' | translate : {taskName: task.displayName} }}</h3>
+
+  <br>
+  <!-- Notifications -->
+  <div *ngIf="isUploadRedirect" class="alert alert-success">{{'submission.success' | translate}}</div>
+  <div *ngIf="fileDeleted" class="alert alert-warning">{{'submission.deleted' | translate: {filename: fileDeleted.filename} }}</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-4 submissionHeader">{{'submission.submissionsHeading' | translate}}</div>
+        <div class="col-md-8">{{'submission.previewHeading' | translate}}</div>
+      </div>
+    </div>
+    <div class="card-body submissionsBody">
+      <div class="row">
+        <div class="col-md-4 submissionList">
+          <div  *ngIf="showSpinner" class="spinner-container">
+            <mat-spinner></mat-spinner>
+          </div>
+          <ul *ngIf="submissions" class="list-unstyled">
+            <li *ngFor="let sub of submissions; let i = index;" [ngClass]="{'selected': sub._id === idSelected}">
+              <div class="listContainer">
+                <button class="btn btn-link" (click)="getPreview(sub._id)"> {{sub.filename}}</button>
+                <span (click)="onDelete(sub)" matTooltip="Delete File" class="material-icons clickable">delete</span>
+              </div>
+              <hr>
+            </li>
+            <li>
+              <button class="btn btn-link text-center newSubmission" [routerLink]="['/tasks', task.type, universityId, task.taskId, task.name]"> {{'submission.newSubmission' | translate}}</button>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-8 previewSegment">
+          <div class="previewViewer">
+            <div class="text-center text-muted previewText" *ngIf="!pdfData">{{'submission.selectFile' | translate}}</div>
+            <div class="text-center text-muted previewText" *ngIf="pdfData && previewType !== 'application/pdf'">{{'submission.noPreview' | translate}}</div>
+          <app-pdf-viewer *ngIf="pdfData && previewType === 'application/pdf'" [height]="800" [sourceData]="pdfData"></app-pdf-viewer>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,16 +1,28 @@
+<!-- navbar -->
 <app-navbar></app-navbar>
 
-<div class="container">
+<!-- spinner - shown while loading data -->
+<div *ngIf="loading" class="spinner-container">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading" class="container">
+  <!-- notification/error banner -->
+  <div *ngIf="errorMessage" class="alert alert-danger topError" [innerHTML]="errorMessage | translate"> </div>
+
   <div class="row">
+    <!-- first column -->
     <div class="col-md-6">
       <br/>
-      <app-dashboard-profile></app-dashboard-profile>
+      <app-dashboard-profile [user]="user"></app-dashboard-profile>
       <br/>
-      <app-dashboard-tools></app-dashboard-tools>
+      <app-dashboard-tools [user]="user"></app-dashboard-tools>
     </div>
+    <!-- second column-->
     <div class="col-md-6">
       <br/>
-      <app-dashboard-my-tasks></app-dashboard-my-tasks>
+      <app-dashboard-my-tasks *ngIf="user.userType === 'student'" [user]="user"></app-dashboard-my-tasks>
+      <app-dashboard-my-students *ngIf="user.userType === 'supervisor'" [user]="user"></app-dashboard-my-students>
     </div>
   </div>
   <br>

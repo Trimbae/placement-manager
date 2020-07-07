@@ -1,0 +1,70 @@
+<!-- Search box-->
+<div class="formFieldWrapper">
+  <span class="material-icons searchIcon">search</span>
+  <mat-form-field>
+    <mat-label>{{'studentTable.filterLabel' | translate}}</mat-label>
+    <input matInput autocomplete="off" placeholder="Filter by Name, Id, or Supervisor" #filterInput>
+  </mat-form-field>
+</div>
+<div class="mat-elevation-z8">
+
+<!-- Table Start -->
+  <table mat-table class="full-width-table" matSort matSortActive="universityId" matSortDirection="asc" matSortDisableClear aria-label="Elements">
+    <!-- Id Column -->
+    <ng-container matColumnDef="universityId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'studentTable.idLabel' | translate}}</th>
+      <td mat-cell *matCellDef="let user">{{user.universityId}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'studentTable.nameLabel' | translate}}</th>
+      <td mat-cell *matCellDef="let user">{{user.name}}</td>
+    </ng-container>
+
+    <!-- supervisor Column -->
+    <ng-container matColumnDef="supervisorName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'studentTable.supervisorLabel' | translate}}</th>
+      <td mat-cell *matCellDef="let user">
+        <span *ngIf="user.studentData.supervisorName">{{user.studentData.supervisorName}}</span>
+        <span class="text-muted" *ngIf="!user.studentData.supervisorName">none</span>
+      </td>
+    </ng-container>
+
+    <!-- placement provider Column -->
+    <ng-container matColumnDef="placementProvider">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'studentTable.placementProviderLabel' | translate}}</th>
+      <td mat-cell *matCellDef="let user">{{user.studentData.placementProvider}}</td>
+    </ng-container>
+    <!-- Action button column -->
+    <ng-container matColumnDef="assign">
+      <th mat-header-cell class="actionHeader" *matHeaderCellDef>{{'studentTable.actionLabel' | translate}}</th>
+      <td mat-cell class="cellAlignRight" *matCellDef="let user;">
+          <button *ngIf="!user.studentData?.supervisorName"
+                  class="btn btn-primary"
+                  (click)="assignSupervisor(user, false); $event.stopPropagation();">
+            {{'studentTable.assignButton' | translate}}
+          </button>
+          <button *ngIf="user.studentData?.supervisorName"
+                  class="btn btn-secondary"
+                  (click)="assignSupervisor(user, true); $event.stopPropagation();">
+            {{'studentTable.reassignButton' | translate}}
+          </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row  *matRowDef="let user; columns: displayedColumns;" [routerLink]="['/student', user.universityId]" class="clickable"></tr>
+  </table>
+
+  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <mat-paginator
+      [length]="tableSize"
+      [pageIndex]="0"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 50, 100]">
+  </mat-paginator>
+</div>

@@ -1,5 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {BroadcastService, MSAL_CONFIG, MSAL_CONFIG_ANGULAR, MsalService} from '@azure/msal-angular';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -7,6 +9,15 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      imports: [
+        RouterTestingModule
+      ],
+      providers: [
+        BroadcastService,
+        MsalService,
+        {provide: MSAL_CONFIG, useValue: {}},
+        {provide: MSAL_CONFIG_ANGULAR, useValue: {}}
+      ]
     }).compileComponents();
   }));
 
@@ -16,16 +27,9 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'placement-manager-v1'`, () => {
+  it(`should have as title 'Placement Manager'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('placement-manager-v1');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('placement-manager-v1 app is running!');
+    expect(app.title).toEqual('Placement Manager');
   });
 });

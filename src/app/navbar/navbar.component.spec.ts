@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavbarComponent } from './navbar.component';
+import {BroadcastService, MSAL_CONFIG, MSAL_CONFIG_ANGULAR, MsalService} from '@azure/msal-angular';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -8,7 +10,16 @@ describe('NavbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavbarComponent ]
+      declarations: [ NavbarComponent ],
+      imports: [
+        RouterTestingModule
+      ],
+      providers: [
+        BroadcastService,
+        MsalService,
+        {provide: MSAL_CONFIG, useValue: {}},
+        {provide: MSAL_CONFIG_ANGULAR, useValue: {}}
+      ]
     })
     .compileComponents();
   }));

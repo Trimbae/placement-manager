@@ -1,0 +1,17 @@
+{
+  "taskId": "1",
+  "name": "upload-induction-checklist",
+  "type": "upload",
+  "uploadInfo": {
+    "uploadType": "supporting-documents",
+    "marksAvailable": null
+  },
+  "_id": "5e949a23f10041b4c1abe26d",
+  "displayName": "Upload induction checklist",
+  "description": "Upload induction checklist form.",
+  "orderIndex": 0,
+  "isPublished": true,
+  "__v": 0,
+  "dueDateTime": "2020-04-20T21:00:00.000Z"
+}
+

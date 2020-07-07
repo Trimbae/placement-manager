@@ -1,0 +1,15 @@
+.detailsHeading {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #d4374a;
+}
+.markIcon {
+  vertical-align: bottom;
+}
+.noSubmissions {
+  padding: 40px 0;
+}
+.taskItem {
+  display: flex;
+  justify-content: space-between;
+}

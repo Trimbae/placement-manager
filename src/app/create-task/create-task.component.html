@@ -1,0 +1,135 @@
+<app-navbar></app-navbar>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <mat-card>
+        <mat-card-header>
+          <h2><span class="material-icons">create</span> {{ 'createTask.' + (isEdit ? 'edit': 'create') + 'Heading' | translate}}</h2>
+        </mat-card-header>
+        <!-- Start of form -->
+        <mat-card-content>
+          <form [formGroup]="form" (ngSubmit)="submit()">
+
+            <!--row 1-->
+            <div class="row">
+              <div class="col-md-10">
+                <!--Task Name Input-->
+                <mat-form-field class="full-width">
+                  <mat-label>{{'createTask.nameLabel' | translate}}</mat-label>
+                  <input matInput
+                         placeholder="Ex. Upload Employer Evaluation 1"
+                         autocomplete="off" formControlName="taskName">
+                  <mat-error *ngIf="taskName.hasError('required')">{{'createTask.nameRequiredError' | translate}}</mat-error>
+                  <mat-error *ngIf="taskName.hasError('pattern')">{{'createTask.namePatternError' | translate}}</mat-error>
+                  <mat-error *ngIf="taskName.hasError('minlength')">{{'createTask.nameMinLengthError' | translate: {requiredLength: taskName.errors.minlength.requiredLength} }}</mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-2">
+                <!--Task Id input (disabled)-->
+                <mat-form-field class="full-width">
+                  <mat-label>{{'createTask.taskIdLabel' | translate}}</mat-label>
+                  <input matInput formControlName="taskId">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <!--Task Type input-->
+                <mat-form-field class="full-width">
+                  <mat-label>{{'createTask.taskTypeLabel' | translate}}</mat-label>
+                  <mat-select formControlName="type">
+                    <mat-option *ngFor="let taskType of taskTypes" [value]="taskType.id">
+                      {{taskType.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="type.hasError('required')">{{'createTask.taskTypeRequiredError' | translate}}</mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <!--Upload type input-->
+                <mat-form-field *ngIf="type.value === 'upload'" class="full-width">
+                  <mat-label>{{'createTask.uploadTypeLabel' | translate}}</mat-label>
+                  <mat-select formControlName="uploadType">
+                    <mat-option *ngFor="let option of uploadTypes" [value]="option.id">
+                      {{option.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <!--Marks Available input-->
+                <mat-form-field *ngIf="uploadType.value === 'assessment'" class="full-width">
+                  <mat-label>{{'createTask.marksLabel' | translate}}</mat-label>
+                  <input matInput
+                         formControlName="marksAvailable"
+                         type="number"
+                         placeholder="Ex. 50">
+                  <mat-hint align="end">{{'createTask.optionalHint' | translate}}</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <!--Task Description Input-->
+                <mat-form-field class="full-width">
+                  <mat-label>{{'createTask.descriptionLabel' | translate}}</mat-label>
+                  <textarea matInput
+                            cdkTextareaAutosize
+                            formControlName="description"
+                            rows="2">
+                  </textarea>
+                  <mat-error *ngIf="description.hasError('required')">{{'createTask.descriptionRequiredError' | translate}}</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="full-width">
+                  <mat-label>{{'createTask.dateLabel' | translate}}</mat-label>
+                  <input matInput
+                         [min]="minDate"
+                         [matDatepicker]="deadlineDatepicker"
+                         formControlName="dueDate"
+                         autocomplete="off"
+                         readonly>
+                  <mat-datepicker-toggle matSuffix
+                                         [for]="deadlineDatepicker">
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #deadlineDatepicker></mat-datepicker>
+                  <mat-error *ngIf="dueDate.hasError('required')">{{'createTask.dateRequiredError' | translate}}</mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <div>
+                  <mat-form-field class="full-width">
+                    <mat-label>{{'createTask.timeLabel' | translate}}</mat-label>
+                    <input matInput
+                           formControlName="dueTime"
+                           type="time">
+                    <span matSuffix class="material-icons smallerIcons">alarm</span>
+                    <mat-error *ngIf="dueTime.hasError('required')">{{'createTask.timeRequiredError' | translate}}</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="buttonContainer">
+              <button class="btn btn-primary" type="submit" [disabled]="!form.valid">{{'createTask.submitTaskButton' | translate: {action: isEdit ? 'Save' : 'Create'} }}</button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+

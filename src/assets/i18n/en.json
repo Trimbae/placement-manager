@@ -1,0 +1,188 @@
+{
+  "assignSupervisorModal" : {
+    "assignHeading": "Assign Supervisor",
+    "reassignHeading": "Re-assign Supervisor",
+    "assignSubheading": "Assign supervisor for ",
+    "reassignSubheading": "Re-assign supervisor for ",
+    "cancelButton": "Cancel",
+    "assignButton": "Assign"
+  },
+  "createMeeting": {
+    "heading":"Schedule Meeting: {{taskName}}",
+    "nameLabel": "Meeting name",
+    "nameRequiredError":"Meeting name is required",
+    "dateLabel": "Meeting date",
+    "dateRequiredError" :"Meeting date is required",
+    "timeLabel": "Meeting time",
+    "timeRequiredError": "Meeting time is required",
+    "locationLabel": "Location",
+    "optionalHint": "(optional)",
+    "submitButton": "Submit"
+  },
+  "createTask": {
+    "editHeading": "Edit Task",
+    "createHeading": "Create Task",
+    "nameLabel": "Task Name",
+    "nameRequiredError": "Task name is required",
+    "namePatternError": "Task name cannot contain special characters",
+    "nameMinLengthError": "Task name must be greater than {{requiredLength}} characters",
+    "taskIdLabel": "Task ID",
+    "taskTypeLabel": "Task Type",
+    "taskTypeRequiredError": "Task type is required",
+    "uploadTypeLabel": "Upload Type",
+    "marksLabel": "Marks Available",
+    "optionalHint": "(optional)",
+    "descriptionLabel": "Description",
+    "descriptionRequiredError": "Task description is required",
+    "dateLabel": "Deadline date",
+    "dateRequiredError": "Date due is required",
+    "timeLabel": "Deadline time",
+    "timeRequiredError": "Due time is required",
+    "submitTaskButton": "{{action}} Task"
+  },
+  "dashboard": {
+    "errors": {
+      "needPermissions": "<strong>Permissions required</strong>, please allow pop-ups in your browser and then re-load the page."
+    }
+  },
+  "dashboardMyStudents": {
+    "heading": "My Students",
+    "supervising": "Supervising",
+    "noStudentsSupervising": "You aren't currently supervising any students.",
+    "moderating": "Moderating",
+    "noStudentsModerating": "You aren't currently moderating any students."
+  },
+  "dashboardMyTasks": {
+    "heading": "My Tasks"
+  },
+  "dashboardProfile": {
+    "heading": "Profile",
+    "supervisor": "Supervisor: ",
+    "workplaceSupervisor": "Work Supervisor: {{workplaceSupervisor}}",
+    "startDate": "Start Date: "
+  },
+  "dashboardTools": {
+    "heading": "Tools",
+    "manageStudents": "Manage Students",
+    "manageTasks": "Manage Tasks",
+    "feedback": "My Feedback",
+    "placement": "My Placement"
+  },
+  "errorPage": {
+    "oops": "Oops,",
+    "subheading1": "Something went wrong, but we're not sure what.",
+    "subheading2": "Sorry about that.",
+    "userNotFound1": "It looks like you aren't registered with the placement management system yet.",
+    "userNotFound2": "If you think this is wrong, please contact a member of the placement team.",
+    "userNotAuthorized1": "It looks like you aren't authorised to view this content.",
+    "userNotAuthorized2": "If you think this is wrong, please contact a member of the placement team."
+  },
+  "feedback": {
+    "heading": " Feedback",
+    "noFeedback": "You haven't received any feedback on your work yet.",
+    "mark": "Mark:",
+    "comments": "Comments:"
+  },
+  "fileUpload": {
+    "heading": "File Upload: {{taskName}}",
+    "description": "Task Description:",
+    "details": "Details:",
+    "deadlineLabel": "Deadline:",
+    "marksLabel": "Marks available:",
+    "na": "N/A",
+    "typeLabel": "Type:",
+    "commentsLabel": "Comments:",
+    "previewLabel": "Preview: ",
+    "selectFile": "Select file to see preview...",
+    "noPreview": "Preview only available for pdf files",
+    "pondLabel": "Add Files: ",
+    "uploadButton": "Upload"
+  },
+  "login": {
+    "heading": "Placement Management System",
+    "logInButton": "Log in with Office 365",
+    "loginProblems": "Problems logging in?"
+  },
+  "markAssignmentModal": {
+    "heading": "Mark Assignment",
+    "submitFeedback": "Submit feedback for ",
+    "markLabel": "Mark",
+    "markRequiredError": "Assignment mark is required",
+    "markMaxError": "Assignment mark must be less than {{marksAvailable}}",
+    "markMinError": "Assignment mark must greater than or equal to 0",
+    "commentsLabel": "Comments",
+    "submitButton": "Submit Mark"
+  },
+  "modalDelete" : {
+    "heading": "{{type}} deletion",
+    "subheading": "Are you sure you want to delete ",
+    "deleteText1": "All information associated with this {{type}} will be permanently deleted.",
+    "deleteText2": "This operation cannot be undone.",
+    "cancelButton": "Cancel",
+    "okButton": "Ok"
+  },
+  "modalProfile": {
+    "heading" : "Supervisor Profile",
+    "cardiff": "Cardiff University - ",
+    "email": "Email: "
+  },
+  "navbar": {
+    "title": "Placement Manager",
+    "logout": "Log out"
+  },
+  "student": {
+    "heading": " Student"
+  },
+  "studentDetails": {
+    "userHeading": "User Details",
+    "name": "Name: ",
+    "userId": "User Id: ",
+    "email": "Email: ",
+    "placementHeading" : "Placement Details",
+    "supervisor" : "Supervisor: ",
+    "moderator": "Moderator: ",
+    "placementProvider" : "Placement Provider: ",
+    "startDate": "Start Date: ",
+    "workplaceSupervisor": "Workplace Supervisor: "
+  },
+  "studentMeetings" : {
+    "scheduledHeading": "Scheduled Meetings",
+    "noMeetingsScheduled" : "No meetings scheduled.",
+    "pendingHeading" : "Pending Approval",
+    "noMeetingsPending" : "No meetings pending approval."
+  },
+  "studentSubmissions": {
+    "feedbackSubmitted": "Feedback submitted for '{{taskName}}'",
+    "heading": "Completed tasks",
+    "noSubmissions": "This student hasn't submitted any work yet."
+  },
+  "studentTable": {
+    "filterLabel": "Filter",
+    "idLabel" : "Id",
+    "nameLabel": "Name",
+    "supervisorLabel": "Supervisor",
+    "placementProviderLabel": "Placement Provider",
+    "actionLabel": "Action",
+    "assignButton": "Assign Supervisor",
+    "reassignButton": "Re-Assign Supervisor"
+  },
+  "submission": {
+    "heading": "View Submissions: {{taskName}}",
+    "success": "Document uploaded successfully",
+    "deleted": "Document '{{filename}}' was deleted.",
+    "submissionsHeading": "Submissions",
+    "previewHeading": "Preview: ",
+    "newSubmission": "Submit another file",
+    "selectFile": "Select submission to see preview... ",
+    "noPreview": "Preview only available for pdf files "
+  },
+  "viewStudents": {
+    "heading": " Students"
+  },
+  "viewTasks": {
+    "heading": " Manage Tasks",
+    "published": "Published Tasks",
+    "drafts": "Drafts",
+    "saveButton": "Save Changes"
+  }
+}

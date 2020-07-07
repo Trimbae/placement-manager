@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">{{'modalDelete.heading' | translate: {type: type} }}</h4>
+  <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p><strong>{{'modalDelete.subheading' | translate}}<span class="text-danger">{{ name }}</span>?</strong></p>
+  <p>{{'modalDelete.deleteText1' | translate :{type: type} }}
+    <span class="text-danger">{{'modalDelete.deleteText2' | translate}}</span>
+  </p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss('cancel click')">{{'modalDelete.cancelButton' | translate}}</button>
+  <button type="button" class="btn btn-danger" (click)="activeModal.close('Ok click')">{{'modalDelete.okButton' | translate}}</button>
+</div>

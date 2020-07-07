@@ -1,0 +1,16 @@
+<div>
+  <div class="detailsHeading">{{'studentDetails.userHeading' | translate}}</div>
+  <ul class="list-group-flush">
+    <li class="list-group-item"><strong>{{'studentDetails.name' | translate}}</strong>{{student.name}}</li>
+    <li class="list-group-item"><strong>{{'studentDetails.userId' | translate}}</strong>{{student.universityId}}</li>
+    <li class="list-group-item"><strong>{{'studentDetails.email' | translate}}</strong><a target="_blank" [href]="'mailto:' + student.email">{{student.email}}</a></li>
+  </ul>
+  <div class="detailsHeading">{{'studentDetails.placementHeading' | translate}}</div>
+  <ul class="list-group-flush">
+    <li class="list-group-item"><strong>{{'studentDetails.supervisor' | translate}}</strong>{{student.studentData.supervisorName}}</li>
+    <li class="list-group-item"><strong>{{'studentDetails.moderator' | translate}}</strong>{{student.studentData.moderatorName}}</li>
+    <li class="list-group-item"><strong>{{'studentDetails.placementProvider' | translate}}</strong>{{student.studentData.placementProvider}}</li>
+    <li class="list-group-item"><strong>{{'studentDetails.startDate' | translate}}</strong>{{student.studentData.startDate | date:'dd/MM/yyyy' }}</li>
+    <li class="list-group-item"><strong>{{'studentDetails.workplaceSupervisor' | translate}}</strong>{{student.studentData.workplaceSupervisor}}</li>
+  </ul>
+</div>
